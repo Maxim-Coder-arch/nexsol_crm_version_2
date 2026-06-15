@@ -1,0 +1,371 @@
+@use "../../global-styles/includes.scss" as *;
+
+.root-clients {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: {
+        top: 50px;
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+    };
+    gap: 20px;
+}
+
+.add-client-section {
+    width: 100%;
+}
+
+.add-client-btn {
+    width: 100%;
+    background-color: $main-text-2;
+    color: $main-bg-2;
+    padding: 14px;
+    border-radius: 5px;
+    @include font(16px, 600);
+    cursor: pointer;
+    
+    &:hover {
+        background-color: lighten($main-text-2, 10%);
+    }
+}
+
+.form-wrapper {
+    background-color: $main-text-2;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.columns-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: 100%;
+}
+
+.clients-column {
+    background-color: $main-text-2;
+    border-radius: 5px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    min-height: 500px;
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: $main-bg-2;
+        padding: 10px 15px;
+        border-radius: 5px;
+        
+        h2 {
+            @include font(24px, 800);
+            color: $main-text-2;
+            margin: 0;
+        }
+        
+        span {
+            @include font(24px, 800);
+            color: $main-bg-2;
+            background-color: $main-text-2;
+            padding: 0 12px;
+            border-radius: 5px;
+            min-width: 45px;
+            text-align: center;
+        }
+    }
+
+    &__data {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        flex: 1;
+    }
+}
+
+.client-card {
+    background-color: $main-bg-2;
+    border-radius: 5px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+        h3 {
+            @include font(18px, 800);
+            color: $main-text-2;
+            margin: 0;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        gap: 8px;
+        
+        button {
+            width: 28px;
+            height: 28px;
+            border-radius: 5px;
+            cursor: pointer;
+            @include font(14px, 600);
+        }
+        
+        .edit-btn {
+            background-color: $pale-yellow;
+            color: $main-text-2;
+        }
+        
+        .delete-btn {
+            background-color: $burgundy;
+            color: $main-bg-2;
+        }
+    }
+
+    &__statuses {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 8px 0;
+        border-top: 1px solid rgba($main-text-2, 0.2);
+        border-bottom: 1px solid rgba($main-text-2, 0.2);
+        
+        .status-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            
+            .status-label {
+                @include font(12px, 600);
+                color: $second-text;
+            }
+            
+            .status-select {
+                background-color: $main-text-2;
+                color: $main-bg-2;
+                padding: 4px 8px;
+                border-radius: 5px;
+                @include font(12px, 600);
+                cursor: pointer;
+            }
+        }
+    }
+
+    &__dates {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 8px;
+        
+        span {
+            @include font(10px, 600);
+            color: $second-text;
+        }
+    }
+
+    &__comment {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        
+        .comment-label {
+            @include font(12px, 600);
+            color: $second-text;
+        }
+        
+        p {
+            @include font(12px, 500);
+            color: $main-text-2;
+            margin: 0;
+            background-color: rgba($main-text-2, 0.1);
+            padding: 8px;
+            border-radius: 5px;
+        }
+    }
+
+    &__additional {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        
+        .additional-label {
+            @include font(12px, 600);
+            color: $second-text;
+        }
+        
+        .additional-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            
+            .additional-item {
+                background-color: $main-text-2;
+                color: $main-bg-2;
+                padding: 4px 10px;
+                border-radius: 5px;
+                @include font(11px, 600);
+                
+                strong {
+                    color: $pale-yellow;
+                }
+            }
+        }
+    }
+}
+
+.client-form {
+    background-color: $main-text-2;
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    
+    h3 {
+        @include font(20px, 800);
+        color: $main-bg-2;
+        margin: 0 0 5px;
+    }
+    
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        
+        label {
+            @include font(13px, 600);
+            color: $main-bg-2;
+        }
+        
+        input, select, textarea {
+            background-color: $main-bg-2;
+            padding: 10px;
+            border-radius: 5px;
+            @include font(14px, 500);
+            color: $main-text-2;
+            
+            &::placeholder {
+                color: $second-text;
+            }
+        }
+    }
+    
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+    
+    .additional-field {
+        display: grid;
+        grid-template-columns: 1fr 1fr auto;
+        gap: 8px;
+        align-items: center;
+        
+        button {
+            width: 30px;
+            height: 30px;
+            background-color: $burgundy;
+            color: $main-bg-2;
+            border-radius: 5px;
+            cursor: pointer;
+            @include font(14px, 600);
+        }
+    }
+    
+    .add-field-btn {
+        align-self: flex-start;
+        background-color: $pale-yellow;
+        color: $main-text-2;
+        padding: 6px 12px;
+        border-radius: 5px;
+        @include font(12px, 600);
+        cursor: pointer;
+    }
+    
+    .form-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+        
+        .submit-btn {
+            flex: 1;
+            background-color: $pale-yellow;
+            color: $main-text-2;
+            padding: 10px;
+            border-radius: 5px;
+            @include font(14px, 600);
+            cursor: pointer;
+        }
+        
+        .cancel-btn {
+            flex: 1;
+            background-color: $pale-grey;
+            color: $main-text-2;
+            padding: 10px;
+            border-radius: 5px;
+            @include font(14px, 600);
+            cursor: pointer;
+        }
+    }
+}
+
+.empty-state {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    background-color: $main-bg-2;
+    border-radius: 5px;
+    
+    p {
+        @include font(14px, 600);
+        color: $second-text;
+        margin: 0;
+    }
+}
+
+@media (max-width: $breakpoint-tablet) {
+    .root-clients {
+        padding: {
+            top: 30px;
+            left: 15px;
+            right: 15px;
+        };
+    }
+    
+    .columns-container {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (max-width: $breakpoint-mobile) {
+    .client-card__statuses {
+        flex-direction: column;
+    }
+    
+    .client-card__dates {
+        flex-direction: column;
+    }
+    
+    .additional-field {
+        grid-template-columns: 1fr !important;
+        
+        button {
+            width: 100% !important;
+        }
+    }
+}

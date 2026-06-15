@@ -1,0 +1,41 @@
+@use "../../global-styles/includes.scss" as *;
+
+.parent-root-menu {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1001;
+    &__child {
+        width: 100%;
+        max-width: 1900px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        align-items: center;
+        background-color: $main-text-2;
+        min-height: 40px;
+        & span {
+            @include font(22px, 800);
+            color: $main-bg-2;
+        }
+        & ul {
+            display: flex;
+            gap: 12px;
+            & li {
+                @include font(14px, 600);
+                color: $main-bg-2;
+                text-transform: lowercase;
+                border-radius: 5px;
+                padding: 0px 3px;
+            }
+        }
+    }
+}
+
+.parent-root-menu__child__item--active {
+    background-color: $main-bg-2;
+    color: $main-text-2 !important;
+}

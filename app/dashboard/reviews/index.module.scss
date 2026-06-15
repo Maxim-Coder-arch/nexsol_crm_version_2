@@ -1,0 +1,210 @@
+@use "../../global-styles/includes.scss" as *;
+
+.root-reviews {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: {
+        top: 50px;
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+    };
+}
+
+.root-reviews__column {
+    min-height: 650px;
+    background-color: $main-text-2;
+    border-radius: 5px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    &__header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: $main-bg-2;
+        padding: 10px 15px;
+        border-radius: 5px;
+        
+        h2 {
+            @include font(24px, 800);
+            color: $main-text-2;
+            margin: 0;
+        }
+        
+        span {
+            @include font(24px, 800);
+            color: $main-bg-2;
+            background-color: $main-text-2;
+            padding: 0 10px;
+            border-radius: 5px;
+            min-width: 40px;
+            text-align: center;
+        }
+    }
+
+    &__data {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex: 1;
+
+        &__review {
+            width: 100%;
+            background-color: $main-bg-2;
+            border-radius: 5px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            &__header {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                flex-wrap: wrap;
+                gap: 10px;
+
+                div:first-child {
+                    flex: 1;
+                }
+
+                h3 {
+                    @include font(18px, 800);
+                    color: $main-text-2;
+                    margin: 0;
+                }
+
+                h4 {
+                    @include font(13px, 600);
+                    color: $second-text;
+                    margin: 4px 0 0;
+                }
+
+                .rating {
+                    @include font(16px, 800);
+                    color: $pale-yellow;
+                    letter-spacing: 2px;
+                    background-color: $main-text-2;
+                    padding: 4px 8px;
+                    border-radius: 5px;
+                }
+            }
+
+            &__text {
+                p {
+                    @include font(13px, 500);
+                    color: $main-text-2;
+                    max-height: 80px;
+                    overflow-y: auto;
+                    margin: 0;
+                    line-height: 1.4;
+                    text-align: justify;
+                }
+            }
+
+            &__footer {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                margin-top: 5px;
+
+                &__buttons {
+                    display: flex;
+                    gap: 10px;
+                    justify-content: flex-end;
+
+                    button {
+                        @include font(13px, 600);
+                        color: $main-bg-2;
+                        padding: 6px 14px;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        background-color: $main-text-2;
+                        transition: opacity 0.2s;
+
+                        &:hover {
+                            opacity: 0.8;
+                        }
+
+                        &:first-child {
+                            background-color: $pale-yellow;
+                            color: $main-text-2;
+                        }
+                    }
+                }
+
+                &__meta {
+                    display: flex;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                    gap: 10px;
+                    padding-top: 5px;
+                    border-top: 1px solid rgba($main-text-2, 0.2);
+
+                    p {
+                        @include font(10px, 600);
+                        color: $second-text;
+                        margin: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.empty-state {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    background-color: $main-bg-2;
+    border-radius: 5px;
+    
+    p {
+        @include font(14px, 600);
+        color: $second-text;
+        margin: 0;
+    }
+}
+
+@media (max-width: $breakpoint-tablet) {
+    .root-reviews {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding: {
+            top: 30px;
+            left: 15px;
+            right: 15px;
+        };
+    }
+
+    .root-reviews__column {
+        min-height: auto;
+    }
+}
+
+@media (max-width: $breakpoint-mobile) {
+    .root-reviews__column__data__review__header {
+        flex-direction: column;
+    }
+    
+    .root-reviews__column__data__review__footer__meta {
+        flex-direction: column;
+        gap: 4px;
+    }
+    
+    .root-reviews__column__data__review__footer__buttons {
+        justify-content: stretch;
+        
+        button {
+            flex: 1;
+        }
+    }
+}

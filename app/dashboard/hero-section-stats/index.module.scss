@@ -1,0 +1,270 @@
+@use "../../global-styles/includes.scss" as *;
+
+.root-hero-section-stats {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: {
+        top: 50px;
+        left: 20px;
+        right: 20px;
+    };
+    &__charts {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+    
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        
+        h2 {
+            @include font(30px, 800);
+            color: $main-text-2;
+        }
+    }
+    
+    &__tabs {
+        display: flex;
+        gap: 10px;
+        
+        button {
+            padding: 8px 20px;
+            border-radius: 5px;
+            @include font(14px, 600);
+            background-color: $main-text-2;
+            color: $main-bg-2;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            
+            &:hover {
+                opacity: 0.8;
+                transform: translateY(-1px);
+            }
+            
+            &.active {
+                background-color: $burgundy;
+                color: $main-bg-2;
+                box-shadow: 0 2px 8px rgba($burgundy, 0.3);
+            }
+        }
+    }
+    
+    &__container {
+        background-color: $main-text-2;
+        border-radius: 5px;
+        padding: 15px;
+        width: 100%;
+        min-height: 400px;
+    }
+}
+    &__bids {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        & h2 {
+            @include font(30px, 800);
+            color: $main-text-2;
+        }
+        &__blocks {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            &__block {
+                background-color: $main-text-2;
+                border-radius: 5px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px;
+                &__header {
+                    display: flex;
+                    flex-direction: column;
+                    & h3 {
+                        @include font(14px, 800);
+                        color: $main-bg-2;
+                    }
+                    & span {
+                        @include font(10px, 800);
+                        color: $pale-yellow;
+                    }
+                }
+                &__body {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    &__point {
+                        width: 100%;
+                        display: flex;
+                        gap: 10px;
+                        align-items: center;
+                        & h4 {
+                            @include font(16px, 800);
+                            color: $main-bg-2;
+                        }
+                        & a {
+                            @include font(12px, 800);
+                            color: $violet;
+                        }
+                    }
+                    &__message {
+                        height: 100px;
+                        width: 100%;
+                        background-color: $main-bg-2;
+                        padding: 5px;
+                        border-radius: 5px;
+                        overflow-y: auto;
+                        & p {
+                            @include font(12px, 800);
+                            color: $main-text-2;
+                            text-align: justify;
+                            word-break: break-all;
+                        }
+                    }
+                }
+                &__footer {
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    & h5 {
+                        @include font(12px, 800);
+                        color: $main-bg-2;
+                    }
+                    & span {
+                        @include font(12px, 800);
+                        color: $pale-yellow;
+                    }
+                }
+            }
+        }
+    }
+    &__users-count {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        & h2 {
+            @include font(30px, 800);
+            color: $main-text-2;
+        }
+        &__blocks {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            &__block {
+                background-color: $main-text-2;
+                border-radius: 5px;
+                display: flex;
+                justify-content: space-between;
+                padding: {
+                    top: 20px;
+                    bottom: 20px;
+                    left: 10px;
+                    right: 10px;
+                };
+                align-items: center;
+                & h3 {
+                    @include font(16px, 800);
+                    color: $main-bg-2;
+                }
+                & span {
+                    @include font(30px, 800);
+                    color: $pale-yellow;
+                }
+            }
+        }
+    }
+    &__team {
+        & h2 {
+            @include font(30px, 800);
+            color: $main-text-2;
+        }
+        &__people {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            &__person {
+                background-color: $main-text-2;
+                border-radius: 5px;
+                display: flex;
+                gap: 10px;
+                padding: {
+                    top: 20px;
+                    bottom: 20px;
+                    left: 10px;
+                    right: 10px;
+                };
+                &__avatar {
+                    width: 50px;
+                    height: 50px;
+                    background-color: $main-bg-2;
+                    border-radius: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    & span {
+                        @include font(30px, 800);
+                        color: $main-text-2;
+                    }
+                }
+                &__meta {
+                    & h3 {
+                        @include font(16px, 800);
+                        color: $main-bg-2;
+                    }
+                    &__specialties {
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 5px;
+                        &__speciality {
+                            padding: 0 8px;
+                            border-radius: 5px;
+                            background-color: $pale-yellow;
+                            & span {
+                                @include font(10px, 800);
+                                color: $main-text-2;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &__detail-stats {
+        & h2 {
+            @include font(30px, 800);
+            color: $main-text-2;
+        }
+
+        & table {
+            border-radius: 5px;
+            overflow: hidden;
+            width: 100%;
+            border-collapse: collapse;
+            & thead {
+                background-color: $main-text-2;
+                & tr td {
+                    padding: 10px;
+                    @include font(12px, 800);
+                    color: $main-bg-2;
+                }
+            }
+            & tbody {
+                & tr {
+                    border-bottom: 1px solid rgba($main-text-2, 0.1);
+                }
+                & tr td {
+                    padding: 10px;
+                    @include font(12px, 800);
+                    color: $main-text-2;
+                }
+            }
+        }
+    }
+}
