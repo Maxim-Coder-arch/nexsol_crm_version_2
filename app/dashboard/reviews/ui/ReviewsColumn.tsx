@@ -1,7 +1,7 @@
-import { IReview } from "../page";
 import ReviewCard from "./reviewCard";
 import EmptyState from "./emptyState";
 import styles from "../index.module.scss";
+import { IReview } from "@/types/reviews/review.type";
 
 interface ReviewsColumnProps {
     title: string;

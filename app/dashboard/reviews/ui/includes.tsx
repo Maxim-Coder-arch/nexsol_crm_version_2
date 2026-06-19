@@ -1,6 +1,6 @@
 import ReviewsColumn from "./ReviewsColumn"
 import styles from "../index.module.scss";
-import { IReview } from "../page";
+import { IReview } from "@/types/reviews/review.type";
 
 interface IProps {
     newReviews: IReview[];

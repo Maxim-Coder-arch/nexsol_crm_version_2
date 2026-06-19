@@ -10,8 +10,6 @@ export async function PATCH(
         const { status } = await request.json();
         const { id } = await params;
 
-        console.log('PATCH id:', id);
-
         if (!status) {
             return NextResponse.json(
                 { error: 'Status is required' },

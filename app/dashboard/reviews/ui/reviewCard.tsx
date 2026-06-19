@@ -1,4 +1,4 @@
-import { IReview } from "../page";
+import { IReview } from "@/types/reviews/review.type";
 import styles from "../index.module.scss";
 
 interface ReviewCardProps {
