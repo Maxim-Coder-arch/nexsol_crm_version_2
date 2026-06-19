@@ -1,14 +1,6 @@
 import { useState } from "react";
+import { AddBidFormProps } from "@/types/bids/bid.type";
 import styles from "../index.module.scss";
-
-interface AddBidFormProps {
-    onAddBid: (bid: {
-        username: string;
-        useremail: string;
-        usecontact: string;
-        comment: string;
-    }) => void;
-}
 
 const AddBidForm = ({ onAddBid }: AddBidFormProps) => {
     const [formData, setFormData] = useState({

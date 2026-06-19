@@ -1,96 +1,99 @@
 "use client";
-import { useState } from "react";
-import { BidsStatus } from "../../../config-and-data/bids.cnf";
+import { useEffect, useState } from "react";
+import { BidsStatus, columnsData } from "@/config-and-data/bids.cnf";
 import IncludesBids from "./ui/includes";
-
-const initialBidsData = [
-    {
-        username: "Max",
-        createdAt: "02.06.2026, 20:56",
-        useremail: "test@test.ru",
-        usecontact: "https://vk.com/id120062926",
-        comment: "This is comment for the test",
-        status: BidsStatus.new,
-    },
-    {
-        username: "Alex",
-        createdAt: "02.06.2026, 20:56",
-        useremail: "test@test.ru",
-        usecontact: "https://vk.com/id120062926",
-        comment: "This is comment for the test",
-        status: BidsStatus.new,
-    },
-    {
-        username: "Ivan",
-        createdAt: "02.06.2026, 20:56",
-        useremail: "test@test.ru",
-        usecontact: "https://vk.com/id120062926",
-        comment: "This is comment for the test",
-        status: BidsStatus.new,
-    },
-    {
-        username: "Max",
-        createdAt: "02.06.2026, 20:56",
-        useremail: "test@test.ru",
-        usecontact: "https://vk.com/id120062926",
-        comment: "This is comment for the test",
-        status: BidsStatus.finished,
-    },
-    {
-        username: "Alex",
-        createdAt: "02.06.2026, 20:56",
-        useremail: "test@test.ru",
-        usecontact: "https://vk.com/id120062926",
-        comment: "This is comment for the test",
-        status: BidsStatus.inProgress,
-    },
-];
-
-const columnsData = [
-    { type: BidsStatus.new, title: "Новые" },
-    { type: BidsStatus.inProgress, title: "В работе" },
-    { type: BidsStatus.finished, title: "Завершенные" },
-];
+import { IBid } from "@/types/bids/bid.type";
 
 const BidsPage = () => {
-    const [bids, setBids] = useState(initialBidsData);
+    const [bids, setBids] = useState<IBid[]>([]);
+    const [loading, setLoading] = useState(true);
 
-    const handleStatusChange = (index: number, newStatus: BidsStatus) => {
-        const updated = [...bids];
-        updated[index] = { ...updated[index], status: newStatus };
-        setBids(updated);
+    const fetchBids = async () => {
+        try {
+            const response = await fetch("/api/bids");
+            const data = await response.json();
+            setBids(data);
+        } catch (error) {
+            console.error('Failed to fetch bids:', error);
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const handleDelete = (index: number) => {
-        const updated = bids.filter((_, i) => i !== index);
-        setBids(updated);
+    useEffect(() => {
+        fetchBids();
+    }, []);
+
+    const handleStatusChange = async (id: string, newStatus: BidsStatus) => {
+        try {
+            const response = await fetch(`/api/bids/${id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: newStatus }),
+            });
+            
+            if (response.ok) {
+                setBids(prev => 
+                    prev.map(bid => 
+                        bid._id === id ? { ...bid, status: newStatus } : bid
+                    )
+                );
+            }
+        } catch (error) {
+            console.error('Failed to update status:', error);
+        }
     };
 
-    const handleAddBid = (newBid: {
+    const handleDelete = async (id: string) => {;
+        try {
+            const response = await fetch(`/api/bids/${id}`, {
+                method: 'DELETE',
+            });
+            
+            if (response.ok) {
+                setBids(prev => prev.filter(bid => bid._id !== id));
+            }
+        } catch (error) {
+            console.error('Failed to delete bid:', error);
+        }
+    };
+
+    const handleAddBid = async (newBid: {
         username: string;
         useremail: string;
         usecontact: string;
         comment: string;
     }) => {
-        const now = new Date();
-        const formattedDate = `${now.toLocaleDateString()}, ${now.toLocaleTimeString()}`;
-        
-        const bidToAdd = {
-            ...newBid,
-            createdAt: formattedDate,
-            status: BidsStatus.new,
-        };
-        
-        setBids([bidToAdd, ...bids]);
+        try {
+            const response = await fetch("/api/bids", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: newBid.username,
+                    email: newBid.useremail,
+                    contact: newBid.usecontact,
+                    message: newBid.comment,
+                }),
+            });
+            
+            if (response.ok) {
+                const createdBid = await response.json();
+                setBids(prev => [createdBid, ...prev]);
+            }
+        } catch (error) {
+            console.error('Failed to add bid:', error);
+        }
     };
 
-    return <IncludesBids
-        bids={bids}
-        handleStatusChange={handleStatusChange}
-        handleDelete={handleDelete}
-        handleAddBid={handleAddBid}
-        columnsData={columnsData}
-    />
+    return (
+        <IncludesBids
+            bids={bids}
+            handleStatusChange={handleStatusChange}
+            handleDelete={handleDelete}
+            handleAddBid={handleAddBid}
+            columnsData={columnsData}
+        />
+    );
 };
 
 export default BidsPage;

@@ -1,16 +1,12 @@
 import { BidsStatus } from "@/config-and-data/bids.cnf";
+import { ConversionStatsProps } from "@/types/bids/bid.type";
 import styles from "../index.module.scss";
-
-interface ConversionStatsProps {
-    bids: Array<{ status: BidsStatus }>;
-}
 
 const ConversionStats = ({ bids }: ConversionStatsProps) => {
     const total = bids.length;
     const finished = bids.filter(b => b.status === BidsStatus.finished).length;
     const inProgress = bids.filter(b => b.status === BidsStatus.inProgress).length;
     const newBids = bids.filter(b => b.status === BidsStatus.new).length;
-    
     const conversionRate = total > 0 ? ((finished / total) * 100).toFixed(1) : "0";
 
     return (

@@ -10,7 +10,7 @@ const IncludesBids = ({ bids, handleStatusChange, handleDelete, handleAddBid, co
                 <ConversionStats bids={bids} />
                 
                 <div className={styles["columns-container"]}>
-                    {columnsData.map((column, index) => (
+                    {columnsData.map((column: any, index: number) => (
                         <BidsColumn
                             key={index}
                             title={column.title}

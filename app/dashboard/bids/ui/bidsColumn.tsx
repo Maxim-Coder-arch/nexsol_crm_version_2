@@ -1,21 +1,6 @@
 import BidCard from "./bidCard";
 import styles from "../index.module.scss";
-import { BidsStatus } from "@/config-and-data/bids.cnf";
-
-interface BidsColumnProps {
-    title: string;
-    type: BidsStatus;
-    bids: Array<{
-        username: string;
-        createdAt: string;
-        useremail: string;
-        usecontact: string;
-        comment: string;
-        status: BidsStatus;
-    }>;
-    onStatusChange: (bidIndex: number, newStatus: BidsStatus) => void;
-    onDelete: (bidIndex: number) => void;
-}
+import { BidsColumnProps, IBid } from "@/types/bids/bid.type";
 
 const BidsColumn = ({ title, type, bids, onStatusChange, onDelete }: BidsColumnProps) => {
     const columnBids = bids.filter(bid => bid.status === type);
@@ -27,21 +12,14 @@ const BidsColumn = ({ title, type, bids, onStatusChange, onDelete }: BidsColumnP
                 <span className={styles["column-count"]}>{columnBids.length}</span>
             </h2>
             <div className={styles["root-bids__column__bids"]}>
-                {columnBids.map((bid, index) => {
-                    const originalIndex = bids.findIndex(b => 
-                        b.username === bid.username && 
-                        b.createdAt === bid.createdAt &&
-                        b.comment === bid.comment
-                    );
-                    return (
-                        <BidCard
-                            key={`${bid.username}-${index}`}
-                            bid={bid}
-                            onStatusChange={(newStatus) => onStatusChange(originalIndex, newStatus)}
-                            onDelete={() => onDelete(originalIndex)}
-                        />
-                    );
-                })}
+                {columnBids.map((bid) => (
+                    <BidCard
+                        key={bid._id}
+                        bid={bid}
+                        onStatusChange={(newStatus) => onStatusChange(bid._id, newStatus)}
+                        onDelete={() => onDelete(bid._id)}
+                    />
+                ))}
             </div>
         </div>
     );
