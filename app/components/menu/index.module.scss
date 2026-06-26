@@ -17,6 +17,68 @@
         align-items: center;
         background-color: $main-text-2;
         min-height: 40px;
+        &__profile-window {
+            position: relative;
+            & button {
+                display: flex;
+                cursor: pointer;
+                align-items: center;
+                & svg {
+                    color: $pale-yellow;
+                    width: 30px;
+                    height: 30px;
+                }
+                & p {
+                    @include font(.9rem, 800);
+                    color: $pale-yellow;
+                }
+            }
+            &__modal {
+                min-width: 280px;
+                height: 170px;
+                position: absolute;
+                bottom: -180px;
+                background-color: rgba($main-text, .7);
+                backdrop-filter: blur(20px);
+                border-radius: 5px;
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+
+                & h2 {
+                    @include font(1rem, 800);
+                    color: $main-bg-2;
+                }
+                &__main {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 5px;
+                    & a {
+                        @include font(.8rem, 800);
+                        color: $main-text-2;
+                        background-color: $main-bg-2;
+                        padding: 3px 6px;
+                        border-radius: 5px;
+                    }
+                }
+                &__profile {
+                    display: flex;
+                    & button {
+                        width: 100%;
+                        @include font(.8rem, 800);
+                        color: $main-text-2;
+                        background-color: $pale-yellow;
+                        padding: 6px 6px;
+                        border-radius: 5px;
+                        display: flex;
+                        justify-content: center;
+                        cursor: pointer;
+                    }
+                }
+
+            }
+        }
         & span {
             @include font(22px, 800);
             color: $main-bg-2;

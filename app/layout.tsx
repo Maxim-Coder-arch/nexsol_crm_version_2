@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Menu from "./components/menu";
 import "./global-styles/reset.scss";
+import { ProfileProvider } from "./context/modalContext";
+import ProfileModal from "./components/modals/profile";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,8 +17,11 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body>
-        <Menu />
-        {children}
+        <ProfileProvider>
+          <Menu />
+          <ProfileModal />
+          {children}
+        </ProfileProvider>
       </body>
     </html>
   );
