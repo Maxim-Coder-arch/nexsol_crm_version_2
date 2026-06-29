@@ -17,6 +17,14 @@ const menuItems: IMenu[] = [
         label: "Клиенты",
         link: "/dashboard/clients",
     },
+    {
+        label: "Сервисы",
+        link: "/dashboard/services"
+    },
+    {
+        label: "Пользователи",
+        link: "/dashboard/users"
+    },
 ]
 
 export { menuItems };

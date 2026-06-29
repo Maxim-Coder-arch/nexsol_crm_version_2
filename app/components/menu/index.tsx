@@ -25,7 +25,7 @@ const Menu = () => {
     };
 
     return (
-        <nav className={styles["parent-root-menu"]}>
+        user && <nav className={styles["parent-root-menu"]}>
             <div className={styles["parent-root-menu__child"]}>
                 <div className={styles["parent-root-menu__child__logo"]}>
                     <span>Nexsol Crm</span>

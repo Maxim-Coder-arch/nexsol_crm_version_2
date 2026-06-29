@@ -1,7 +1,7 @@
-// app/(auth)/login/page.tsx
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import styles from "./index.module.scss";
 
 export default function LoginPage() {
     const router = useRouter();
@@ -32,7 +32,6 @@ export default function LoginPage() {
 
             console.log('Login successful!', data);
 
-            // ✅ Редирект на главную страницу (корень)
             router.push('/');
         } catch (error) {
             console.error('Login error:', error);
@@ -42,85 +41,24 @@ export default function LoginPage() {
     };
 
     return (
-        <div style={{ 
-            display: 'flex', 
-            justifyContent: 'center', 
-            alignItems: 'center', 
-            minHeight: '100vh',
-            backgroundColor: '#f5f5f5'
-        }}>
-            <form onSubmit={handleSubmit} style={{
-                background: 'white',
-                padding: '40px',
-                borderRadius: '8px',
-                boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-                width: '100%',
-                maxWidth: '400px'
-            }}>
-                <h1 style={{ textAlign: 'center', marginBottom: '24px' }}>Вход в Nexsol CRM</h1>
-                
-                {error && (
-                    <div style={{ 
-                        background: '#ffebee', 
-                        color: '#c62828', 
-                        padding: '10px', 
-                        borderRadius: '4px',
-                        marginBottom: '16px'
-                    }}>
-                        {error}
-                    </div>
-                )}
-                
-                <div style={{ marginBottom: '16px' }}>
-                    <label style={{ display: 'block', marginBottom: '4px' }}>Email</label>
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                        style={{
-                            width: '100%',
-                            padding: '10px',
-                            border: '1px solid #ddd',
-                            borderRadius: '4px',
-                            boxSizing: 'border-box'
-                        }}
-                    />
-                </div>
-                
-                <div style={{ marginBottom: '24px' }}>
-                    <label style={{ display: 'block', marginBottom: '4px' }}>Пароль</label>
-                    <input
-                        type="password"
-                        placeholder="Пароль"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                        style={{
-                            width: '100%',
-                            padding: '10px',
-                            border: '1px solid #ddd',
-                            borderRadius: '4px',
-                            boxSizing: 'border-box'
-                        }}
-                    />
-                </div>
-                
-                <button 
-                    type="submit" 
-                    disabled={loading}
-                    style={{
-                        width: '100%',
-                        padding: '12px',
-                        background: loading ? '#999' : '#1976d2',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '4px',
-                        cursor: loading ? 'not-allowed' : 'pointer',
-                        fontSize: '16px'
-                    }}
-                >
+        <div className={styles["login"]}>
+            <form onSubmit={handleSubmit}>
+                <h2>Добро пожаловать!</h2>
+                <input 
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                />
+                <input 
+                    type="password"
+                    placeholder="Пароль"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                />
+                <button type="submit" disabled={loading}>
                     {loading ? 'Загрузка...' : 'Войти'}
                 </button>
             </form>

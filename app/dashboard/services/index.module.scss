@@ -1,0 +1,230 @@
+@use "../../global-styles/includes.scss" as *;
+
+.services {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    padding: {
+        top: 50px;
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+    };
+    min-height: calc(100vh - 100px);
+
+    &__list {
+        background-color: $main-text-2;
+        border-radius: 5px;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        max-height: 80vh;
+        overflow-y: auto;
+
+        &__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: $main-bg-2;
+            padding: 10px 15px;
+            border-radius: 5px;
+
+            h2 {
+                @include font(24px, 800);
+                color: $main-text-2;
+                margin: 0;
+            }
+
+            span {
+                @include font(20px, 800);
+                color: $main-bg-2;
+                background-color: $main-text-2;
+                padding: 0 12px;
+                border-radius: 5px;
+                min-width: 35px;
+                text-align: center;
+            }
+        }
+
+        ul {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        &__item {
+            background-color: $main-bg-2;
+            border-radius: 5px;
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.2s;
+
+            &__content {
+                flex: 1;
+                min-width: 0;
+
+                h3 {
+                    @include font(16px, 800);
+                    color: $main-text-2;
+                    margin: 0 0 4px;
+                }
+
+                p {
+                    @include font(13px, 700);
+                    color: $second-text;
+                    margin: 0 0 4px;
+                }
+
+                a {
+                    @include font(12px, 500);
+                    color: $main-text-2;
+                    word-break: break-all;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+
+            &__delete {
+                background-color: $burgundy;
+                color: $main-bg-2;
+                border: none;
+                border-radius: 5px;
+                width: 30px;
+                height: 30px;
+                @include font(14px, 700);
+                cursor: pointer;
+                flex-shrink: 0;
+                transition: opacity 0.2s;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
+    }
+
+    &__add {
+        &__btn {
+            width: 100%;
+            background-color: $main-text-2;
+            color: $main-bg-2;
+            padding: 14px;
+            border-radius: 5px;
+            @include font(16px, 600);
+            cursor: pointer;
+            border: none;
+
+            &:hover {
+                background-color: lighten($main-text-2, 10%);
+            }
+        }
+
+        &__form {
+            background-color: $main-text-2;
+            padding: 20px;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+
+            h3 {
+                @include font(18px, 800);
+                color: $main-bg-2;
+                margin: 0;
+            }
+
+            input {
+                background-color: $main-bg-2;
+                padding: 10px;
+                border-radius: 5px;
+                @include font(14px, 500);
+                color: $main-text-2;
+                border: none;
+
+                &::placeholder {
+                    color: $second-text;
+                }
+            }
+
+            &__actions {
+                display: flex;
+                gap: 10px;
+                margin-top: 5px;
+
+                .submit {
+                    flex: 1;
+                    background-color: $pale-yellow;
+                    color: $main-text-2;
+                    padding: 10px;
+                    border-radius: 5px;
+                    @include font(14px, 600);
+                    cursor: pointer;
+                    border: none;
+
+                    &:hover {
+                        opacity: 0.8;
+                    }
+                }
+
+                .cancel {
+                    flex: 1;
+                    background-color: $pale-grey;
+                    color: $main-text-2;
+                    padding: 10px;
+                    border-radius: 5px;
+                    @include font(14px, 600);
+                    cursor: pointer;
+                    border: none;
+
+                    &:hover {
+                        opacity: 0.8;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $breakpoint-tablet) {
+    .services {
+        grid-template-columns: 1fr;
+        padding-top: 30px;
+        gap: 15px;
+
+        &__list {
+            max-height: 50vh;
+        }
+    }
+}
+
+@media (max-width: $breakpoint-mobile) {
+    .services {
+        padding: {
+            top: 20px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+        };
+
+        &__list__item {
+            flex-direction: column;
+            align-items: flex-start;
+
+            &__delete {
+                align-self: flex-end;
+            }
+        }
+    }
+}

@@ -1,0 +1,44 @@
+@use "../global-styles/includes.scss" as *;
+
+.login {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $main-text-2;
+
+    & form {
+        display: flex;
+        flex-direction: column;
+        background-color: $main-bg-2;
+        padding: 10px;
+        border-radius: 5px;
+        gap: 10px;
+        min-width: 400px;
+
+        & h2 {
+            @include font(2rem, 800);
+            color: $main-text-2;
+        }
+
+        & input {
+            @include font(1rem, 800);
+            background-color: $main-text-2;
+            color: $main-bg-2;
+            padding: 3px 6px;
+            border-radius: 3px;
+        }
+
+        & button {
+            @include font(1rem, 800);
+            background-color: $main-text-2;
+            color: $pale-yellow;
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+    }
+}

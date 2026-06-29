@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 
-interface User {
+export interface User {
     _id: string;
     name: string;
     email: string;
