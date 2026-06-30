@@ -1,39 +1,90 @@
 'use client';
-import { ITeamMember } from '@/types/team';
+import { ITeamMember, RoleType } from '@/types/team';
 import AddUserButton from './addUserButton';
 import TeamColumn from './teamColumn';
 import EditUserModal from '@/app/components/modals/users/editUserModal';
+import AddUserForm from './addUserForm';
 import styles from '../index.module.scss';
 
 interface IncludesUsersProps {
     users: ITeamMember[];
     editingUser: ITeamMember | null;
     isModalOpen: boolean;
+    showAddForm: boolean;
+    formData: {
+        name: string;
+        email: string;
+        password: string;
+        role: RoleType;
+        specialties: string[];
+        responsibilities: string[];
+    };
+    specialtyInput: string;
+    responsibilityInput: string;
+    onFormChange: (data: Partial<typeof formData>) => void;
+    onSpecialtyInputChange: (value: string) => void;
+    onResponsibilityInputChange: (value: string) => void;
+    onAddSpecialty: () => void;
+    onRemoveSpecialty: (index: number) => void;
+    onAddResponsibility: () => void;
+    onRemoveResponsibility: (index: number) => void;
+    onAddSubmit: (e: React.FormEvent) => void;
     onEdit: (user: ITeamMember) => void;
     onSaveEdit: (id: string, data: Partial<ITeamMember>) => void;
     onDelete: (id: string) => void;
     onRoleChange: (id: string, role: ITeamMember['role']) => void;
     onAddUser: () => void;
     onCloseModal: () => void;
+    onCancelAdd: () => void;
 }
 
 const IncludesUsers = ({
     users,
     editingUser,
     isModalOpen,
+    showAddForm,
+    formData,
+    specialtyInput,
+    responsibilityInput,
+    onFormChange,
+    onSpecialtyInputChange,
+    onResponsibilityInputChange,
+    onAddSpecialty,
+    onRemoveSpecialty,
+    onAddResponsibility,
+    onRemoveResponsibility,
+    onAddSubmit,
     onEdit,
     onSaveEdit,
     onDelete,
     onRoleChange,
     onAddUser,
     onCloseModal,
+    onCancelAdd,
 }: IncludesUsersProps) => {
     const roles: ITeamMember['role'][] = ['director', 'moderator', 'viewer'];
 
     return (
         <section id="team">
             <div className={styles["team"]}>
-                <AddUserButton onClick={onAddUser} />
+                {!showAddForm ? (
+                    <AddUserButton onClick={onAddUser} />
+                ) : (
+                    <AddUserForm
+                        formData={formData}
+                        specialtyInput={specialtyInput}
+                        responsibilityInput={responsibilityInput}
+                        onFormChange={onFormChange}
+                        onSpecialtyInputChange={onSpecialtyInputChange}
+                        onResponsibilityInputChange={onResponsibilityInputChange}
+                        onAddSpecialty={onAddSpecialty}
+                        onRemoveSpecialty={onRemoveSpecialty}
+                        onAddResponsibility={onAddResponsibility}
+                        onRemoveResponsibility={onRemoveResponsibility}
+                        onSubmit={onAddSubmit}
+                        onCancel={onCancelAdd}
+                    />
+                )}
 
                 <div className={styles["team__grid"]}>
                     {roles.map(role => (

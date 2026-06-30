@@ -43,7 +43,6 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
-    max-height: 750px;
     overflow-y: auto;
 
     &::-webkit-scrollbar {
@@ -240,6 +239,214 @@
     }
 }
 
+.add-user-form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+
+    &__form {
+        min-height: 400px;
+        width: 100%;
+        max-width: 600px;
+        background-color: $main-text-2;
+        border-radius: 8px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid rgba($main-bg-2, 0.15);
+        padding-bottom: 12px;
+
+        h3 {
+            @include font(20px, 800);
+            color: $main-bg-2;
+            margin: 0;
+        }
+
+        .add-user-form__close {
+            background: none;
+            border: none;
+            color: $main-bg-2;
+            @include font(20px, 700);
+            cursor: pointer;
+
+            &:hover {
+                opacity: 0.7;
+            }
+        }
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        flex: 1;
+    }
+
+    &__field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        label {
+            @include font(13px, 600);
+            color: $main-bg-2;
+        }
+
+        input,
+        select {
+            background-color: $main-bg-2;
+            padding: 10px;
+            border-radius: 5px;
+            @include font(14px, 500);
+            color: $main-text-2;
+            border: none;
+
+            &::placeholder {
+                color: $second-text;
+            }
+
+            &:focus {
+                outline: 2px solid $burgundy;
+            }
+        }
+    }
+
+    &__tag-input {
+        display: flex;
+        gap: 8px;
+
+        input {
+            flex: 1;
+        }
+
+        button {
+            background-color: $pale-yellow;
+            color: $main-text-2;
+            padding: 0 16px;
+            border-radius: 5px;
+            border: none;
+            @include font(18px, 700);
+            cursor: pointer;
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+    }
+
+    &__tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 6px;
+
+        .add-user-form__tag {
+            background-color: $main-bg;
+            color: $main-text-2;
+            padding: 4px 10px;
+            border-radius: 4px;
+            @include font(12px, 500);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+
+            button {
+                background: none;
+                border: none;
+                color: $burgundy;
+                cursor: pointer;
+                @include font(12px, 700);
+
+                &:hover {
+                    opacity: 0.7;
+                }
+            }
+        }
+    }
+
+    &__list {
+        margin: 6px 0 0;
+        padding-left: 20px;
+        list-style: disc;
+
+        li {
+            @include font(13px, 500);
+            color: $main-bg-2;
+            padding: 2px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            button {
+                background: none;
+                border: none;
+                color: $burgundy;
+                cursor: pointer;
+                @include font(14px, 700);
+
+                &:hover {
+                    opacity: 0.7;
+                }
+            }
+        }
+    }
+
+    &__footer {
+        display: flex;
+        gap: 10px;
+        padding-top: 12px;
+        border-top: 1px solid rgba($main-bg-2, 0.15);
+
+        button {
+            flex: 1;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            @include font(14px, 600);
+            cursor: pointer;
+
+            &.add-user-form__submit {
+                background-color: $pale-yellow;
+                color: $main-text-2;
+
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+
+            &.add-user-form__cancel {
+                background-color: $pale-grey;
+                color: $main-text-2;
+
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $breakpoint-mobile) {
+    .add-user-form {
+        padding: 10px 0;
+
+        &__form {
+            padding: 16px;
+        }
+
+        &__footer {
+            flex-direction: column;
+        }
+    }
+}
 
 @media (max-width: $breakpoint-tablet) {
     .team {

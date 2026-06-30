@@ -22,6 +22,10 @@ const menuItems: IMenu[] = [
         link: "/dashboard/services"
     },
     {
+        label: "Воронки",
+        link: "/dashboard/funnels"
+    },
+    {
         label: "Пользователи",
         link: "/dashboard/users"
     },
