@@ -53,7 +53,7 @@ const IncludesFunnels = ({
                     ) : (
                         filteredFunnels.map(funnel => (
                             <FunnelCard 
-                                key={funnel.id}
+                                key={funnel._id}
                                 funnel={funnel}
                                 onDelete={onDeleteFunnel}
                                 onEdit={onEditFunnel}

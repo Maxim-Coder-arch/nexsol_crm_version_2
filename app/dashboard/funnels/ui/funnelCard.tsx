@@ -26,7 +26,7 @@ const FunnelCard = ({
                 </div>
                 <div className={styles["funnel-card__actions"]}>
                     <button onClick={() => onEdit(funnel)} className={styles["edit-btn"]}>✎</button>
-                    <button onClick={() => onDelete(funnel.id)} className={styles["delete-btn"]}>✕</button>
+                    <button onClick={() => onDelete(funnel._id)} className={styles["delete-btn"]}>✕</button>
                 </div>
             </div>
 

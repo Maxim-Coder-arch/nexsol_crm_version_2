@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import IncludesFunnels from "./ui/includes";
 
 export type FunnelType = 'sales' | 'attraction' | 'b2b';
@@ -12,49 +12,12 @@ export interface IFunnelItem {
 }
 
 export interface IFunnel {
-    id: string;
+    _id: string;
     title: string;
     type: FunnelType;
     items: IFunnelItem[];
     createdAt: Date;
 }
-
-const mockFunnels: IFunnel[] = [
-    {
-        id: '1',
-        title: 'Продажа софта',
-        type: 'sales',
-        items: [
-            { id: '1-1', title: 'Посетитель', type: 'TOFU' },
-            { id: '1-2', title: 'Лид', type: 'MOFU' },
-            { id: '1-3', title: 'Клиент', type: 'BOFU' },
-        ],
-        createdAt: new Date(),
-    },
-    {
-        id: '2',
-        title: 'Привлечение через контент',
-        type: 'attraction',
-        items: [
-            { id: '2-1', title: 'Просмотр статьи', type: 'TOFU' },
-            { id: '2-2', title: 'Подписка', type: 'MOFU' },
-            { id: '2-3', title: 'Заявка', type: 'BOFU' },
-        ],
-        createdAt: new Date(),
-    },
-    {
-        id: '3',
-        title: 'B2B переговоры',
-        type: 'b2b',
-        items: [
-            { id: '3-1', title: 'Знакомство', type: 'TOFU' },
-            { id: '3-2', title: 'Презентация', type: 'MOFU' },
-            { id: '3-3', title: 'Договор', type: 'BOFU' },
-            { id: '3-4', title: 'Оплата', type: 'BOFU' },
-        ],
-        createdAt: new Date(),
-    },
-];
 
 const funnelTypes: { value: FunnelType; label: string }[] = [
     { value: 'sales', label: 'Продажи' },
@@ -69,28 +32,71 @@ const stageTypes: { value: StageType; label: string; color: string }[] = [
 ];
 
 const FunnelsPage = () => {
-    const [funnels, setFunnels] = useState<IFunnel[]>(mockFunnels);
+    const [funnels, setFunnels] = useState<IFunnel[]>([]);
     const [filter, setFilter] = useState<FunnelType | 'all'>('all');
     const [editingFunnel, setEditingFunnel] = useState<IFunnel | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
 
-    const handleAddFunnel = (data: { title: string; type: FunnelType }) => {
-        const newFunnel: IFunnel = {
-            id: Date.now().toString(),
-            title: data.title,
-            type: data.type,
-            items: [
-                { id: '1', title: 'Шаг 1', type: 'TOFU' },
-                { id: '2', title: 'Шаг 2', type: 'MOFU' },
-                { id: '3', title: 'Шаг 3', type: 'BOFU' },
-            ],
-            createdAt: new Date(),
-        };
-        setFunnels([newFunnel, ...funnels]);
+    const fetchFunnels = async () => {
+        try {
+            const response = await fetch("/api/funnels");
+            const json = await response.json();
+            setFunnels(json);
+        } catch (error) {
+            console.error('Failed to fetch funnels:', error);
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const handleDeleteFunnel = (id: string) => {
-        setFunnels(funnels.filter(f => f.id !== id));
+    useEffect(() => {
+        fetchFunnels();
+    }, []);
+
+    const handleAddFunnel = async (data: { title: string; type: FunnelType }) => {
+        try {
+            const response = await fetch("/api/funnels", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    title: data.title,
+                    type: data.type,
+                })
+            });
+
+            if (response.ok) {
+                const createdFunnel = await response.json();
+                setFunnels(prev => [createdFunnel, ...prev]);
+            } else {
+                const error = await response.json();
+                alert(error.error || 'Ошибка при создании воронки');
+            }
+        } catch (error) {
+            console.error('Failed to add funnel:', error);
+            alert('Ошибка при создании воронки');
+        }
+    };
+
+    const handleDeleteFunnel = async (id: string) => {
+
+        try {
+            const response = await fetch(`/api/funnels/${id}`, {
+                method: "DELETE",
+            });
+
+            if (response.ok) {
+                setFunnels(prev => prev.filter(f => f._id !== id));
+            } else {
+                const error = await response.json();
+                alert(error.error || 'Ошибка при удалении воронки');
+            }
+        } catch (error) {
+            console.error('Failed to delete funnel:', error);
+            alert('Ошибка при удалении воронки');
+        }
     };
 
     const handleEditFunnel = (funnel: IFunnel) => {
@@ -98,10 +104,33 @@ const FunnelsPage = () => {
         setIsModalOpen(true);
     };
 
-    const handleSaveFunnel = (id: string, data: Partial<IFunnel>) => {
-        setFunnels(prev => prev.map(f => 
-            f.id === id ? { ...f, ...data } : f
-        ));
+    const handleSaveFunnel = async (id: string, data: Partial<IFunnel>) => {
+        try {
+            const response = await fetch(`/api/funnels/${id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    title: data.title,
+                    type: data.type,
+                    items: data.items,
+                })
+            });
+
+            if (response.ok) {
+                const updatedFunnel = await response.json();
+                setFunnels(prev => prev.map(f => 
+                    f._id === id ? updatedFunnel : f
+                ));
+                setIsModalOpen(false);
+                setEditingFunnel(null);
+            } else {
+                const error = await response.json();
+            }
+        } catch (error) {
+            alert('Ошибка при обновлении воронки');
+        }
     };
 
     const handleCloseModal = () => {
@@ -112,6 +141,10 @@ const FunnelsPage = () => {
     const filteredFunnels = filter === 'all' 
         ? funnels 
         : funnels.filter(f => f.type === filter);
+
+    if (loading) {
+        return <div>Загрузка воронок...</div>;
+    }
 
     return (
         <IncludesFunnels

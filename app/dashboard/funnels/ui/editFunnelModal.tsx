@@ -51,7 +51,7 @@ const EditFunnelModal = ({
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (!title.trim()) return;
-        onSave(funnel.id, { title: title.trim(), type, items });
+        onSave(funnel._id, { title: title.trim(), type, items });
         onClose();
     };
 
