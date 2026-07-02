@@ -1,30 +1,14 @@
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import styles from "../index.module.scss";
 import { HeroSectionUiChartsProps } from "@/types/hero-section/uiProps.type";
+import CustomTooltip from "./customTooltip";
 
-const CustomTooltip = ({ active, payload, label }: any) => {
-  if (active && payload && payload.length) {
-    return (
-      <div style={{
-        backgroundColor: '#2a2a2a',
-        padding: '10px',
-        borderRadius: '5px',
-        border: `1px solid #c12060`,
-      }}>
-        <p style={{ color: '#e3e1e1', fontSize: '12px', margin: 0 }}>{label}</p>
-        {payload.map((item: any, index: number) => (
-          <p key={index} style={{ color: item.color, fontSize: '12px', margin: '5px 0 0' }}>
-            {item.name}: {item.value}
-          </p>
-        ))}
-      </div>
-    );
-  }
-  return null;
-};
-
-
-const HeroSectionUiCharts = ({ chartPeriod, setChartPeriod, chartData, loading }: HeroSectionUiChartsProps) => {
+const HeroSectionUiCharts = ({ 
+  chartPeriod, 
+  setChartPeriod, 
+  chartData, 
+  loading
+ }: HeroSectionUiChartsProps) => {
   if (loading) {
     return (
       <div className={styles["root-hero-section-stats__charts"]}>

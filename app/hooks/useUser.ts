@@ -1,15 +1,6 @@
 'use client';
+import { User } from '@/types/hooks/useUser.type';
 import { useState, useEffect } from 'react';
-
-export interface User {
-    _id: string;
-    name: string;
-    email: string;
-    role: string;
-    specialties?: string[];
-    responsibilities?: string[];
-    createdAt: string;
-}
 
 let cachedUser: User | null = null;
 let cachedPromise: Promise<User | null> | null = null;

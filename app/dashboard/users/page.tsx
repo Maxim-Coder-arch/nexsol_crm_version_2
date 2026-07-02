@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import { ITeamMember, RoleType } from "@/types/team";
+import { ITeamMember } from "@/types/team/teamMember.type";
 import IncludesUsers from "./ui/includes";
+import { RoleType } from "@/types/team/roleType.type";
 
 const TeamPage = () => {
     const [users, setUsers] = useState<ITeamMember[]>([]);

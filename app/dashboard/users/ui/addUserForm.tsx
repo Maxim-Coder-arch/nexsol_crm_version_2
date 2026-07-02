@@ -1,28 +1,8 @@
 'use client';
-import { RoleType, ROLE_LABELS } from '@/types/team';
+import { RoleType } from '@/types/team/roleType.type';
 import styles from '../index.module.scss';
-
-interface AddUserFormProps {
-    formData: {
-        name: string;
-        email: string;
-        password: string;
-        role: RoleType;
-        specialties: string[];
-        responsibilities: string[];
-    };
-    specialtyInput: string;
-    responsibilityInput: string;
-    onFormChange: (data: Partial<AddUserFormProps['formData']>) => void;
-    onSpecialtyInputChange: (value: string) => void;
-    onResponsibilityInputChange: (value: string) => void;
-    onAddSpecialty: () => void;
-    onRemoveSpecialty: (index: number) => void;
-    onAddResponsibility: () => void;
-    onRemoveResponsibility: (index: number) => void;
-    onSubmit: (e: React.FormEvent) => void;
-    onCancel: () => void;
-}
+import { AddUserFormProps } from '@/types/users/addUserForm.type';
+import { ROLE_LABELS } from '@/types/team/roleLabels.type';
 
 const AddUserForm = ({
     formData,

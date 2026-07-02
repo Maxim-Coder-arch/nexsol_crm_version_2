@@ -1,15 +1,12 @@
-import { FunnelType } from "../page";
 import styles from "../index.module.scss";
+import { IFunnelFilterProps } from "@/types/funnels/funnelFilter.type";
 
 const FunnelFilter = ({ 
     activeFilter, 
     onFilterChange,
     funnelTypes
-}: { 
-    activeFilter: FunnelType | 'all'; 
-    onFilterChange: (filter: FunnelType | 'all') => void,
-    funnelTypes: { value: FunnelType; label: string }[]
-}) => {
+}: IFunnelFilterProps) => {
+    
     return (
         <div className={styles["funnel-filter"]}>
             <button 

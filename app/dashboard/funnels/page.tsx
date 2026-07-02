@@ -1,35 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import IncludesFunnels from "./ui/includes";
-
-export type FunnelType = 'sales' | 'attraction' | 'b2b';
-export type StageType = 'TOFU' | 'MOFU' | 'BOFU';
-
-export interface IFunnelItem {
-    id: string;
-    title: string;
-    type: StageType;
-}
-
-export interface IFunnel {
-    _id: string;
-    title: string;
-    type: FunnelType;
-    items: IFunnelItem[];
-    createdAt: Date;
-}
-
-const funnelTypes: { value: FunnelType; label: string }[] = [
-    { value: 'sales', label: 'Продажи' },
-    { value: 'attraction', label: 'Привлечение' },
-    { value: 'b2b', label: 'B2B' },
-];
-
-const stageTypes: { value: StageType; label: string; color: string }[] = [
-    { value: 'TOFU', label: 'TOFU', color: '#4CAF50' },
-    { value: 'MOFU', label: 'MOFU', color: '#FF9800' },
-    { value: 'BOFU', label: 'BOFU', color: '#F44336' },
-];
+import { FunnelType } from "@/types/funnels/ItemType.type";
+import { IFunnel } from "@/types/funnels/funnel.type";
+import { funnelTypes, stageTypes } from "@/config-and-data/funnels.cnf";
 
 const FunnelsPage = () => {
     const [funnels, setFunnels] = useState<IFunnel[]>([]);

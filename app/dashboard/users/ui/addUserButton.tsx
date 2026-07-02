@@ -1,9 +1,6 @@
 'use client';
+import { AddUserButtonProps } from '@/types/users/addUserButton.type';
 import styles from '../index.module.scss';
-
-interface AddUserButtonProps {
-    onClick: () => void;
-}
 
 const AddUserButton = ({ onClick }: AddUserButtonProps) => {
     return (

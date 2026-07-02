@@ -1,8 +1,5 @@
+import { EmptyStateProps } from "@/types/reviews/emptyState.type";
 import styles from "../index.module.scss";
-
-interface EmptyStateProps {
-    type: "new" | "approved";
-}
 
 const EmptyState = ({ type }: EmptyStateProps) => {
     const message = type === "new" ? "Нет новых отзывов" : "Нет отзывов на сайте";

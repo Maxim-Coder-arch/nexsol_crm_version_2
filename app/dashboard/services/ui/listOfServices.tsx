@@ -1,8 +1,8 @@
-import { IService } from "../page";
+import { IListOfServicesProps } from "@/types/services/listOfServices.type";
 import styles from "../index.module.scss";
 import CloseIcon from "@/public/global/close";
 
-const ListOfServices = ({ services, handleDelete }: { services: IService[], handleDelete: (id: string) => void }) => {
+const ListOfServices = ({ services, handleDelete }: IListOfServicesProps) => {
     return (
         <div className={styles["services__list"]}>
             <div className={styles["services__list__header"]}>

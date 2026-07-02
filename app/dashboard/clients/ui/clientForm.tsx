@@ -1,21 +1,15 @@
 import { useState } from "react";
 import styles from "../index.module.scss";
+import { ClientFormProps } from "@/types/clients/clientForm.type";
 
-interface ClientFormProps {
-    initialData?: {
-        name: string;
-        workStatus: string;
-        physicalStatus: string;
-        comment: string;
-        additionalData: { key: string; value: string }[];
-    };
-    workStatuses: readonly { value: string; label: string }[];
-    physicalStatuses: readonly { value: string; label: string }[];
-    onSubmit: (client: any) => void;
-    onCancel: () => void;
-}
-
-const ClientForm = ({ initialData, workStatuses, physicalStatuses, onSubmit, onCancel }: ClientFormProps) => {
+const ClientForm = ({ 
+    initialData, 
+    workStatuses, 
+    physicalStatuses, 
+    onSubmit, 
+    onCancel
+ }: ClientFormProps) => {
+    
     const [name, setName] = useState(initialData?.name || "");
     const [workStatus, setWorkStatus] = useState(initialData?.workStatus || "new");
     const [physicalStatus, setPhysicalStatus] = useState(initialData?.physicalStatus || "successful");

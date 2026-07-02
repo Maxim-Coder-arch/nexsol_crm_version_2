@@ -1,18 +1,5 @@
+import { AddServiceProps } from "@/types/services/addService.type";
 import styles from "../index.module.scss";
-
-interface AddServiceProps {
-    setFormData: React.Dispatch<React.SetStateAction<{
-        title: string;
-        description: string;
-        url: string;
-    }>>;
-    handleAdd: () => void;
-    formData: {
-        title: string;
-        description: string;
-        url: string;
-    };
-}
 
 const AddService = ({ setFormData, handleAdd, formData }: AddServiceProps) => {
     return (

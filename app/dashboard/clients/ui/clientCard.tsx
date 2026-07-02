@@ -1,17 +1,15 @@
 import { useState } from "react";
-import { IClient } from "../page";
 import ClientForm from "./clientForm";
 import styles from "../index.module.scss";
+import { ClientCardProps } from "@/types/clients/clientsCard.type";
 
-interface ClientCardProps {
-    client: IClient;
-    workStatuses: readonly { value: string; label: string }[];
-    physicalStatuses: readonly { value: string; label: string }[];
-    onUpdate: (id: string, updates: Partial<IClient>) => void;
-    onDelete: (id: string) => void;
-}
-
-const ClientCard = ({ client, workStatuses, physicalStatuses, onUpdate, onDelete }: ClientCardProps) => {
+const ClientCard = ({ 
+    client, 
+    workStatuses, 
+    physicalStatuses, 
+    onUpdate, 
+    onDelete
+ }: ClientCardProps) => {
     const [isEditing, setIsEditing] = useState(false);
 
     if (isEditing) {

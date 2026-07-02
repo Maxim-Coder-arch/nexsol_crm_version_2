@@ -1,6 +1,6 @@
 import BidCard from "./bidCard";
 import styles from "../index.module.scss";
-import { BidsColumnProps, IBid } from "@/types/bids/bid.type";
+import { BidsColumnProps } from "@/types/bids/bidsColumn.type";
 
 const BidsColumn = ({ title, type, bids, onStatusChange, onDelete }: BidsColumnProps) => {
     const columnBids = bids.filter(bid => bid.status === type);

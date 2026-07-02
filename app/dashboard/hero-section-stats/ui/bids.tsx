@@ -1,7 +1,6 @@
 import { HeroSectionUiBidsProps } from "@/types/hero-section/bidsProps";
 import styles from "../index.module.scss";
 
-
 const HeroSectionUiBids = ({ bids }: HeroSectionUiBidsProps) => {
   if (bids.length === 0) {
     return (

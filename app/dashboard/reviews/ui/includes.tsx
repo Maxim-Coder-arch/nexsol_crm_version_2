@@ -1,15 +1,13 @@
 import ReviewsColumn from "./ReviewsColumn"
 import styles from "../index.module.scss";
-import { IReview } from "@/types/reviews/review.type";
+import { ReviewSectioUiIncludesProps } from "@/types/reviews/reviewSectionUiIncludes.type";
 
-interface IProps {
-    newReviews: IReview[];
-    handleApprove: (id: string) => void;
-    handleDelete: (id: string) => void;
-    approvedReviews: IReview[];
-}
-
-const ReviewsSectionUiIncludes = ({ newReviews, handleApprove, handleDelete, approvedReviews }: IProps) => {
+const ReviewsSectionUiIncludes = ({ 
+    newReviews, 
+    handleApprove, 
+    handleDelete, 
+    approvedReviews
+ }: ReviewSectioUiIncludesProps) => {
     return (
         <section id="reviews">
             <div className={styles["root-reviews"]}>

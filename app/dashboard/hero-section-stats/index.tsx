@@ -1,7 +1,14 @@
 "use client";
+
 import { useState, useEffect } from "react";
-import { Period, ChartDataItem, UserStat, Bid, TeamMember, DetailUser, VisitorsStats } from "../../../types/hero-section";
 import HeroSectionUiIncludes from "./ui/includes";
+import { Period } from "@/types/hero-section/preriod.type";
+import { ChartDataItem } from "@/types/hero-section/ChartDataItem.type";
+import { Bid } from "@/types/hero-section/bid.type";
+import { DetailUser } from "@/types/hero-section/detailUser.type";
+import { TeamMember } from "@/types/hero-section/teamMember.type";
+import { UserStat } from "@/types/hero-section/userStat.type";
+import { VisitorsStats } from "@/types/hero-section/visitorStats.type";
 
 const HeroSectionStats = () => {
   const [chartPeriod, setChartPeriod] = useState<Period>('week');

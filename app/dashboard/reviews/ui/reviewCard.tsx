@@ -1,14 +1,12 @@
-import { IReview } from "@/types/reviews/review.type";
 import styles from "../index.module.scss";
+import { ReviewCardProps } from "@/types/reviews/reviewCard.type";
 
-interface ReviewCardProps {
-    review: IReview;
-    type: "new" | "approved";
-    onApprove?: (id: string) => void;
-    onDelete: (id: string) => void;
-}
-
-const ReviewCard = ({ review, type, onApprove, onDelete }: ReviewCardProps) => {
+const ReviewCard = ({ 
+    review, 
+    type, 
+    onApprove, 
+    onDelete
+ }: ReviewCardProps) => {
     const stars = "★".repeat(review.rating) + "☆".repeat(5 - review.rating);
 
     return (

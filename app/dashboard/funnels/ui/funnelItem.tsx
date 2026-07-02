@@ -1,7 +1,13 @@
+import { IFunnelItemProps } from "@/types/funnels/funneltem.type";
 import styles from "../index.module.scss";
-import { IFunnelItem, StageType } from "../page";
 
-const FunnelItem = ({ item, index, total, stageTypes }: { item: IFunnelItem; index: number; total: number, stageTypes: { value: StageType; label: string; color: string }[] }) => {
+const FunnelItem = ({ 
+    item, 
+    index, 
+    total, 
+    stageTypes
+ }: IFunnelItemProps) => {
+    
     const stageInfo = stageTypes.find(s => s.value === item.type);
     const width = 100 - (index / total) * 25;
 

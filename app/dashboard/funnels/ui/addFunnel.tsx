@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "../index.module.scss";
-import { FunnelType } from "../page";
+import { FunnelType } from "@/types/funnels/ItemType.type";
 
 const AddFunnel = ({ onAdd, funnelTypes }: { onAdd: (data: { title: string; type: FunnelType }) => void, funnelTypes: { value: FunnelType; label: string }[] }) => {
     const [title, setTitle] = useState('');

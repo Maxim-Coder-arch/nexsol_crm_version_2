@@ -1,15 +1,8 @@
 'use client';
-import { ITeamMember, ROLE_LABELS } from '@/types/team';
 import TeamCard from './teamCard';
 import styles from '../index.module.scss';
-
-interface TeamColumnProps {
-    role: ITeamMember['role'];
-    users: ITeamMember[];
-    onEdit: (user: ITeamMember) => void;
-    onDelete: (id: string) => void;
-    onRoleChange: (id: string, role: ITeamMember['role']) => void;
-}
+import { TeamColumnProps } from '@/types/users/teamColumn.type';
+import { ROLE_LABELS } from '@/types/team/roleLabels.type';
 
 const TeamColumn = ({ role, users, onEdit, onDelete, onRoleChange }: TeamColumnProps) => {
     const filteredUsers = users.filter(u => u.role === role);

@@ -1,17 +1,9 @@
 'use client';
+import { ProfileContextType } from '@/types/contexts/profileContext/profileContext.type';
+import { ProfileProviderProps } from '@/types/contexts/profileContext/profileProvider.type';
 import { createContext, useState, ReactNode } from 'react';
 
-interface ProfileContextType {
-    isOpen: boolean;
-    open: () => void;
-    close: () => void;
-}
-
 export const ProfileContext = createContext<ProfileContextType | null>(null);
-
-interface ProfileProviderProps {
-    children: ReactNode;
-}
 
 export const ProfileProvider = ({ children }: ProfileProviderProps) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);

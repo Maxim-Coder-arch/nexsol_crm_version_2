@@ -3,8 +3,6 @@ import { useEffect, useState } from "react";
 import ReviewsSectionUiIncludes from "./ui/includes";
 import { IReview } from "@/types/reviews/review.type";
 
-
-
 const ReviewsPage = () => {
     const [reviews, setReviews] = useState<IReview[]>([]);
 

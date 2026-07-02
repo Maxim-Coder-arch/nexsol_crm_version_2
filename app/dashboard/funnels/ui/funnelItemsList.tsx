@@ -1,7 +1,8 @@
-import { IFunnelItem, StageType } from "../page";
+import { IFunnelItemsListProps } from "@/types/funnels/funnelItemsList.type";
 import styles from "../index.module.scss";
 
-const FunnelItemsList = ({ items,stageTypes }: { items: IFunnelItem[], stageTypes: { value: StageType; label: string; color: string }[] }) => {
+const FunnelItemsList = ({ items,stageTypes }: IFunnelItemsListProps) => {
+    
     return (
         <div className={styles["funnel-items-list"]}>
             <h4>Все пункты воронки</h4>

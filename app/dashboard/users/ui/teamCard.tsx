@@ -1,13 +1,10 @@
 'use client';
-import { ITeamMember, ROLE_LABELS, ROLE_COLORS } from '../../../../types/team';
+import { TeamCardProps } from '@/types/users/teamCard.type';
+import { ITeamMember } from '../../../../types/team/teamMember.type';
 import styles from '../index.module.scss';
+import { ROLE_LABELS } from '@/types/team/roleLabels.type';
+import { ROLE_COLORS } from '@/types/team/roleColors.type';
 
-interface TeamCardProps {
-    user: ITeamMember;
-    onEdit: (user: ITeamMember) => void;
-    onDelete: (id: string) => void;
-    onRoleChange: (id: string, role: ITeamMember['role']) => void;
-}
 
 const TeamCard = ({ user, onEdit, onDelete, onRoleChange }: TeamCardProps) => {
     const roleOptions: ITeamMember['role'][] = ['director', 'moderator', 'viewer'];

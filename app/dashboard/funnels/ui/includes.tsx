@@ -1,28 +1,11 @@
+import { IncludesFunnelsProps } from "@/types/funnels/includesFunnel.type";
 import styles from "../index.module.scss";
 import AddFunnel from "./addFunnel";
 import EditFunnelModal from "./editFunnelModal";
 import FunnelCard from "./funnelCard";
 import FunnelFilter from "./funnelFilter";
-import { IFunnel, FunnelType, StageType } from "../page";
-
-interface IncludesFunnelsProps {
-    funnels: IFunnel[];
-    filter: FunnelType | 'all';
-    editingFunnel: IFunnel | null;
-    isModalOpen: boolean;
-    filteredFunnels: IFunnel[];
-    funnelTypes: { value: FunnelType; label: string }[];
-    stageTypes: { value: StageType; label: string; color: string }[];
-    onAddFunnel: (data: { title: string; type: FunnelType }) => void;
-    onDeleteFunnel: (id: string) => void;
-    onEditFunnel: (funnel: IFunnel) => void;
-    onSaveFunnel: (id: string, data: Partial<IFunnel>) => void;
-    onFilterChange: (filter: FunnelType | 'all') => void;
-    onCloseModal: () => void;
-}
 
 const IncludesFunnels = ({
-    funnels,
     filter,
     editingFunnel,
     isModalOpen,
@@ -36,6 +19,7 @@ const IncludesFunnels = ({
     onFilterChange,
     onCloseModal,
 }: IncludesFunnelsProps) => {
+
     return (
         <section id="funnels">
             <div className={styles["funnels"]}>

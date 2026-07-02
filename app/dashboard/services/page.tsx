@@ -1,14 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import IncludesServices from "./ui/includes";
-
-export interface IService {
-    _id: string;
-    title: string;
-    description: string;
-    url: string;
-    createdAt: number;
-}
+import { IService } from "@/types/services/service.type";
 
 const Services = () => {
     const [services, setServices] = useState<IService[]>([]);

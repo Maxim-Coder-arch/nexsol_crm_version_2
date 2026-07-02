@@ -1,6 +1,6 @@
-import { FunnelType, IFunnel, StageType } from "../page";
 import FunnelItem from "./funnelItem";
 import styles from "../index.module.scss";
+import { IFunnelCardProps } from "@/types/funnels/funnelCard.type";
 
 const FunnelCard = ({ 
     funnel, 
@@ -8,13 +8,8 @@ const FunnelCard = ({
     onEdit,
     funnelTypes,
     stageTypes,
-}: { 
-    funnel: IFunnel; 
-    onDelete: (id: string) => void; 
-    onEdit: (funnel: IFunnel) => void;
-    funnelTypes: { value: FunnelType; label: string }[];
-    stageTypes: { value: StageType; label: string; color: string }[]
-}) => {
+}: IFunnelCardProps) => {
+    
     const typeLabel = funnelTypes.find(t => t.value === funnel.type)?.label || funnel.type;
 
     return (

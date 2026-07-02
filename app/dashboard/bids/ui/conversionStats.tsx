@@ -1,6 +1,6 @@
 import { BidsStatus } from "@/config-and-data/bids.cnf";
-import { ConversionStatsProps } from "@/types/bids/bid.type";
 import styles from "../index.module.scss";
+import { ConversionStatsProps } from "@/types/bids/coversionStats.type";
 
 const ConversionStats = ({ bids }: ConversionStatsProps) => {
     const total = bids.length;

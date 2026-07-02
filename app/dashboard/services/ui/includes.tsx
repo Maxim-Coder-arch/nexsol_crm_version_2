@@ -1,23 +1,9 @@
-import { IService } from "../page";
 import AddService from "./addService";
 import ListOfServices from "./listOfServices";
 import styles from "../index.module.scss";
+import { IncludesServicesProps } from "@/types/services/includesService.type";
 
-interface IncludesServicesProps {
-    services: IService[];
-    handleDelete: (id: string) => void;
-    setFormData: React.Dispatch<React.SetStateAction<{
-        title: string;
-        description: string;
-        url: string;
-    }>>;
-    handleAdd: () => void;
-    formData: {
-        title: string;
-        description: string;
-        url: string;
-    };
-}
+
 
 const IncludesServices = ({ 
     services, 

@@ -1,17 +1,15 @@
 import ReviewCard from "./reviewCard";
 import EmptyState from "./emptyState";
 import styles from "../index.module.scss";
-import { IReview } from "@/types/reviews/review.type";
+import { ReviewsColumnProps } from "@/types/reviews/reviewColumn.type";
 
-interface ReviewsColumnProps {
-    title: string;
-    reviews: IReview[];
-    type: "new" | "approved";
-    onApprove?: (id: string) => void;
-    onDelete: (id: string) => void;
-}
-
-const ReviewsColumn = ({ title, reviews, type, onApprove, onDelete }: ReviewsColumnProps) => {
+const ReviewsColumn = ({ 
+    title, 
+    reviews, 
+    type, 
+    onApprove, 
+    onDelete
+ }: ReviewsColumnProps) => {
     return (
         <div className={`${styles["root-reviews__column"]} ${styles[`root-reviews__column--${type}`]}`}>
             <div className={styles["root-reviews__column__header"]}>

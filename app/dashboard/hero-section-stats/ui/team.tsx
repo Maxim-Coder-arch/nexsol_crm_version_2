@@ -1,9 +1,5 @@
-import { TeamMember } from "../../../../types/hero-section/index";
 import styles from "../index.module.scss";
-
-interface HeroSectionUiTeamProps {
-  team: TeamMember[];
-}
+import { HeroSectionUiTeamProps } from "@/types/hero-section/heroSectionUiTeam.type";
 
 const HeroSectionUiTeam = ({ team }: HeroSectionUiTeamProps) => {
   if (team.length === 0) {

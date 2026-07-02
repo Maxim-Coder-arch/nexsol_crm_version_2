@@ -1,4 +1,5 @@
-import { ChartDataItem, Period } from ".";
+import { ChartDataItem } from "./ChartDataItem.type";
+import { Period } from "./preriod.type";
 
 export interface HeroSectionUiChartsProps {
   chartPeriod: Period;

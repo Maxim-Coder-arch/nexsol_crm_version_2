@@ -1,28 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import ClientsIncludes from "./ui/includes";
-
-export interface IClient {
-    _id: string;
-    name: string;
-    workStatus: "new" | "inProgress" | "completed";
-    physicalStatus: "successful" | "lost";
-    comment: string;
-    additionalData: { key: string; value: string }[];
-    createdAt: string;
-    updatedAt: string;
-}
-
-const workStatuses = [
-    { value: "new", label: "Новый" },
-    { value: "inProgress", label: "В работе" },
-    { value: "completed", label: "Завершен" },
-] as const;
-
-const physicalStatuses = [
-    { value: "successful", label: "Успешный" },
-    { value: "lost", label: "Потерянный" },
-] as const;
+import { IClient } from "@/types/clients/client.type";
+import { physicalStatuses, workStatuses } from "@/config-and-data/clients.cnf";
 
 const ClientsPage = () => {
     const [clients, setClients] = useState<IClient[]>([]);

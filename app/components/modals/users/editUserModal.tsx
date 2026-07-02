@@ -1,14 +1,9 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { ITeamMember, ROLE_LABELS } from '@/types/team';
+import { ITeamMember } from '@/types/team/teamMember.type';
 import styles from "./index.module.scss";
-
-interface EditUserModalProps {
-    isOpen: boolean;
-    user: ITeamMember | null;
-    onClose: () => void;
-    onSave: (id: string, data: Partial<ITeamMember>) => void;
-}
+import { EditUserModalProps } from '@/types/modals/users/editUserModal.type';
+import { ROLE_LABELS } from '@/types/team/roleLabels.type';
 
 const EditUserModal = ({ isOpen, user, onClose, onSave }: EditUserModalProps) => {
     const [formData, setFormData] = useState<Partial<ITeamMember>>({});

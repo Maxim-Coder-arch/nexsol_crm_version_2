@@ -2,8 +2,15 @@ import AddBidForm from "./addBidForm";
 import BidsColumn from "./bidsColumn";
 import ConversionStats from "./conversionStats";
 import styles from "../index.module.scss";
+import { IIncludesBidsProps } from "@/types/bids/includesBids.type";
 
-const IncludesBids = ({ bids, handleStatusChange, handleDelete, handleAddBid, columnsData }: any) => {
+const IncludesBids = ({ 
+    bids, 
+    handleStatusChange, 
+    handleDelete, 
+    handleAddBid, 
+    columnsData
+ }: IIncludesBidsProps) => {
     return (
         <section id="bids">
             <div className={styles["root-bids"]}>

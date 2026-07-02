@@ -1,6 +1,6 @@
 import { BidsStatus, statusOptions } from "@/config-and-data/bids.cnf";
 import styles from "../index.module.scss";
-import { BidCardProps } from "@/types/bids/bid.type";
+import { BidCardProps } from "@/types/bids/bidCard.type";
 
 const BidCard = ({ bid, onStatusChange, onDelete }: BidCardProps) => {
     const date = new Date(bid.createdAt);

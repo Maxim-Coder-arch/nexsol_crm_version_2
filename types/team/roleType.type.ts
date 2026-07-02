@@ -1,0 +1,1 @@
+export type RoleType = 'director' | 'moderator' | 'viewer';
