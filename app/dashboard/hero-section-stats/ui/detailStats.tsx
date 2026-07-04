@@ -1,9 +1,16 @@
 import { HeroSectionUiDetailStatsProps } from "@/types/hero-section/uiDetailStatsProps";
+import { motion } from "framer-motion";
 import styles from "../index.module.scss";
+import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
 
 const HeroSectionUiDetailStats = ({ detailUsers }: HeroSectionUiDetailStatsProps) => {
+    const show = useTimeoutAnimationLoader();
+    
     return (
-        <div className={styles["root-hero-section-stats__detail-stats"]}>
+        <motion.div 
+        initial={{opacity: 0}}
+        animate={show ? {opacity: 1} : {}}
+        className={styles["root-hero-section-stats__detail-stats"]}>
             <h2>Пользователи</h2>
             <table>
                 <thead>
@@ -29,7 +36,7 @@ const HeroSectionUiDetailStats = ({ detailUsers }: HeroSectionUiDetailStatsProps
                     })}
                 </tbody>
             </table>
-        </div>
+        </motion.div>
     )
 }
 

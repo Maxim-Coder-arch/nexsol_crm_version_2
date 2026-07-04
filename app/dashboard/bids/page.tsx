@@ -86,13 +86,15 @@ const BidsPage = () => {
     };
 
     return (
-        <IncludesBids
-            bids={bids}
-            handleStatusChange={handleStatusChange}
-            handleDelete={handleDelete}
-            handleAddBid={handleAddBid}
-            columnsData={columnsData}
-        />
+        <div className="root-content"> {/* сделать из этого дива переиспользуемый компонент и отцентровать контент внутри него по центру */}
+            <IncludesBids
+                bids={bids}
+                handleStatusChange={handleStatusChange}
+                handleDelete={handleDelete}
+                handleAddBid={handleAddBid}
+                columnsData={columnsData}
+            />
+        </div>
     );
 };
 

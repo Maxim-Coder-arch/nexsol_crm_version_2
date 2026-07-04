@@ -1,0 +1,25 @@
+@use "../../global-styles/includes.scss" as *;
+
+.loader {
+    position: fixed;
+    top: 40px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1002;
+    background-color: $main-bg-2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__points {
+        display: flex;
+        gap: 20px;
+        &__point {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: $main-text-2;
+        }
+    }
+}

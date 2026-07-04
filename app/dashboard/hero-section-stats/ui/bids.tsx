@@ -1,49 +1,116 @@
+import { motion, AnimatePresence } from "framer-motion";
 import { HeroSectionUiBidsProps } from "@/types/hero-section/bidsProps";
 import styles from "../index.module.scss";
+import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
 
 const HeroSectionUiBids = ({ bids }: HeroSectionUiBidsProps) => {
+  const show = useTimeoutAnimationLoader();
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.15,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.4, ease: "easeOut" },
+    },
+  } as const;
+
   if (bids.length === 0) {
     return (
-      <div className={styles["root-hero-section-stats__bids"]}>
-        <h2>Новые заявки</h2>
-        <div className={styles["root-hero-section-stats__bids__empty"]}>
+      <motion.div
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: show ? 1 : 0, y: show ? 0 : 15 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className={styles["root-hero-section-stats__bids"]}
+      >
+        <motion.h2
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: show ? 1 : 0, x: show ? 0 : -10 }}
+          transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
+        >
+          Новые заявки
+        </motion.h2>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: show ? 1 : 0, scale: show ? 1 : 0.95 }}
+          transition={{ duration: 0.4, delay: 0.15, ease: "easeOut" }}
+          className={styles["root-hero-section-stats__bids__empty"]}
+        >
           <p>Нет новых заявок</p>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     );
   }
 
   return (
-    <div className={styles["root-hero-section-stats__bids"]}>
-      <h2>Новые заявки</h2>
-      <div className={styles["root-hero-section-stats__bids__blocks"]}>
-        {bids.map((bid) => (
-          <div key={bid._id} className={styles["root-hero-section-stats__bids__blocks__block"]}>
-            <div className={styles["root-hero-section-stats__bids__blocks__block__header"]}>
-              <h3>{bid.name}</h3>
-              <span>{bid.createdAt} ({bid.time})</span>
-            </div>
-            <div className={styles["root-hero-section-stats__bids__blocks__block__body"]}>
-              <div className={styles["root-hero-section-stats__bids__blocks__block__body__point"]}>
-                <h4>Email</h4>
-                <a href={`mailto:${bid.email}`}>{bid.email}</a>
+    <motion.div
+      key={bids.length} // ✅ ключ для перезапуска анимации при изменении данных
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: show ? 1 : 0, y: show ? 0 : 15 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className={styles["root-hero-section-stats__bids"]}
+    >
+      <motion.h2
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: show ? 1 : 0, x: show ? 0 : -10 }}
+        transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
+      >
+        Новые заявки
+      </motion.h2>
+
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={bids.length} // ✅ ключ для перезапуска
+          variants={containerVariants}
+          initial="hidden"
+          animate={show ? "visible" : "hidden"}
+          className={styles["root-hero-section-stats__bids__blocks"]}
+        >
+          {bids.map((bid) => (
+            <motion.div
+              key={bid._id}
+              variants={cardVariants}
+              whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+              className={styles["root-hero-section-stats__bids__blocks__block"]}
+            >
+              <div className={styles["root-hero-section-stats__bids__blocks__block__header"]}>
+                <h3>{bid.name}</h3>
+                <span>{bid.createdAt} ({bid.time})</span>
               </div>
-              <div className={styles["root-hero-section-stats__bids__blocks__block__body__point"]}>
-                <h4>Контакт</h4>
-                <a href={bid.contact} target="_blank" rel="noopener noreferrer">{bid.contact}</a>
+              <div className={styles["root-hero-section-stats__bids__blocks__block__body"]}>
+                <div className={styles["root-hero-section-stats__bids__blocks__block__body__point"]}>
+                  <h4>Email</h4>
+                  <a href={`mailto:${bid.email}`}>{bid.email}</a>
+                </div>
+                <div className={styles["root-hero-section-stats__bids__blocks__block__body__point"]}>
+                  <h4>Контакт</h4>
+                  <a href={bid.contact} target="_blank" rel="noopener noreferrer">{bid.contact}</a>
+                </div>
+                <div className={styles["root-hero-section-stats__bids__blocks__block__body__message"]}>
+                  <p>{bid.message}</p>
+                </div>
               </div>
-              <div className={styles["root-hero-section-stats__bids__blocks__block__body__message"]}>
-                <p>{bid.message}</p>
+              <div className={styles["root-hero-section-stats__bids__blocks__block__footer"]}>
+                <h5>Статус</h5>
+                <span>{bid.status === 'new' ? 'Новая' : bid.status}</span>
               </div>
-            </div>
-            <div className={styles["root-hero-section-stats__bids__blocks__block__footer"]}>
-              <h5>Статус</h5>
-              <span>{bid.status === 'new' ? 'Новая' : bid.status}</span>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </AnimatePresence>
+    </motion.div>
   );
 };
 

@@ -1,10 +1,13 @@
 'use client';
 import { motion } from "framer-motion";
-import { AddUserButtonProps } from '@/types/users/addUserButton.type';
-import styles from '../index.module.scss';
+import styles from "../index.module.scss";
 import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
 
-const AddUserButton = ({ onClick }: AddUserButtonProps) => {
+interface AddFileButtonProps {
+    onClick: () => void;
+}
+
+const AddFileButton = ({ onClick }: AddFileButtonProps) => {
     const show = useTimeoutAnimationLoader();
 
     return (
@@ -12,19 +15,19 @@ const AddUserButton = ({ onClick }: AddUserButtonProps) => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: show ? 1 : 0, y: show ? 0 : 15 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className={styles["add-user"]}
+            className={styles["add-file"]}
         >
             <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
                 transition={{ duration: 0.2 }}
-                className={styles["add-user__btn"]}
+                className={styles["add-file__btn"]}
                 onClick={onClick}
             >
-                + Добавить пользователя
+                + Загрузить файл
             </motion.button>
         </motion.div>
     );
 };
 
-export default AddUserButton;
+export default AddFileButton;

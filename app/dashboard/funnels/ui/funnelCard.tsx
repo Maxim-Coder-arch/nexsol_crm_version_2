@@ -11,9 +11,11 @@ const FunnelCard = ({
 }: IFunnelCardProps) => {
     
     const typeLabel = funnelTypes.find(t => t.value === funnel.type)?.label || funnel.type;
+    
 
     return (
-        <div className={styles["funnel-card"]}>
+        <div 
+        className={styles["funnel-card"]}>
             <div className={styles["funnel-card__header"]}>
                 <div>
                     <h3>{funnel.title}</h3>

@@ -4,6 +4,8 @@ import AddFunnel from "./addFunnel";
 import EditFunnelModal from "./editFunnelModal";
 import FunnelCard from "./funnelCard";
 import FunnelFilter from "./funnelFilter";
+import { motion } from "framer-motion";
+import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
 
 const IncludesFunnels = ({
     filter,
@@ -20,6 +22,8 @@ const IncludesFunnels = ({
     onCloseModal,
 }: IncludesFunnelsProps) => {
 
+    const show = useTimeoutAnimationLoader();
+
     return (
         <section id="funnels">
             <div className={styles["funnels"]}>
@@ -31,7 +35,10 @@ const IncludesFunnels = ({
                     funnelTypes={funnelTypes} 
                 />
 
-                <div className={styles["funnels__grid"]}>
+                <motion.div 
+                initial={{opacity: 0, scale: .9}}
+                animate={show ? {opacity: 1, scale: 1} : {}}
+                className={styles["funnels__grid"]}>
                     {filteredFunnels.length === 0 ? (
                         <div className={styles["funnels__empty"]}>Нет воронок</div>
                     ) : (
@@ -46,7 +53,7 @@ const IncludesFunnels = ({
                             />
                         ))
                     )}
-                </div>
+                </motion.div>
 
                 {editingFunnel && (
                     <EditFunnelModal

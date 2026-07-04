@@ -29,6 +29,10 @@ const menuItems: IMenu[] = [
         label: "Пользователи",
         link: "/dashboard/users"
     },
+    {
+        label: "Файловое хранилище",
+        link: "/dashboard/explorer"
+    },
 ]
 
 export { menuItems };

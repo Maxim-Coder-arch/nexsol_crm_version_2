@@ -3,6 +3,7 @@ import Menu from "./components/menu";
 import "./global-styles/reset.scss";
 import { ProfileProvider } from "./context/modalContext";
 import ProfileModal from "./components/modals/profile";
+import LoaderComponent from "./components/loader";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,6 +24,7 @@ export default function RootLayout({
           <ProfileModal />
           {children}
         </ProfileProvider>
+        <LoaderComponent />
       </body>
     </html>
   );

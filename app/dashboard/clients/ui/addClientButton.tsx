@@ -1,6 +1,9 @@
+// addClientButton.tsx
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import ClientForm from "./clientForm";
 import styles from "../index.module.scss";
+import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
 
 interface AddClientButtonProps {
     workStatuses: readonly { value: string; label: string }[];
@@ -10,30 +13,47 @@ interface AddClientButtonProps {
 
 const AddClientButton = ({ workStatuses, physicalStatuses, onAdd }: AddClientButtonProps) => {
     const [isOpen, setIsOpen] = useState(false);
+    const show = useTimeoutAnimationLoader();
 
     return (
-        <div className={styles["add-client-section"]}>
+        <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: show ? 1 : 0, y: show ? 0 : 15 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className={styles["add-client-section"]}
+        >
             {!isOpen ? (
-                <button
+                <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.97 }}
+                    transition={{ duration: 0.2 }}
                     onClick={() => setIsOpen(true)}
                     className={styles["add-client-btn"]}
                 >
                     + Добавить клиента
-                </button>
+                </motion.button>
             ) : (
-                <div className={styles["form-wrapper"]}>
-                    <ClientForm
-                        workStatuses={workStatuses}
-                        physicalStatuses={physicalStatuses}
-                        onSubmit={(client) => {
-                            onAdd(client);
-                            setIsOpen(false);
-                        }}
-                        onCancel={() => setIsOpen(false)}
-                    />
-                </div>
+                <AnimatePresence>
+                    <motion.div
+                        initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
+                        className={styles["form-wrapper"]}
+                    >
+                        <ClientForm
+                            workStatuses={workStatuses}
+                            physicalStatuses={physicalStatuses}
+                            onSubmit={(client) => {
+                                onAdd(client);
+                                setIsOpen(false);
+                            }}
+                            onCancel={() => setIsOpen(false)}
+                        />
+                    </motion.div>
+                </AnimatePresence>
             )}
-        </div>
+        </motion.div>
     );
 };
 

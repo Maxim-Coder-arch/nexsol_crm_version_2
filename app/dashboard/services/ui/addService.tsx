@@ -1,9 +1,16 @@
 import { AddServiceProps } from "@/types/services/addService.type";
 import styles from "../index.module.scss";
+import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
+import { motion } from "framer-motion";
 
 const AddService = ({ setFormData, handleAdd, formData }: AddServiceProps) => {
+    const show  =useTimeoutAnimationLoader();
+    
     return (
-        <div className={styles["services__add"]}>
+        <motion.div 
+        initial={{opacity: 0, scale: .9}}
+        animate={show ? { opacity: 1, scale: 1 } : {}}
+        className={styles["services__add"]}>
             <div className={styles["services__add__form"]}>
                 <h3>Новый сервис</h3>
                 <input
@@ -30,7 +37,7 @@ const AddService = ({ setFormData, handleAdd, formData }: AddServiceProps) => {
                     </button>
                 </div>
             </div>
-        </div>
+        </motion.div>
     )
 }
 

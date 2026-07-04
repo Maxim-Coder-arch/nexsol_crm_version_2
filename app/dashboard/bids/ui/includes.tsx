@@ -15,7 +15,7 @@ const IncludesBids = ({
         <section id="bids">
             <div className={styles["root-bids"]}>
                 <ConversionStats bids={bids} />
-                
+                <AddBidForm onAddBid={handleAddBid} />
                 <div className={styles["columns-container"]}>
                     {columnsData.map((column: any, index: number) => (
                         <BidsColumn
@@ -29,7 +29,6 @@ const IncludesBids = ({
                     ))}
                 </div>
                 
-                <AddBidForm onAddBid={handleAddBid} />
             </div>
         </section>
     )

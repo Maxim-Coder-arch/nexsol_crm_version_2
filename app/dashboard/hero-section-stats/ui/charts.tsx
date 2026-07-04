@@ -1,7 +1,9 @@
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { motion } from "framer-motion";
 import styles from "../index.module.scss";
 import { HeroSectionUiChartsProps } from "@/types/hero-section/uiProps.type";
 import CustomTooltip from "./customTooltip";
+import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
 
 const HeroSectionUiCharts = ({ 
   chartPeriod, 
@@ -9,6 +11,8 @@ const HeroSectionUiCharts = ({
   chartData, 
   loading
  }: HeroSectionUiChartsProps) => {
+  const show = useTimeoutAnimationLoader();
+
   if (loading) {
     return (
       <div className={styles["root-hero-section-stats__charts"]}>
@@ -20,10 +24,31 @@ const HeroSectionUiCharts = ({
   }
 
   return (
-    <div className={styles["root-hero-section-stats__charts"]}>    
-      <div className={styles["root-hero-section-stats__charts__header"]}>
-        <h2>Графики посещаемости</h2>
-        <div className={styles["root-hero-section-stats__charts__tabs"]}>
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: show ? 1 : 0, y: show ? 0 : 20 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className={styles["root-hero-section-stats__charts"]}
+    >    
+      <motion.div 
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: show ? 1 : 0, y: show ? 0 : 15 }}
+        transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
+        className={styles["root-hero-section-stats__charts__header"]}
+      >
+        <motion.h2
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: show ? 1 : 0, x: show ? 0 : -10 }}
+          transition={{ duration: 0.4, delay: 0.15, ease: "easeOut" }}
+        >
+          Графики посещаемости
+        </motion.h2>
+        <motion.div 
+          initial={{ opacity: 0, x: 10 }}
+          animate={{ opacity: show ? 1 : 0, x: show ? 0 : 10 }}
+          transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
+          className={styles["root-hero-section-stats__charts__tabs"]}
+        >
           <button 
             className={chartPeriod === 'week' ? styles.active : ''}
             onClick={() => setChartPeriod('week')}
@@ -42,10 +67,15 @@ const HeroSectionUiCharts = ({
           >
             Год
           </button>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
       
-      <div className={styles["root-hero-section-stats__charts__container"]}>
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: show ? 1 : 0, y: show ? 0 : 30 }}
+        transition={{ duration: 0.5, delay: 0.25, ease: "easeOut" }}
+        className={styles["root-hero-section-stats__charts__container"]}
+      >
         <ResponsiveContainer width="100%" height={350}>
           <LineChart data={chartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#c4c4c4" opacity={0.3} />
@@ -85,8 +115,8 @@ const HeroSectionUiCharts = ({
             />
           </LineChart>
         </ResponsiveContainer>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 
