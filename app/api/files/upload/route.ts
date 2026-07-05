@@ -24,18 +24,18 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
         const bucket = await getGridFSBucket();
         const buffer = Buffer.from(await file.arrayBuffer());
-        const result = await new Promise<NextResponse>((resolve) => {
-            const uploadStream = bucket.openUploadStream(file.name, {
-                contentType: file.type || 'application/octet-stream',
-                metadata: {
-                    uploadedBy: payload.userId,
-                    uploadedByName: payload.name,
-                    originalName: file.name,
-                    size: file.size,
-                    mimeType: file.type || 'application/octet-stream',
-                },
-            });
 
+        const uploadStream = bucket.openUploadStream(file.name, {
+            metadata: {
+                uploadedBy: payload.userId,
+                uploadedByName: payload.name,
+                originalName: file.name,
+                size: file.size,
+                mimeType: file.type || 'application/octet-stream',
+            },
+        });
+
+        return new Promise<NextResponse>((resolve) => {
             uploadStream.write(buffer);
             uploadStream.end();
 
@@ -57,8 +57,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
                 }, { status: 500 }));
             });
         });
-
-        return result;
     } catch (error) {
         console.error('Upload error:', error);
         return NextResponse.json({
