@@ -1,5 +1,10 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import IncludesFiles from "./ui/includes";
+import TemplateContent from "@/app/components/share/template";
+import { useDeleteFileMutation, useGetFilesQuery, useUploadFileMutation } from "@/store/client-api";
+
 export interface IFileCard {
     _id: string;
     filename: string;
@@ -8,35 +13,17 @@ export interface IFileCard {
     createdAt: Date;
 }
 
-import { useState, useEffect } from "react";
-import IncludesFiles from "./ui/includes";
-import TemplateContent from "@/app/components/share/template";
-
 const FilesPage = () => {
-    const [files, setFiles] = useState<IFileCard[]>([]);
-    const [loading, setLoading] = useState(true);
+    const { data: files = [], isLoading, error } = useGetFilesQuery(void 0) as {
+        data: IFileCard[],
+        isLoading: boolean,
+        error: any
+    };
+    const [uploadFile] = useUploadFileMutation();
+    const [deleteFile] = useDeleteFileMutation();
     const [showAddForm, setShowAddForm] = useState(false);
 
-    const fetchFiles = async () => {
-        try {
-            const response = await fetch("/api/files");
-            if (response.ok) {
-                const data = await response.json();
-                setFiles(data);
-            }
-        } catch (error) {
-            console.error("Failed to fetch files:", error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        fetchFiles();
-    }, []);
-
     const handleDownload = async (id: string) => {
-        console.log("rgerthbrtnb")
         try {
             const response = await fetch(`/api/files/${id}`);
             if (response.ok) {
@@ -61,13 +48,7 @@ const FilesPage = () => {
 
     const handleDelete = async (id: string) => {
         try {
-            const response = await fetch(`/api/files/${id}`, {
-                method: "DELETE",
-            });
-
-            if (response.ok) {
-                setFiles(prev => prev.filter(f => f._id !== id));
-            }
+            await deleteFile(id).unwrap();
         } catch (error) {
             console.error("Failed to delete file:", error);
         }
@@ -86,33 +67,19 @@ const FilesPage = () => {
         formData.append('file', file);
 
         try {
-            const response = await fetch("/api/files/upload", {
-                method: "POST",
-                body: formData,
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                setFiles(prev => [{
-                    _id: data.fileId,
-                    filename: data.filename,
-                    size: data.size,
-                    contentType: file.name.split('.').pop() || 'unknown',
-                    createdAt: new Date(),
-                }, ...prev]);
-                setShowAddForm(false);
-            } else {
-                const error = await response.json();
-                alert(error.error || 'Ошибка при загрузке файла');
-            }
+            const data = await uploadFile(formData).unwrap();
+            setShowAddForm(false);
         } catch (error) {
             console.error("Failed to upload file:", error);
-            alert('Ошибка при загрузке файла');
         }
     };
 
-    if (loading) {
+    if (isLoading) {
         return <div>Загрузка файлов...</div>;
+    }
+
+    if (error) {
+        return <div>Ошибка загрузки</div>;
     }
 
     return (

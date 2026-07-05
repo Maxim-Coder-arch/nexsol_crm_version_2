@@ -1,3 +1,4 @@
+// app/api/files/[id]/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { ObjectId } from 'mongodb';
 import { getTokenFromCookies, verifyToken } from '@/lib/auth';
@@ -8,7 +9,6 @@ function getMimeType(filename: string): string {
     const extension = filename.split('.').pop()?.toLowerCase() || '';
     
     const mimeTypes: Record<string, string> = {
-        // Текстовые
         'txt': 'text/plain',
         'csv': 'text/csv',
         'md': 'text/markdown',
@@ -18,21 +18,17 @@ function getMimeType(filename: string): string {
         'css': 'text/css',
         'js': 'application/javascript',
         'ts': 'application/typescript',
-
         'pdf': 'application/pdf',
         'doc': 'application/msword',
         'docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
         'odt': 'application/vnd.oasis.opendocument.text',
         'rtf': 'application/rtf',
-
         'xls': 'application/vnd.ms-excel',
         'xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         'ods': 'application/vnd.oasis.opendocument.spreadsheet',
-
         'ppt': 'application/vnd.ms-powerpoint',
         'pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
         'odp': 'application/vnd.oasis.opendocument.presentation',
-
         'jpg': 'image/jpeg',
         'jpeg': 'image/jpeg',
         'png': 'image/png',
@@ -41,25 +37,21 @@ function getMimeType(filename: string): string {
         'webp': 'image/webp',
         'bmp': 'image/bmp',
         'ico': 'image/x-icon',
-
         'mp4': 'video/mp4',
         'avi': 'video/x-msvideo',
         'mov': 'video/quicktime',
         'mkv': 'video/x-matroska',
         'webm': 'video/webm',
-
         'mp3': 'audio/mpeg',
         'wav': 'audio/wav',
         'flac': 'audio/flac',
         'ogg': 'audio/ogg',
         'm4a': 'audio/mp4',
-
         'zip': 'application/zip',
         'rar': 'application/vnd.rar',
         '7z': 'application/x-7z-compressed',
         'tar': 'application/x-tar',
         'gz': 'application/gzip',
-
         'py': 'text/x-python',
         'java': 'text/x-java',
         'cpp': 'text/x-c++src',
@@ -88,7 +80,7 @@ function encodeFilename(filename: string): string {
 export async function GET(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }
-) {
+): Promise<NextResponse | Response> {
     try {
         const token = await getTokenFromCookies();
         if (!token) {
@@ -122,7 +114,7 @@ export async function GET(
 
         const chunks: Buffer[] = [];
 
-        return new Promise((resolve) => {
+        return new Promise<NextResponse | Response>((resolve) => {  // ✅ Явно указываем тип Promise
             downloadStream.on('data', (chunk) => chunks.push(chunk));
             
             downloadStream.on('error', (error) => {
@@ -134,10 +126,9 @@ export async function GET(
             
             downloadStream.on('end', () => {
                 const buffer = Buffer.concat(chunks);
-                
                 const mimeType = getMimeType(file.filename);
                 
-                resolve(new NextResponse(buffer, {
+                resolve(new Response(buffer, {  // ✅ Используем Response вместо NextResponse для файлов
                     headers: {
                         'Content-Type': mimeType,
                         'Content-Disposition': `attachment; ${encodeFilename(file.filename)}`,
@@ -157,7 +148,7 @@ export async function GET(
 export async function DELETE(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }
-) {
+): Promise<NextResponse> {  // ✅ Явно указываем тип возврата
     try {
         const token = await getTokenFromCookies();
         if (!token) {
