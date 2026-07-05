@@ -1,90 +1,56 @@
 "use client";
-import { useEffect, useState } from "react";
 import ClientsIncludes from "./ui/includes";
 import { IClient } from "@/types/clients/client.type";
 import { physicalStatuses, workStatuses } from "@/config-and-data/clients.cnf";
 import TemplateContent from "@/app/components/share/template";
+import { 
+    useCreateClientMutation, 
+    useGetClientsQuery, 
+    useUpdateClientMutation,
+    useDeleteClientMutation 
+} from "@/store/client-api";
 
 const ClientsPage = () => {
-    const [clients, setClients] = useState<IClient[]>([]);
-    const [loading, setLoading] = useState(true);
-
-    const fetchClients = async () => {
-        try {
-            const response = await fetch("/api/clients");
-            const data = await response.json();
-            setClients(data);
-        } catch (error) {
-            console.error('Failed to fetch clients:', error);
-        } finally {
-            setLoading(false);
-        }
+    const { data: clients = [], isLoading, error } = useGetClientsQuery(void 0) as {
+        data: IClient[];
+        isLoading: boolean;
+        error: any;
     };
+    const [createClientMutation] = useCreateClientMutation();
+    const [updateClientMutation] = useUpdateClientMutation();
+    const [deleteClientMutation] = useDeleteClientMutation();
 
-    useEffect(() => {
-        fetchClients();
-    }, []);
-
-    const addClient = async (client: Omit<IClient, "_id" | "createdAt" | "updatedAt">) => {
+    const handleAddClient = async (client: Omit<IClient, "_id" | "createdAt" | "updatedAt">) => {
         try {
-            const response = await fetch("/api/clients", {
-                method: "POST",
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name: client.name,
-                    workStatus: client.workStatus,
-                    physicalStatus: client.physicalStatus,
-                    comment: client.comment,
-                    additionalData: client.additionalData,
-                })
-            });
-    
-            if (response.ok) {
-                const createdClient = await response.json();
-                setClients(prev => [createdClient, ...prev]);
-            }
+            await createClientMutation(client).unwrap();
         } catch (error) {
             console.error('Failed to add client:', error);
         }
     };
 
-    const updateClient = async (id: string, updates: Partial<IClient>) => {
+    const handleUpdateClient = async (id: string, updates: Partial<IClient>) => {
         try {
-            const response = await fetch(`/api/clients/${id}`, {
-                method: "PATCH",
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(updates),
-            });
-
-            if (response.ok) {
-                const updatedClient = await response.json();
-                setClients(prev =>
-                    prev.map(client =>
-                        client._id === id ? updatedClient : client
-                    )
-                );
-            }
+            await updateClientMutation({ id, data: updates }).unwrap();
         } catch (error) {
             console.error('Failed to update client:', error);
         }
     };
 
-    const deleteClient = async (id: string) => {
+    const handleDeleteClient = async (id: string) => {
+        if (!confirm("Удалить клиента?")) return;
         try {
-            const response = await fetch(`/api/clients/${id}`, {
-                method: "DELETE",
-            });
-
-            if (response.ok) {
-                setClients(prev => prev.filter(client => client._id !== id));
-            }
+            await deleteClientMutation(id).unwrap();
         } catch (error) {
             console.error('Failed to delete client:', error);
         }
     };
 
-    if (loading) {
+    if (isLoading) {
         return <div>Загрузка клиентов...</div>;
+    }
+
+    if (error) {
+        return <div>Ошибка загрузки</div>;
     }
 
     const successfulClients = clients.filter(
@@ -97,10 +63,10 @@ const ClientsPage = () => {
             <ClientsIncludes
                 workStatuses={workStatuses}
                 physicalStatuses={physicalStatuses}
-                addClient={addClient}
+                addClient={handleAddClient}
                 successfulClients={successfulClients}
-                updateClient={updateClient}
-                deleteClient={deleteClient}
+                updateClient={handleUpdateClient}
+                deleteClient={handleDeleteClient}
                 lostClients={lostClients}
             />
         </TemplateContent>

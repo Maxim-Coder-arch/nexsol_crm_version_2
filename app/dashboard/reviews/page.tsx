@@ -1,37 +1,21 @@
 "use client";
-import { useEffect, useState } from "react";
 import ReviewsSectionUiIncludes from "./ui/includes";
-import { IReview } from "@/types/reviews/review.type";
 import TemplateContent from "@/app/components/share/template";
+import { useDeleteReviewMutation, useGetReviewsQuery, useUpdateReviewMutation } from "@/store/client-api";
+import { IReview } from "@/types/reviews/review.type";
 
 const ReviewsPage = () => {
-    const [reviews, setReviews] = useState<IReview[]>([]);
-
-    useEffect(() => {
-        const fetchReviews = async () => {
-            const response = await fetch("/api/reviews");
-            const json = await response.json();
-            setReviews(json);
-        }
-
-        fetchReviews();
-    }, []);
+    const { data: reviews = [], isLoading, error} = useGetReviewsQuery(void 0) as {
+        data: IReview[],
+        isLoading: boolean,
+        error: any
+    };
+    const [updateReview] = useUpdateReviewMutation();
+    const [deleteReview] = useDeleteReviewMutation();
 
     const handleApprove = async (id: string) => {
         try {
-            const response = await fetch(`/api/reviews/${id}`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ status: 'approved' }),
-            });
-
-            if (response.ok) {
-                setReviews(prev =>
-                    prev.map(review =>
-                        review._id === id ? { ...review, status: "approved" } : review
-                    )
-                );
-            }
+            await updateReview({ id, data: { status: "approved" } }).unwrap();
         } catch (error) {
             console.error('Failed to approve review:', error);
         }
@@ -39,13 +23,7 @@ const ReviewsPage = () => {
 
     const handleDelete = async (id: string) => {
         try {
-            const response = await fetch(`/api/reviews/${id}`, {
-                method: 'DELETE',
-            });
-
-            if (response.ok) {
-                setReviews(prev => prev.filter(review => review._id !== id));
-            }
+            await deleteReview(id).unwrap();
         } catch (error) {
             console.error('Failed to delete review:', error);
         }

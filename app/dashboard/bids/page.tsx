@@ -1,59 +1,37 @@
 "use client";
-import { useEffect, useState } from "react";
 import { BidsStatus, columnsData } from "@/config-and-data/bids.cnf";
 import IncludesBids from "./ui/includes";
-import { IBid } from "@/types/bids/bid.type";
 import TemplateContent from "@/app/components/share/template";
+import { 
+    useGetBidsQuery, 
+    useCreateBidMutation,
+    useUpdateBidMutation,
+    useDeleteBidMutation 
+} from "../../../store/client-api";
+import { IBid } from "@/types/bids/bid.type";
 
 const BidsPage = () => {
-    const [bids, setBids] = useState<IBid[]>([]);
-    const [loading, setLoading] = useState(true);
-
-    const fetchBids = async () => {
-        try {
-            const response = await fetch("/api/bids");
-            const data = await response.json();
-            setBids(data);
-        } catch (error) {
-            console.error('Failed to fetch bids:', error);
-        } finally {
-            setLoading(false);
-        }
+    const { data: bids = [], isLoading, error } = useGetBidsQuery(void 0) as {
+        data: IBid[],
+        isLoading: boolean,
+        error: any
     };
-
-    useEffect(() => {
-        fetchBids();
-    }, []);
+    const [createBid] = useCreateBidMutation();
+    const [updateBid] = useUpdateBidMutation();
+    const [deleteBid] = useDeleteBidMutation();
 
     const handleStatusChange = async (id: string, newStatus: BidsStatus) => {
         try {
-            const response = await fetch(`/api/bids/${id}`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ status: newStatus }),
-            });
-            
-            if (response.ok) {
-                setBids(prev => 
-                    prev.map(bid => 
-                        bid._id === id ? { ...bid, status: newStatus } : bid
-                    )
-                );
-            }
+            await updateBid({ id, data: { status: newStatus } }).unwrap();
         } catch (error) {
             console.error('Failed to update status:', error);
         }
     };
 
-    const handleDelete = async (id: string) => {;
+    const handleDelete = async (id: string) => {
+        if (!confirm('Удалить заявку?')) return;
         try {
-            const response = await fetch(`/api/bids/${id}`, {
-                method: 'DELETE',
-            });
-            
-            if (response.ok) {
-                setBids(prev => prev.filter(bid => bid._id !== id));
-            }
+            await deleteBid(id).unwrap();
         } catch (error) {
             console.error('Failed to delete bid:', error);
         }
@@ -66,25 +44,19 @@ const BidsPage = () => {
         comment: string;
     }) => {
         try {
-            const response = await fetch("/api/bids", {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name: newBid.username,
-                    email: newBid.useremail,
-                    contact: newBid.usecontact,
-                    message: newBid.comment,
-                }),
-            });
-            
-            if (response.ok) {
-                const createdBid = await response.json();
-                setBids(prev => [createdBid, ...prev]);
-            }
+            await createBid({
+                name: newBid.username,
+                email: newBid.useremail,
+                contact: newBid.usecontact,
+                message: newBid.comment,
+            }).unwrap();
         } catch (error) {
             console.error('Failed to add bid:', error);
         }
     };
+
+    if (isLoading) return <div>Загрузка...</div>;
+    if (error) return <div>Ошибка загрузки</div>;
 
     return (
         <TemplateContent>
@@ -96,7 +68,6 @@ const BidsPage = () => {
                 columnsData={columnsData}
             />
         </TemplateContent>
-        
     );
 };
 

@@ -28,9 +28,6 @@ export async function DELETE(
             return NextResponse.json({ error: 'Service not found' }, { status: 404 });
         }
 
-        if (service.createdBy !== payload.userId) {
-            return NextResponse.json({ error: 'Access denied' }, { status: 403 });
-        }
 
         const result = await collection.deleteOne({ _id: new ObjectId(id) });
 

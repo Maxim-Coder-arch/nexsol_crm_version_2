@@ -1,76 +1,45 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import IncludesFunnels from "./ui/includes";
 import { FunnelType } from "@/types/funnels/ItemType.type";
 import { IFunnel } from "@/types/funnels/funnel.type";
 import { funnelTypes, stageTypes } from "@/config-and-data/funnels.cnf";
 import TemplateContent from "@/app/components/share/template";
+import { 
+    useCreateFunnelMutation, 
+    useDeleteFunnelMutation, 
+    useGetFunnelsQuery,
+    useUpdateFunnelMutation 
+} from "@/store/client-api";
 
 const FunnelsPage = () => {
-    const [funnels, setFunnels] = useState<IFunnel[]>([]);
+    const { data: funnels = [], isLoading, error } = useGetFunnelsQuery(void 0) as {
+        data: IFunnel[];
+        isLoading: boolean;
+        error: any;
+    };
+    
+    const [createFunnel] = useCreateFunnelMutation();
+    const [updateFunnel] = useUpdateFunnelMutation();
+    const [deleteFunnel] = useDeleteFunnelMutation();
     const [filter, setFilter] = useState<FunnelType | 'all'>('all');
     const [editingFunnel, setEditingFunnel] = useState<IFunnel | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [loading, setLoading] = useState(true);
-
-    const fetchFunnels = async () => {
-        try {
-            const response = await fetch("/api/funnels");
-            const json = await response.json();
-            setFunnels(json);
-        } catch (error) {
-            console.error('Failed to fetch funnels:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        fetchFunnels();
-    }, []);
 
     const handleAddFunnel = async (data: { title: string; type: FunnelType }) => {
         try {
-            const response = await fetch("/api/funnels", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    title: data.title,
-                    type: data.type,
-                })
-            });
-
-            if (response.ok) {
-                const createdFunnel = await response.json();
-                setFunnels(prev => [createdFunnel, ...prev]);
-            } else {
-                const error = await response.json();
-                alert(error.error || 'Ошибка при создании воронки');
-            }
+            await createFunnel(data).unwrap();
         } catch (error) {
             console.error('Failed to add funnel:', error);
-            alert('Ошибка при создании воронки');
         }
     };
 
     const handleDeleteFunnel = async (id: string) => {
-
+        if (!confirm('Удалить воронку?')) return;
         try {
-            const response = await fetch(`/api/funnels/${id}`, {
-                method: "DELETE",
-            });
-
-            if (response.ok) {
-                setFunnels(prev => prev.filter(f => f._id !== id));
-            } else {
-                const error = await response.json();
-                alert(error.error || 'Ошибка при удалении воронки');
-            }
+            await deleteFunnel(id).unwrap();
         } catch (error) {
             console.error('Failed to delete funnel:', error);
-            alert('Ошибка при удалении воронки');
         }
     };
 
@@ -81,30 +50,11 @@ const FunnelsPage = () => {
 
     const handleSaveFunnel = async (id: string, data: Partial<IFunnel>) => {
         try {
-            const response = await fetch(`/api/funnels/${id}`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    title: data.title,
-                    type: data.type,
-                    items: data.items,
-                })
-            });
-
-            if (response.ok) {
-                const updatedFunnel = await response.json();
-                setFunnels(prev => prev.map(f => 
-                    f._id === id ? updatedFunnel : f
-                ));
-                setIsModalOpen(false);
-                setEditingFunnel(null);
-            } else {
-                const error = await response.json();
-            }
+            await updateFunnel({ id, data }).unwrap();
+            setIsModalOpen(false);
+            setEditingFunnel(null);
         } catch (error) {
-            alert('Ошибка при обновлении воронки');
+            console.error('Failed to update funnel:', error);
         }
     };
 
@@ -117,8 +67,12 @@ const FunnelsPage = () => {
         ? funnels 
         : funnels.filter(f => f.type === filter);
 
-    if (loading) {
+    if (isLoading) {
         return <div>Загрузка воронок...</div>;
+    }
+
+    if (error) {
+        return <div>Ошибка загрузки</div>;
     }
 
     return (

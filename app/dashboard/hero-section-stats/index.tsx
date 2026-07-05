@@ -9,32 +9,41 @@ import { DetailUser } from "@/types/hero-section/detailUser.type";
 import { TeamMember } from "@/types/hero-section/teamMember.type";
 import { UserStat } from "@/types/hero-section/userStat.type";
 import { VisitorsStats } from "@/types/hero-section/visitorStats.type";
+import { API_URLS, initialUserStats } from "@/config-and-data/hero-section";
+
+const fetchData = async (
+  url: string,
+  onSuccess: (data: any[]) => void,
+  onError?: () => void
+) => {
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    onSuccess(Array.isArray(data) ? data : []);
+  } catch (error) {
+    console.error(`Failed to fetch ${url}:`, error);
+    if (onError) onError();
+  }
+};
 
 const HeroSectionStats = () => {
-  const [chartPeriod, setChartPeriod] = useState<Period>('week');
+  const [chartPeriod, setChartPeriod] = useState<Period>("week");
   const [chartData, setChartData] = useState<ChartDataItem[]>([]);
   const [chartLoading, setChartLoading] = useState(true);
   const [bids, setBids] = useState<Bid[]>([]);
   const [team, setTeam] = useState<TeamMember[]>([]);
   const [detailUsers, setDetailUsers] = useState<DetailUser[]>([]);
-  const [userStats, setUserStats] = useState<UserStat[]>([
-    { label: "Уникальные сегодня", value: 0 },
-    { label: "Уникальные за неделю", value: 0 },
-    { label: "Уникальные за месяц", value: 0 },
-    { label: "Всего сегодня", value: 0 },
-    { label: "Всего за неделю", value: 0 },
-    { label: "Всего за месяц", value: 0 },
-  ]);
+  const [userStats, setUserStats] = useState<UserStat[]>(initialUserStats);
 
   useEffect(() => {
     const fetchChartData = async () => {
       setChartLoading(true);
       try {
-        const res = await fetch(`/api/hero-section/chart?period=${chartPeriod}`);
+        const res = await fetch(`${API_URLS.chart}?period=${chartPeriod}`);
         const data = await res.json();
         setChartData(data.data || []);
       } catch (error) {
-        console.error('Failed to fetch chart data:', error);
+        console.error("Failed to fetch chart data:", error);
       } finally {
         setChartLoading(false);
       }
@@ -46,9 +55,9 @@ const HeroSectionStats = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await fetch('/api/hero-section/stats');
+        const res = await fetch(API_URLS.stats);
         const stats: VisitorsStats = await res.json();
-        
+
         setUserStats([
           { label: "Уникальные сегодня", value: stats.uniqueToday },
           { label: "Уникальные за неделю", value: stats.uniqueWeek },
@@ -58,57 +67,26 @@ const HeroSectionStats = () => {
           { label: "Всего за месяц", value: stats.totalMonth },
         ]);
       } catch (error) {
-        console.error('Failed to fetch stats:', error);
+        console.error("Failed to fetch stats:", error);
       }
     };
 
     fetchStats();
   }, []);
 
-   useEffect(() => {
-    const fetchLeads = async () => {
-      try {
-        const res = await fetch('/api/hero-section/leads');
-        const data = await res.json();
-        setBids(Array.isArray(data) ? data : []);
-      } catch (error) {
-        console.error('Failed to fetch leads:', error);
-        setBids([]);
-      }
-    };
-
-    fetchLeads();
+  useEffect(() => {
+    fetchData(API_URLS.leads, (data) => setBids(data as Bid[]), () => setBids([]));
   }, []);
 
-    useEffect(() => {
-        const fetchTeam = async () => {
-            try {
-            const res = await fetch('/api/hero-section/team');
-            const data = await res.json();
-            setTeam(Array.isArray(data) ? data : []);
-            } catch (error) {
-            console.error('Failed to fetch team:', error);
-            setTeam([]);
-            }
-        };
+  useEffect(() => {
+    fetchData(API_URLS.team, (data) => setTeam(data as TeamMember[]), () => setTeam([]));
+  }, []);
 
-        fetchTeam();
-    }, []);
-
-    useEffect(() => {
-        const fetchVisitors = async () => {
-            try {
-                const res = await fetch('/api/hero-section/visitors');
-                const data = await res.json();
-                setDetailUsers(Array.isArray(data) ? data : []);
-                } catch (error) {
-                console.error('Failed to fetch visitors:', error);
-                setDetailUsers([]);
-            }
-        };
-
-        fetchVisitors();
-    }, []);
+  useEffect(() => {
+    fetchData(API_URLS.visitors, (data) => setDetailUsers(data as DetailUser[]), () =>
+      setDetailUsers([])
+    );
+  }, []);
 
   return (
     <HeroSectionUiIncludes
