@@ -111,6 +111,9 @@
         cursor: pointer;
         @include font(13px, 600);
         transition: all 0.2s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         &:hover {
             transform: scale(1.05);

@@ -1,3 +1,4 @@
+// components/layout/Menu/index.module.scss
 @use "../../global-styles/includes.scss" as *;
 
 .parent-root-menu {
@@ -8,96 +9,344 @@
     left: 0;
     right: 0;
     z-index: 1001;
+    background-color: $main-text-2;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+
     &__child {
         width: 100%;
         max-width: 1900px;
         display: flex;
-        justify-content: center;
-        gap: 20px;
+        justify-content: space-between;
         align-items: center;
-        background-color: $main-text-2;
-        min-height: 40px;
-        &__profile-window {
-            position: relative;
-            & button {
-                display: flex;
-                cursor: pointer;
-                align-items: center;
-                & svg {
-                    color: $pale-yellow;
-                    width: 30px;
-                    height: 30px;
-                }
-                & p {
-                    @include font(.9rem, 800);
-                    color: $pale-yellow;
-                }
-            }
-            &__modal {
-                min-width: 280px;
-                height: 170px;
-                position: absolute;
-                bottom: -180px;
-                background-color: rgba($main-text, .7);
-                backdrop-filter: blur(20px);
-                border-radius: 5px;
-                padding: 10px;
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
+        padding: 8px 24px;
+        height: 40px;
+        gap: 16px;
 
-                & h2 {
-                    @include font(1rem, 800);
-                    color: $main-bg-2;
-                }
-                &__main {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 5px;
-                    & a {
-                        @include font(.8rem, 800);
-                        color: $main-text-2;
-                        background-color: $main-bg-2;
-                        padding: 3px 6px;
-                        border-radius: 5px;
-                    }
-                }
-                &__profile {
-                    display: flex;
-                    & button {
-                        width: 100%;
-                        @include font(.8rem, 800);
-                        color: $main-text-2;
-                        background-color: $pale-yellow;
-                        padding: 6px 6px;
-                        border-radius: 5px;
-                        display: flex;
-                        justify-content: center;
-                        cursor: pointer;
-                    }
-                }
-
+        &__logo {
+            flex-shrink: 0;
+            span {
+                @include font(22px, 800);
+                color: $main-bg-2;
+                letter-spacing: 0.5px;
             }
         }
-        & span {
-            @include font(22px, 800);
-            color: $main-bg-2;
+
+        // Бургер-меню (мобильная версия)
+        &__burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            z-index: 10;
+
+            .burger-line {
+                display: block;
+                width: 28px;
+                height: 3px;
+                background-color: $main-bg-2;
+                border-radius: 2px;
+                transition: all 0.3s ease;
+
+                &--active {
+                    &:nth-child(1) {
+                        transform: rotate(45deg) translate(5px, 6px);
+                    }
+                    &:nth-child(2) {
+                        opacity: 0;
+                    }
+                    &:nth-child(3) {
+                        transform: rotate(-45deg) translate(5px, -6px);
+                    }
+                }
+            }
         }
-        & ul {
+
+        // Список навигации
+        &__list {
             display: flex;
-            gap: 12px;
-            & li {
+            gap: 8px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            flex: 1;
+            justify-content: center;
+
+            li {
                 @include font(14px, 600);
                 color: $main-bg-2;
                 text-transform: lowercase;
-                border-radius: 5px;
-                padding: 0px 3px;
+                border-radius: 6px;
+                padding: 6px 14px;
+                transition: all 0.2s ease;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: rgba($main-bg-2, 0.1);
+                }
+
+                a {
+                    color: inherit;
+                    text-decoration: none;
+                    display: block;
+                }
+
+                &.parent-root-menu__child__item--active {
+                    background-color: $main-bg-2;
+                    color: $main-text-2 !important;
+                }
+            }
+        }
+
+        // Профиль
+        &__profile-window {
+            position: relative;
+            flex-shrink: 0;
+
+            button {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                cursor: pointer;
+                background: none;
+                border: none;
+                padding: 4px 8px;
+                border-radius: 6px;
+                transition: background 0.2s;
+
+                svg {
+                    color: $pale-yellow;
+                    width: 30px;
+                    height: 30px;
+                    flex-shrink: 0;
+                }
+
+                p {
+                    @include font(14px, 600);
+                    color: $pale-yellow;
+                    margin: 0;
+                }
+            }
+
+            &__modal {
+                min-width: 240px;
+                position: absolute;
+                right: 0;
+                top: calc(100% + 10px);
+                background-color: rgba($main-text, 0.95);
+                backdrop-filter: blur(20px);
+                border-radius: 8px;
+                padding: 16px;
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+                box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+                border: 1px solid rgba($main-bg-2, 0.1);
+                z-index: 20;
+
+                h2 {
+                    @include font(16px, 700);
+                    color: $main-bg-2;
+                    margin: 0;
+                }
+
+                &__main {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 6px;
+
+                    a {
+                        @include font(13px, 500);
+                        color: $main-text-2;
+                        background-color: $main-bg-2;
+                        padding: 6px 12px;
+                        border-radius: 5px;
+                        text-decoration: none;
+                        transition: all 0.2s;
+
+                        &:hover {
+                            background-color: $pale-yellow;
+                            transform: translateX(4px);
+                        }
+                    }
+                }
+
+                &__profile {
+                    button {
+                        width: 100%;
+                        @include font(14px, 600);
+                        color: $main-text-2;
+                        background-color: $pale-yellow;
+                        padding: 8px 12px;
+                        border-radius: 5px;
+                        border: none;
+                        cursor: pointer;
+                        transition: all 0.2s;
+
+                        &:hover {
+                            opacity: 0.85;
+                            transform: scale(1.01);
+                        }
+                    }
+                }
             }
         }
     }
 }
 
-.parent-root-menu__child__item--active {
-    background-color: $main-bg-2;
-    color: $main-text-2 !important;
+// ========== АДАПТИВНОСТЬ ==========
+
+// Планшет
+@media (max-width: $breakpoint-tablet) {
+    .parent-root-menu {
+        &__child {
+            padding: 8px 16px;
+            min-height: 50px;
+
+            &__burger {
+                display: flex;
+            }
+
+            &__list {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba($main-text, 0.97);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 16px;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+                z-index: 5;
+                padding: 40px 20px;
+
+                &--open {
+                    transform: translateX(0);
+                }
+
+                li {
+                    @include font(18px, 600);
+                    padding: 8px 24px;
+
+                    a {
+                        padding: 8px 0;
+                    }
+                }
+            }
+
+            &__profile-window {
+                z-index: 10;
+
+                &__modal {
+                    right: -8px;
+                    min-width: 220px;
+
+                    h2 {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Мобилка
+@media (max-width: $breakpoint-mobile) {
+    .parent-root-menu {
+        &__child {
+            padding: 6px 12px;
+            min-height: 48px;
+
+            &__logo {
+                span {
+                    @include font(18px, 800);
+                }
+            }
+
+            &__burger {
+                .burger-line {
+                    width: 24px;
+                    height: 2.5px;
+                }
+            }
+
+            &__list {
+                li {
+                    @include font(16px, 600);
+                    padding: 6px 16px;
+                }
+            }
+
+            &__profile-window {
+                button {
+                    p {
+                        @include font(12px, 600);
+                    }
+
+                    svg {
+                        width: 24px;
+                        height: 24px;
+                    }
+                }
+
+                &__modal {
+                    min-width: 200px;
+                    right: -4px;
+                    padding: 12px;
+                    top: calc(100% + 8px);
+
+                    h2 {
+                        @include font(14px, 700);
+                    }
+
+                    &__main a {
+                        @include font(12px, 500);
+                        padding: 5px 10px;
+                    }
+
+                    &__profile button {
+                        @include font(12px, 600);
+                        padding: 6px 10px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Маленькие мобилки
+@media (max-width: $breakpoint-small-mobile) {
+    .parent-root-menu {
+        &__child {
+            padding: 4px 8px;
+            min-height: 44px;
+
+            &__logo {
+                span {
+                    @include font(16px, 800);
+                }
+            }
+
+            &__list {
+                li {
+                    @include font(14px, 600);
+                    padding: 4px 12px;
+                }
+            }
+
+            &__profile-window {
+                button {
+                    p {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
 }

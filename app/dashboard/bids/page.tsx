@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { BidsStatus, columnsData } from "@/config-and-data/bids.cnf";
 import IncludesBids from "./ui/includes";
 import { IBid } from "@/types/bids/bid.type";
+import TemplateContent from "@/app/components/share/template";
 
 const BidsPage = () => {
     const [bids, setBids] = useState<IBid[]>([]);
@@ -86,7 +87,7 @@ const BidsPage = () => {
     };
 
     return (
-        <div className="root-content"> {/* сделать из этого дива переиспользуемый компонент и отцентровать контент внутри него по центру */}
+        <TemplateContent>
             <IncludesBids
                 bids={bids}
                 handleStatusChange={handleStatusChange}
@@ -94,7 +95,8 @@ const BidsPage = () => {
                 handleAddBid={handleAddBid}
                 columnsData={columnsData}
             />
-        </div>
+        </TemplateContent>
+        
     );
 };
 

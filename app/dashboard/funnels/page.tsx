@@ -4,6 +4,7 @@ import IncludesFunnels from "./ui/includes";
 import { FunnelType } from "@/types/funnels/ItemType.type";
 import { IFunnel } from "@/types/funnels/funnel.type";
 import { funnelTypes, stageTypes } from "@/config-and-data/funnels.cnf";
+import TemplateContent from "@/app/components/share/template";
 
 const FunnelsPage = () => {
     const [funnels, setFunnels] = useState<IFunnel[]>([]);
@@ -121,21 +122,23 @@ const FunnelsPage = () => {
     }
 
     return (
-        <IncludesFunnels
-            funnels={funnels}
-            filter={filter}
-            editingFunnel={editingFunnel}
-            isModalOpen={isModalOpen}
-            filteredFunnels={filteredFunnels}
-            funnelTypes={funnelTypes}
-            stageTypes={stageTypes}
-            onAddFunnel={handleAddFunnel}
-            onDeleteFunnel={handleDeleteFunnel}
-            onEditFunnel={handleEditFunnel}
-            onSaveFunnel={handleSaveFunnel}
-            onFilterChange={setFilter}
-            onCloseModal={handleCloseModal}
-        />
+        <TemplateContent>
+            <IncludesFunnels
+                funnels={funnels}
+                filter={filter}
+                editingFunnel={editingFunnel}
+                isModalOpen={isModalOpen}
+                filteredFunnels={filteredFunnels}
+                funnelTypes={funnelTypes}
+                stageTypes={stageTypes}
+                onAddFunnel={handleAddFunnel}
+                onDeleteFunnel={handleDeleteFunnel}
+                onEditFunnel={handleEditFunnel}
+                onSaveFunnel={handleSaveFunnel}
+                onFilterChange={setFilter}
+                onCloseModal={handleCloseModal}
+            />
+        </TemplateContent>
     );
 };
 

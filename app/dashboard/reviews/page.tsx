@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import ReviewsSectionUiIncludes from "./ui/includes";
 import { IReview } from "@/types/reviews/review.type";
+import TemplateContent from "@/app/components/share/template";
 
 const ReviewsPage = () => {
     const [reviews, setReviews] = useState<IReview[]>([]);
@@ -53,12 +54,16 @@ const ReviewsPage = () => {
     const newReviews = reviews.filter(r => r.status === "new");
     const approvedReviews = reviews.filter(r => r.status === "approved");
 
-    return <ReviewsSectionUiIncludes
-        newReviews={newReviews}
-        handleApprove={handleApprove}
-        handleDelete={handleDelete}
-        approvedReviews={approvedReviews}
-    />
+    return (
+        <TemplateContent>
+            <ReviewsSectionUiIncludes
+                newReviews={newReviews}
+                handleApprove={handleApprove}
+                handleDelete={handleDelete}
+                approvedReviews={approvedReviews}
+            />
+        </TemplateContent>
+    )
 };
 
 export default ReviewsPage;

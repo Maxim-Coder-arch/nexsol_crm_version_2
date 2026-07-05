@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import IncludesServices from "./ui/includes";
 import { IService } from "@/types/services/service.type";
+import TemplateContent from "@/app/components/share/template";
 
 const Services = () => {
     const [services, setServices] = useState<IService[]>([]);
@@ -58,13 +59,17 @@ const Services = () => {
         }
     };
 
-    return <IncludesServices 
-        services={services}
-        handleDelete={handleDelete}
-        setFormData={setFormData}
-        handleAdd={handleAdd}
-        formData={formData}
-    />
+    return (
+        <TemplateContent>
+            <IncludesServices 
+                services={services}
+                handleDelete={handleDelete}
+                setFormData={setFormData}
+                handleAdd={handleAdd}
+                formData={formData}
+            />
+        </TemplateContent>
+    )
 };
 
 export default Services;

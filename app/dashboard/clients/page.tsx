@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import ClientsIncludes from "./ui/includes";
 import { IClient } from "@/types/clients/client.type";
 import { physicalStatuses, workStatuses } from "@/config-and-data/clients.cnf";
+import TemplateContent from "@/app/components/share/template";
 
 const ClientsPage = () => {
     const [clients, setClients] = useState<IClient[]>([]);
@@ -92,15 +93,17 @@ const ClientsPage = () => {
     const lostClients = clients.filter(c => c.physicalStatus === "lost");
 
     return (
-        <ClientsIncludes
-            workStatuses={workStatuses}
-            physicalStatuses={physicalStatuses}
-            addClient={addClient}
-            successfulClients={successfulClients}
-            updateClient={updateClient}
-            deleteClient={deleteClient}
-            lostClients={lostClients}
-        />
+        <TemplateContent>
+            <ClientsIncludes
+                workStatuses={workStatuses}
+                physicalStatuses={physicalStatuses}
+                addClient={addClient}
+                successfulClients={successfulClients}
+                updateClient={updateClient}
+                deleteClient={deleteClient}
+                lostClients={lostClients}
+            />
+        </TemplateContent>
     );
 };
 

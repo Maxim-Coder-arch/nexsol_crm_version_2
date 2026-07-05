@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { ITeamMember } from "@/types/team/teamMember.type";
 import IncludesUsers from "./ui/includes";
 import { RoleType } from "@/types/team/roleType.type";
+import TemplateContent from "@/app/components/share/template";
 
 const TeamPage = () => {
     const [users, setUsers] = useState<ITeamMember[]>([]);
@@ -222,30 +223,32 @@ const TeamPage = () => {
     }
 
     return (
-        <IncludesUsers
-            users={users}
-            editingUser={editingUser}
-            isModalOpen={isModalOpen}
-            showAddForm={showAddForm}
-            formData={formData}
-            specialtyInput={specialtyInput}
-            responsibilityInput={responsibilityInput}
-            onFormChange={handleFormChange}
-            onSpecialtyInputChange={setSpecialtyInput}
-            onResponsibilityInputChange={setResponsibilityInput}
-            onAddSpecialty={handleAddSpecialty}
-            onRemoveSpecialty={handleRemoveSpecialty}
-            onAddResponsibility={handleAddResponsibility}
-            onRemoveResponsibility={handleRemoveResponsibility}
-            onAddSubmit={handleAddSubmit}
-            onEdit={handleEdit}
-            onSaveEdit={handleSaveEdit}
-            onDelete={handleDelete}
-            onRoleChange={handleRoleChange}
-            onAddUser={handleAddUser}
-            onCloseModal={handleCloseModal}
-            onCancelAdd={handleCancelAdd}
-        />
+        <TemplateContent>
+            <IncludesUsers
+                users={users}
+                editingUser={editingUser}
+                isModalOpen={isModalOpen}
+                showAddForm={showAddForm}
+                formData={formData}
+                specialtyInput={specialtyInput}
+                responsibilityInput={responsibilityInput}
+                onFormChange={handleFormChange}
+                onSpecialtyInputChange={setSpecialtyInput}
+                onResponsibilityInputChange={setResponsibilityInput}
+                onAddSpecialty={handleAddSpecialty}
+                onRemoveSpecialty={handleRemoveSpecialty}
+                onAddResponsibility={handleAddResponsibility}
+                onRemoveResponsibility={handleRemoveResponsibility}
+                onAddSubmit={handleAddSubmit}
+                onEdit={handleEdit}
+                onSaveEdit={handleSaveEdit}
+                onDelete={handleDelete}
+                onRoleChange={handleRoleChange}
+                onAddUser={handleAddUser}
+                onCloseModal={handleCloseModal}
+                onCancelAdd={handleCancelAdd}
+            />
+        </TemplateContent>
     );
 };
 

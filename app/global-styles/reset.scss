@@ -15,6 +15,13 @@ body {
   overflow-x: hidden;
   background-color: $main-bg-2;
 }
+
+.full-size {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}
+
 .root-content {
   width: 100%;
   max-width: 1900px;
