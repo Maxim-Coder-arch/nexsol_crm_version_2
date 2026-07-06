@@ -1,15 +1,9 @@
 import { motion } from "framer-motion";
 import styles from "../index.module.scss";
-import { IFileCard } from "../page";
 import CloseIcon from "@/public/global/close";
 import DownloadIcon from "@/public/global/download";
 import FileIcon from "@/public/global/file";
-
-interface FileCardProps {
-    file: IFileCard;
-    onDownload: (id: string) => void;
-    onDelete: (id: string) => void;
-}
+import { FileCardProps } from "@/types/explorer/fileCardProps.type";
 
 const FileCard = ({ file, onDownload, onDelete }: FileCardProps) => {
 

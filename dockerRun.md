@@ -1,0 +1,1 @@
+docker run -d --name nexsol-crm-2 -p 3000:3000 -e MONGODB_URI="password" -e JWT_SECRET="password" image id

@@ -2,13 +2,7 @@ import { motion } from "framer-motion";
 import FileCard from "./fileCard";
 import styles from "../index.module.scss";
 import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
-import { IFileCard } from "../page";
-
-interface FileGridProps {
-    files: IFileCard[];
-    onDownload: (id: string) => void;
-    onDelete: (id: string) => void;
-}
+import { FileGridProps } from "@/types/explorer/fileGrid.type";
 
 const FileGrid = ({ files, onDownload, onDelete }: FileGridProps) => {
     const show = useTimeoutAnimationLoader();

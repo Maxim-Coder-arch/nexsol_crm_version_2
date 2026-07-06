@@ -5,17 +5,7 @@ import AddFileButton from "./addFileButton";
 import AddFileForm from "./addFileForm";
 import styles from "../index.module.scss";
 import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
-import { IFileCard } from "../page";
-
-interface IncludesFilesProps {
-    files: IFileCard[];
-    showAddForm: boolean;
-    onDownload: (id: string) => void;
-    onDelete: (id: string) => void;
-    onAddFile: () => void;
-    onCancelAdd: () => void;
-    onFileSubmit: (file: File) => void;
-}
+import { IncludesFilesProps } from "@/types/explorer/includesFile.type";
 
 const IncludesFiles = ({
     files,

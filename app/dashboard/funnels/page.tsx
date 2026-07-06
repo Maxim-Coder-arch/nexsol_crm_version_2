@@ -12,8 +12,11 @@ import {
     useUpdateFunnelMutation 
 } from "@/store/client-api";
 import { clientType } from "@/types/store-types/client.type";
+import { showToast } from "@/store/slices/uiSlice";
+import { useAppDispatch } from "@/app/hooks/store";
 
 const FunnelsPage = () => {
+    const dispatch = useAppDispatch();
     const { data: funnels = [], isLoading, error } = useGetFunnelsQuery(void 0) as clientType<IFunnel>;
     
     const [createFunnel] = useCreateFunnelMutation();
@@ -26,17 +29,38 @@ const FunnelsPage = () => {
     const handleAddFunnel = async (data: { title: string; type: FunnelType }) => {
         try {
             await createFunnel(data).unwrap();
-        } catch (error) {
-            console.error('Failed to add funnel:', error);
+            dispatch(showToast({
+                type: 'success',
+                title: 'Воронка создана',
+                message: `Воронка "${data.title}" успешно создана`,
+                duration: 3000,
+            }));
+        } catch {
+            dispatch(showToast({
+                type: 'error',
+                title: 'Ошибка!',
+                message: 'Не удалось создать воронку',
+                duration: 4000,
+            }));
         }
     };
 
     const handleDeleteFunnel = async (id: string) => {
-        if (!confirm('Удалить воронку?')) return;
         try {
             await deleteFunnel(id).unwrap();
-        } catch (error) {
-            console.error('Failed to delete funnel:', error);
+            dispatch(showToast({
+                type: 'success',
+                title: 'Удалено!',
+                message: 'Воронка успешно удалена',
+                duration: 3000,
+            }));
+        } catch {
+            dispatch(showToast({
+                type: 'error',
+                title: 'Ошибка!',
+                message: 'Не удалось удалить воронку',
+                duration: 4000,
+            }));
         }
     };
 
@@ -50,8 +74,19 @@ const FunnelsPage = () => {
             await updateFunnel({ id, data }).unwrap();
             setIsModalOpen(false);
             setEditingFunnel(null);
-        } catch (error) {
-            console.error('Failed to update funnel:', error);
+            dispatch(showToast({
+                type: 'success',
+                title: 'Обновлено!',
+                message: 'Воронка успешно обновлена',
+                duration: 3000,
+            }));
+        } catch {
+            dispatch(showToast({
+                type: 'error',
+                title: 'Ошибка!',
+                message: 'Не удалось обновить воронку',
+                duration: 4000,
+            }));
         }
     };
 
@@ -69,6 +104,12 @@ const FunnelsPage = () => {
     }
 
     if (error) {
+        dispatch(showToast({
+            type: 'error',
+            title: 'Ошибка загрузки',
+            message: 'Не удалось загрузить воронки',
+            duration: 4000,
+        }));
         return <div>Ошибка загрузки</div>;
     }
 

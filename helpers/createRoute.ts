@@ -1,24 +1,8 @@
 import clientPromise from "@/lib";
 import { getTokenFromCookies, verifyToken } from "@/lib/auth";
+import { RouteFactoryOptions } from "@/types/collections/route-factory-options.type";
 import { ObjectId } from "mongodb";
 import { NextRequest, NextResponse } from "next/server";
-
-type collections = 'leads' | 'clients' | 'reviews' | 'users' | 'funnels' | 'services' | 'files';
-
-
-interface RouteFactoryOptions {
-    collectionName: collections;
-    dbName?: string;
-    transformCreate?: (data: any) => any;
-    transformUpdate?: (data: any) => any;
-    transformResponse?: (data: any) => any;
-    allowGetAll?: boolean;
-    allowCreate?: boolean;
-    allowUpdate?: boolean;
-    allowDelete?: boolean;
-    requireAuth?: boolean;
-    allowedRoles?: string[];
-}
 
 const createRoute = (options: RouteFactoryOptions) => {
     const {

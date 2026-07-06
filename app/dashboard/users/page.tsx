@@ -10,11 +10,13 @@ import {
     useGetUsersQuery, 
     useUpdateUserMutation 
 } from "@/store/client-api";
-import { TeamMember } from "@/types/hero-section/teamMember.type";
 import { clientType } from "@/types/store-types/client.type";
+import { showToast } from "@/store/slices/uiSlice";
+import { useAppDispatch } from "@/app/hooks/store";
 
 const TeamPage = () => {
-    const { data: users = [], isLoading, error } = useGetUsersQuery(void 0) as clientType<TeamMember>;
+    const dispatch = useAppDispatch();
+    const { data: users = [], isLoading, error } = useGetUsersQuery(void 0) as clientType<ITeamMember>;
     const [createUser] = useCreateUserMutation();
     const [updateUser] = useUpdateUserMutation();
     const [deleteUser] = useDeleteUserMutation();
@@ -70,16 +72,69 @@ const TeamPage = () => {
         }));
     };
 
+    const validateEmail = (email: string): boolean => {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    };
+
     const handleAddSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!formData.name || !formData.email || !formData.password) {
-            alert('Заполните все обязательные поля');
+        if (!formData.name.trim()) {
+            dispatch(showToast({
+                type: 'warning',
+                title: 'Заполните поле',
+                message: 'Имя обязательно для заполнения',
+                duration: 3000,
+            }));
+            return;
+        }
+
+        if (!formData.email.trim()) {
+            dispatch(showToast({
+                type: 'warning',
+                title: 'Заполните поле',
+                message: 'Email обязателен для заполнения',
+                duration: 3000,
+            }));
+            return;
+        }
+
+        if (!validateEmail(formData.email)) {
+            dispatch(showToast({
+                type: 'warning',
+                title: 'Неверный формат',
+                message: 'Пожалуйста, введите корректный email',
+                duration: 3000,
+            }));
+            return;
+        }
+
+        if (!formData.password.trim() || formData.password.length < 6) {
+            dispatch(showToast({
+                type: 'warning',
+                title: 'Слабый пароль',
+                message: 'Пароль должен содержать минимум 6 символов',
+                duration: 3000,
+            }));
             return;
         }
 
         try {
-            await createUser(formData).unwrap();
+            await createUser({
+                ...formData,
+                name: formData.name.trim(),
+                email: formData.email.trim(),
+                password: formData.password.trim(),
+            }).unwrap();
+
+            dispatch(showToast({
+                type: 'success',
+                title: 'Пользователь добавлен',
+                message: `Пользователь "${formData.name}" успешно создан`,
+                duration: 3000,
+            }));
+
             setShowAddForm(false);
             setFormData({
                 name: '',
@@ -91,8 +146,13 @@ const TeamPage = () => {
             });
             setSpecialtyInput('');
             setResponsibilityInput('');
-        } catch (error) {
-            console.error('Failed to add user:', error);
+        } catch {
+            dispatch(showToast({
+                type: 'error',
+                title: 'Ошибка!',
+                message: 'Не удалось создать пользователя',
+                duration: 4000,
+            }));
         }
     };
 
@@ -106,24 +166,57 @@ const TeamPage = () => {
             await updateUser({ id, data }).unwrap();
             setIsModalOpen(false);
             setEditingUser(null);
-        } catch (error) {
-            console.error('Failed to update user:', error);
+            dispatch(showToast({
+                type: 'success',
+                title: 'Обновлено!',
+                message: 'Данные пользователя обновлены',
+                duration: 3000,
+            }));
+        } catch {
+            dispatch(showToast({
+                type: 'error',
+                title: 'Ошибка!',
+                message: 'Не удалось обновить пользователя',
+                duration: 4000,
+            }));
         }
     };
 
     const handleDelete = async (id: string) => {
         try {
             await deleteUser(id).unwrap();
-        } catch (error) {
-            console.error('Failed to delete user:', error);
+            dispatch(showToast({
+                type: 'success',
+                title: 'Удалено!',
+                message: 'Пользователь успешно удалён',
+                duration: 3000,
+            }));
+        } catch {
+            dispatch(showToast({
+                type: 'error',
+                title: 'Ошибка!',
+                message: 'Не удалось удалить пользователя',
+                duration: 4000,
+            }));
         }
     };
 
     const handleRoleChange = async (id: string, newRole: ITeamMember['role']) => {
         try {
             await updateUser({ id, data: { role: newRole } }).unwrap();
-        } catch (error) {
-            console.error('Failed to change role:', error);
+            dispatch(showToast({
+                type: 'success',
+                title: 'Роль обновлена',
+                message: 'Роль пользователя успешно изменена',
+                duration: 3000,
+            }));
+        } catch {
+            dispatch(showToast({
+                type: 'error',
+                title: 'Ошибка!',
+                message: 'Не удалось изменить роль',
+                duration: 4000,
+            }));
         }
     };
 
@@ -155,6 +248,12 @@ const TeamPage = () => {
     }
 
     if (error) {
+        dispatch(showToast({
+            type: 'error',
+            title: 'Ошибка загрузки',
+            message: 'Не удалось загрузить пользователей',
+            duration: 4000,
+        }));
         return <div>Ошибка загрузки</div>;
     }
 

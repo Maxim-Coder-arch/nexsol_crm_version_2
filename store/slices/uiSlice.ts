@@ -1,16 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-
-export type ModalType = 'profile' | 'settings' | 'confirm' | null;
-interface UiState {
-    isModalOpen: boolean;
-    modalType: ModalType;
-    modalProps: Record<string, any>;
-    isLoading: boolean;
-    toast: {
-        message: string;
-        type: 'success' | 'error' | 'info' | null;
-    };
-}
+import { ModalType, ToastState, UiState } from '@/types/slices/uiState.type';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: UiState = {
     isModalOpen: false,
@@ -18,37 +7,62 @@ const initialState: UiState = {
     modalProps: {},
     isLoading: false,
     toast: {
-        message: "",
-        type: null
+        isOpen: false,
+        type: 'info',
+        title: '',
+        message: '',
+        actions: [],
+        duration: 3000,
     },
 };
 
-const uiSLice = createSlice({
-    name: "ui",
+const uiSlice = createSlice({
+    name: 'ui',
     initialState,
     reducers: {
-        openModal: (state, action) => {
+        openModal: (state, action: PayloadAction<{ type: ModalType; props?: Record<string, any> }>) => {
             state.isModalOpen = true;
             state.modalType = action.payload.type;
             state.modalProps = action.payload.props || {};
         },
+
         closeModal: (state) => {
             state.isModalOpen = false;
             state.modalType = null;
             state.modalProps = {};
         },
-        setLoading: (state, action) => {
+
+        setLoading: (state, action: PayloadAction<boolean>) => {
             state.isLoading = action.payload;
-        }
-    }
+        },
+
+        showToast: (state, action: PayloadAction<Omit<ToastState, 'isOpen'>>) => {
+            state.toast.isOpen = true;
+            state.toast.type = action.payload.type;
+            state.toast.title = action.payload.title || '';
+            state.toast.message = action.payload.message;
+            state.toast.actions = action.payload.actions || [];
+            state.toast.duration = action.payload.duration ?? 3000;
+        },
+
+        hideToast: (state) => {
+            state.toast.isOpen = false;
+            state.toast.actions = [];
+        },
+
+        clearToast: (state) => {
+            state.toast = initialState.toast;
+        },
+    },
 });
-
-
 
 export const {
     openModal,
     closeModal,
-    setLoading
-} = uiSLice.actions;
+    setLoading,
+    showToast,
+    hideToast,
+    clearToast,
+} = uiSlice.actions;
 
-export default uiSLice.reducer;
+export default uiSlice.reducer;

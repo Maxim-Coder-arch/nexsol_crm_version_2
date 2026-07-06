@@ -1,0 +1,179 @@
+@use "../../../global-styles/includes.scss" as *;
+
+.toast-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 9999;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding: 24px;
+}
+
+.toast {
+    pointer-events: auto;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px 20px;
+    border-radius: 12px;
+    background: $main-text-2;
+    color: $main-bg-2;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.45);
+    max-width: 420px;
+    min-width: 320px;
+    border: 1px solid rgba($main-bg-2, 0.08);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 4px;
+    }
+
+    &--success::before {
+        background: #4caf50;
+    }
+
+    &--error::before {
+        background: #f44336;
+    }
+
+    &--warning::before {
+        background: #ff9800;
+    }
+
+    &--info::before {
+        background: $pale-yellow;
+    }
+
+    &__icon {
+        flex-shrink: 0;
+        margin-top: 2px;
+
+        &-svg {
+            width: 28px;
+            height: 28px;
+            display: block;
+        }
+    }
+
+    &__content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    &__title {
+        @include font(15px, 700);
+        color: $main-bg-2;
+        margin: 0 0 2px;
+        letter-spacing: 0.3px;
+    }
+
+    &__message {
+        @include font(13px, 500);
+        color: $main-bg-2;
+        opacity: 0.8;
+        margin: 0;
+        line-height: 1.4;
+        word-break: break-word;
+    }
+
+    &__actions {
+        display: flex;
+        gap: 8px;
+        flex-shrink: 0;
+        align-items: center;
+        margin-top: 2px;
+    }
+
+    &__action {
+        padding: 6px 16px;
+        border-radius: 6px;
+        border: none;
+        @include font(12px, 600);
+        cursor: pointer;
+        transition: all 0.2s;
+        white-space: nowrap;
+
+        &:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        &:active {
+            transform: scale(0.97);
+        }
+
+        &--primary {
+            background: $pale-yellow;
+            color: $main-text-2;
+        }
+
+        &--danger {
+            background: $burgundy;
+            color: $main-bg-2;
+        }
+
+        &--success {
+            background: #4caf50;
+            color: #fff;
+        }
+    }
+
+    &__close {
+        flex-shrink: 0;
+        background: none;
+        border: none;
+        color: $main-bg-2;
+        opacity: 0.4;
+        cursor: pointer;
+        padding: 4px;
+        margin: -4px -4px 0 0;
+        transition: opacity 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            opacity: 0.8;
+        }
+
+        svg {
+            width: 18px;
+            height: 18px;
+        }
+    }
+}
+
+@media (max-width: $breakpoint-mobile) {
+    .toast-wrapper {
+        padding: 16px;
+        align-items: flex-end;
+        justify-content: center;
+    }
+
+    .toast {
+        min-width: auto;
+        width: 100%;
+        max-width: 400px;
+        padding: 14px 16px;
+        flex-wrap: wrap;
+        gap: 12px;
+
+        &__actions {
+            width: 100%;
+            justify-content: flex-end;
+            margin-top: 4px;
+        }
+    }
+}

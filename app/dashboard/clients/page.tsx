@@ -10,8 +10,11 @@ import {
     useDeleteClientMutation 
 } from "@/store/client-api";
 import { clientType } from "@/types/store-types/client.type";
+import { showToast } from "@/store/slices/uiSlice";
+import { useAppDispatch } from "@/app/hooks/store";
 
 const ClientsPage = () => {
+    const dispatch = useAppDispatch();
     const { data: clients = [], isLoading, error } = useGetClientsQuery(void 0) as clientType<IClient>;
     const [createClientMutation] = useCreateClientMutation();
     const [updateClientMutation] = useUpdateClientMutation();
@@ -20,39 +23,73 @@ const ClientsPage = () => {
     const handleAddClient = async (client: Omit<IClient, "_id" | "createdAt" | "updatedAt">) => {
         try {
             await createClientMutation(client).unwrap();
-        } catch (error) {
-            console.error('Failed to add client:', error);
+            dispatch(showToast({
+                type: 'success',
+                title: 'Клиент добавлен',
+                message: `Клиент "${client.name}" успешно добавлен`,
+                duration: 3000,
+            }));
+        } catch {
+            dispatch(showToast({
+                type: 'error',
+                title: 'Ошибка!',
+                message: 'Не удалось добавить клиента',
+                duration: 4000,
+            }));
         }
     };
 
     const handleUpdateClient = async (id: string, updates: Partial<IClient>) => {
         try {
             await updateClientMutation({ id, data: updates }).unwrap();
-        } catch (error) {
-            console.error('Failed to update client:', error);
+            dispatch(showToast({
+                type: 'success',
+                title: 'Клиент обновлён',
+                message: 'Данные клиента успешно обновлены',
+                duration: 3000,
+            }));
+        } catch {
+            dispatch(showToast({
+                type: 'error',
+                title: 'Ошибка!',
+                message: 'Не удалось обновить клиента',
+                duration: 4000,
+            }));
         }
     };
 
-    const handleDeleteClient = async (id: string) => {
-        if (!confirm("Удалить клиента?")) return;
+    const handleDeleteClient = async (id: string) => {   
         try {
             await deleteClientMutation(id).unwrap();
-        } catch (error) {
-            console.error('Failed to delete client:', error);
+            dispatch(showToast({
+                type: 'success',
+                title: 'Удалено!',
+                message: 'Клиент успешно удалён',
+                duration: 3000,
+            }));
+        } catch {
+            dispatch(showToast({
+                type: 'error',
+                title: 'Ошибка!',
+                message: 'Не удалось удалить клиента',
+                duration: 4000,
+            }));
         }
     };
 
-    if (isLoading) {
-        return <div>Загрузка клиентов...</div>;
-    }
+    if (isLoading) return <div>Загрузка клиентов...</div>;
 
     if (error) {
+        dispatch(showToast({
+            type: 'error',
+            title: 'Ошибка загрузки',
+            message: 'Не удалось загрузить клиентов',
+            duration: 4000,
+        }));
         return <div>Ошибка загрузки</div>;
     }
 
-    const successfulClients = clients.filter(
-        c => c.physicalStatus === "successful"
-    );
+    const successfulClients = clients.filter(c => c.physicalStatus === "successful");
     const lostClients = clients.filter(c => c.physicalStatus === "lost");
 
     return (
