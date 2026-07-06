@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import IncludesFiles from "./ui/includes";
 import TemplateContent from "@/app/components/share/template";
 import { useDeleteFileMutation, useGetFilesQuery, useUploadFileMutation } from "@/store/client-api";
+import { clientType } from "@/types/store-types/client.type";
 
 export interface IFileCard {
     _id: string;
@@ -14,11 +15,7 @@ export interface IFileCard {
 }
 
 const FilesPage = () => {
-    const { data: files = [], isLoading, error } = useGetFilesQuery(void 0) as {
-        data: IFileCard[],
-        isLoading: boolean,
-        error: any
-    };
+    const { data: files = [], isLoading, error } = useGetFilesQuery(void 0) as clientType<IFileCard>;
     const [uploadFile] = useUploadFileMutation();
     const [deleteFile] = useDeleteFileMutation();
     const [showAddForm, setShowAddForm] = useState(false);

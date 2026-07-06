@@ -11,13 +11,10 @@ import {
     useGetFunnelsQuery,
     useUpdateFunnelMutation 
 } from "@/store/client-api";
+import { clientType } from "@/types/store-types/client.type";
 
 const FunnelsPage = () => {
-    const { data: funnels = [], isLoading, error } = useGetFunnelsQuery(void 0) as {
-        data: IFunnel[];
-        isLoading: boolean;
-        error: any;
-    };
+    const { data: funnels = [], isLoading, error } = useGetFunnelsQuery(void 0) as clientType<IFunnel>;
     
     const [createFunnel] = useCreateFunnelMutation();
     const [updateFunnel] = useUpdateFunnelMutation();

@@ -1,4 +1,3 @@
-// app/api/files/upload/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { getGridFSBucket } from '@/lib/gridFs';
 import { getTokenFromCookies, verifyToken } from '@/lib/auth';

@@ -4,13 +4,10 @@ import IncludesServices from "./ui/includes";
 import { IService } from "@/types/services/service.type";
 import TemplateContent from "@/app/components/share/template";
 import { useCreateServiceMutation, useDeleteServiceMutation, useGetServicesQuery } from "@/store/client-api";
+import { clientType } from "@/types/store-types/client.type";
 
 const Services = () => {
-    const { data: services = [], isLoading, error } = useGetServicesQuery(void 0) as {
-        data: IService[],
-        isLoading: boolean,
-        error: any
-    };
+    const { data: services = [], isLoading, error } = useGetServicesQuery(void 0) as clientType<IService>;
     const [deleteService] = useDeleteServiceMutation();
     const [createService] = useCreateServiceMutation();
     const [formData, setFormData] = useState({

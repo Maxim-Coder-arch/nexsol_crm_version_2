@@ -9,13 +9,10 @@ import {
     useDeleteBidMutation 
 } from "../../../store/client-api";
 import { IBid } from "@/types/bids/bid.type";
+import { clientType } from "@/types/store-types/client.type";
 
 const BidsPage = () => {
-    const { data: bids = [], isLoading, error } = useGetBidsQuery(void 0) as {
-        data: IBid[],
-        isLoading: boolean,
-        error: any
-    };
+    const { data: bids = [], isLoading, error } = useGetBidsQuery(void 0) as clientType<IBid>
     const [createBid] = useCreateBidMutation();
     const [updateBid] = useUpdateBidMutation();
     const [deleteBid] = useDeleteBidMutation();

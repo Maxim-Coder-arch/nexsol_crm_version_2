@@ -1,0 +1,1 @@
+export type clientType<T> = { data: T[], isLoading: boolean, error: any };

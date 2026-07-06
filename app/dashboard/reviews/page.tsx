@@ -3,13 +3,10 @@ import ReviewsSectionUiIncludes from "./ui/includes";
 import TemplateContent from "@/app/components/share/template";
 import { useDeleteReviewMutation, useGetReviewsQuery, useUpdateReviewMutation } from "@/store/client-api";
 import { IReview } from "@/types/reviews/review.type";
+import { clientType } from "@/types/store-types/client.type";
 
 const ReviewsPage = () => {
-    const { data: reviews = [], isLoading, error} = useGetReviewsQuery(void 0) as {
-        data: IReview[],
-        isLoading: boolean,
-        error: any
-    };
+    const { data: reviews = [], isLoading, error} = useGetReviewsQuery(void 0) as clientType<IReview>;
     const [updateReview] = useUpdateReviewMutation();
     const [deleteReview] = useDeleteReviewMutation();
 

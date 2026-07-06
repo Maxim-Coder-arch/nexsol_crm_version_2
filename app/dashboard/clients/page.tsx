@@ -9,13 +9,10 @@ import {
     useUpdateClientMutation,
     useDeleteClientMutation 
 } from "@/store/client-api";
+import { clientType } from "@/types/store-types/client.type";
 
 const ClientsPage = () => {
-    const { data: clients = [], isLoading, error } = useGetClientsQuery(void 0) as {
-        data: IClient[];
-        isLoading: boolean;
-        error: any;
-    };
+    const { data: clients = [], isLoading, error } = useGetClientsQuery(void 0) as clientType<IClient>;
     const [createClientMutation] = useCreateClientMutation();
     const [updateClientMutation] = useUpdateClientMutation();
     const [deleteClientMutation] = useDeleteClientMutation();

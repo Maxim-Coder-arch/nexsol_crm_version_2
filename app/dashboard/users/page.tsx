@@ -11,13 +11,10 @@ import {
     useUpdateUserMutation 
 } from "@/store/client-api";
 import { TeamMember } from "@/types/hero-section/teamMember.type";
+import { clientType } from "@/types/store-types/client.type";
 
 const TeamPage = () => {
-    const { data: users = [], isLoading, error } = useGetUsersQuery(void 0) as {
-        data: TeamMember[],
-        isLoading: boolean,
-        error: any
-    };
+    const { data: users = [], isLoading, error } = useGetUsersQuery(void 0) as clientType<TeamMember>;
     const [createUser] = useCreateUserMutation();
     const [updateUser] = useUpdateUserMutation();
     const [deleteUser] = useDeleteUserMutation();

@@ -1,4 +1,3 @@
-// app/api/files/[id]/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { ObjectId } from 'mongodb';
 import { getTokenFromCookies, verifyToken } from '@/lib/auth';
@@ -114,7 +113,7 @@ export async function GET(
 
         const chunks: Buffer[] = [];
 
-        return new Promise<NextResponse | Response>((resolve) => {  // ✅ Явно указываем тип Promise
+        return new Promise<NextResponse | Response>((resolve) => {
             downloadStream.on('data', (chunk) => chunks.push(chunk));
             
             downloadStream.on('error', (error) => {
@@ -128,7 +127,7 @@ export async function GET(
                 const buffer = Buffer.concat(chunks);
                 const mimeType = getMimeType(file.filename);
                 
-                resolve(new Response(buffer, {  // ✅ Используем Response вместо NextResponse для файлов
+                resolve(new Response(buffer, {
                     headers: {
                         'Content-Type': mimeType,
                         'Content-Disposition': `attachment; ${encodeFilename(file.filename)}`,
@@ -148,7 +147,7 @@ export async function GET(
 export async function DELETE(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }
-): Promise<NextResponse> {  // ✅ Явно указываем тип возврата
+): Promise<NextResponse> {
     try {
         const token = await getTokenFromCookies();
         if (!token) {

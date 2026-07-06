@@ -1,26 +1,27 @@
 'use client';
-import { ProfileContext } from '@/app/context/modalContext';
+import { closeModal } from '@/store/slices/uiSlice';
 import { useUser } from '@/app/hooks/useUser';
-import { useContext } from 'react';
 import styles from "./index.module.scss";
 import CloseIcon from '@/public/global/close';
+import { useAppDispatch, useAppSelector } from '@/app/hooks/store';
 
 const ProfileModal = () => {
-    const context = useContext(ProfileContext);
+    const dispatch = useAppDispatch();
+    const { isModalOpen, modalType } = useAppSelector((state) => state.ui);
     const { user } = useUser();
 
-    if (!context) return null;
+    if (!isModalOpen || modalType !== 'profile') return null;
 
-    const { isOpen, close } = context;
-
-    if (!isOpen) return null;
+    const handleClose = () => {
+        dispatch(closeModal());
+    };
 
     return (
-        <div className={styles["darkening-modal"]} onClick={close}>
+        <div className={styles["darkening-modal"]} onClick={handleClose}>
             <div className={styles["darkening-modal__window"]} onClick={(e) => e.stopPropagation()}>
                 <div className={styles["darkening-modal__window__header"]}>
                     <h2>{user?.name}</h2>
-                    <button onClick={close}>
+                    <button onClick={handleClose}>
                         <CloseIcon />
                     </button>
                 </div>
@@ -65,8 +66,8 @@ const ProfileModal = () => {
                 </div>
 
                 <div className={styles["darkening-modal__window__footer"]}>
-                    <button onClick={close} className={styles["close-btn"]}>
-                        Выйти из аккаунта
+                    <button onClick={handleClose} className={styles["close-btn"]}>
+                        Закрыть
                     </button>
                 </div>
             </div>

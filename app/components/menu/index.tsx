@@ -7,25 +7,26 @@ import styles from "./index.module.scss";
 import { usePathname } from "next/navigation";
 import UserIcon from "@/public/icons/menu/user";
 import { useUser } from "@/app/hooks/useUser";
-import { useContext, useState, useEffect } from "react";
-import { ProfileContext } from "@/app/context/modalContext";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { openModal } from "@/store/slices/uiSlice";
+import { useAppDispatch } from "@/app/hooks/store";
 
 const Menu = () => {
     const [openModalUser, setOpenModalUser] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const pathname = usePathname();
     const { user } = useUser();
-    const context = useContext(ProfileContext);
+    const dispatch = useAppDispatch();
 
-    if (!context) return null;
+    const handleOpenProfile = () => {
+        setOpenModalUser(false);
+        dispatch(openModal({ type: 'profile' }));
+    };
 
-    const { open, close } = context;
-
-    const handleLinkClick = () => {
+    const handleCloseMenu = () => {
         setOpenModalUser(false);
         setIsMobileMenuOpen(false);
-        close();
     };
 
     // Закрываем мобильное меню при переходе
@@ -60,7 +61,7 @@ const Menu = () => {
                                     key={`fupX0p-${index}`}
                                     className={isActive ? styles["parent-root-menu__child__item--active"] : ""}
                                 >
-                                    <Link href={item.link} onClick={handleLinkClick}>
+                                    <Link href={item.link} onClick={handleCloseMenu}>
                                         {item.label}
                                     </Link>
                                 </li>
@@ -85,15 +86,12 @@ const Menu = () => {
                                 >
                                     <h2>Привет, {user?.name}!</h2>
                                     <div className={styles["parent-root-menu__child__profile-window__modal__main"]}>
-                                        <Link href={"/"} onClick={handleLinkClick}>Управлять заметками</Link>
-                                        <Link href={"/"} onClick={handleLinkClick}>Система ролей пользователей</Link>
-                                        <a href="nexsol.ru" onClick={handleLinkClick}>Перейти на основной сайт</a>
+                                        <Link href={"/"} onClick={handleCloseMenu}>Управлять заметками</Link>
+                                        <Link href={"/"} onClick={handleCloseMenu}>Система ролей пользователей</Link>
+                                        <a href="nexsol.ru" onClick={handleCloseMenu}>Перейти на основной сайт</a>
                                     </div>
                                     <div className={styles["parent-root-menu__child__profile-window__modal__profile"]}>
-                                        <button onClick={() => {
-                                            setOpenModalUser(false);
-                                            open();
-                                        }}>Открыть профиль</button>
+                                        <button onClick={handleOpenProfile}>Открыть профиль</button>
                                     </div>
                                 </motion.div>
                             )}
