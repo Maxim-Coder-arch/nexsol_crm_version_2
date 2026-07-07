@@ -41,9 +41,11 @@ const ClientCard = ({
             <div className={styles["client-card__header"]}>
                 <h3>{client.name}</h3>
                 <div className={styles["client-card__actions"]}>
-                    <button onClick={() => setIsEditing(true)} className={styles["edit-btn"]}>
-                        ✎
-                    </button>
+                    <UserProtected>
+                        <button onClick={() => setIsEditing(true)} className={styles["edit-btn"]}>
+                            ✎
+                        </button>
+                    </UserProtected>
                     <UserProtected>
                         <button onClick={() => onDelete(client._id)} className={styles["delete-btn"]}>
                             ✕
@@ -53,29 +55,33 @@ const ClientCard = ({
             </div>
 
             <div className={styles["client-card__statuses"]}>
+                <UserProtected>
+                    <div className={styles["status-group"]}>
+                        <span className={styles["status-label"]}>Рабочий:</span>
+                        <select
+                            value={client.workStatus}
+                            onChange={(e) => onUpdate(client._id, { workStatus: e.target.value as any })}
+                            className={styles["status-select"]}
+                        >
+                            {workStatuses.map(s => (
+                                <option key={s.value} value={s.value}>{s.label}</option>
+                            ))}
+                        </select>
+                    </div>
+                </UserProtected>
                 <div className={styles["status-group"]}>
-                    <span className={styles["status-label"]}>Рабочий:</span>
-                    <select
-                        value={client.workStatus}
-                        onChange={(e) => onUpdate(client._id, { workStatus: e.target.value as any })}
-                        className={styles["status-select"]}
-                    >
-                        {workStatuses.map(s => (
-                            <option key={s.value} value={s.value}>{s.label}</option>
-                        ))}
-                    </select>
-                </div>
-                <div className={styles["status-group"]}>
-                    <span className={styles["status-label"]}>Статус:</span>
-                    <select
-                        value={client.physicalStatus}
-                        onChange={(e) => onUpdate(client._id, { physicalStatus: e.target.value as any })}
-                        className={styles["status-select"]}
-                    >
-                        {physicalStatuses.map(s => (
-                            <option key={s.value} value={s.value}>{s.label}</option>
-                        ))}
-                    </select>
+                    <UserProtected>
+                        <span className={styles["status-label"]}>Статус:</span>
+                        <select
+                            value={client.physicalStatus}
+                            onChange={(e) => onUpdate(client._id, { physicalStatus: e.target.value as any })}
+                            className={styles["status-select"]}
+                        >
+                            {physicalStatuses.map(s => (
+                                <option key={s.value} value={s.value}>{s.label}</option>
+                            ))}
+                        </select>
+                    </UserProtected>
                 </div>
             </div>
 

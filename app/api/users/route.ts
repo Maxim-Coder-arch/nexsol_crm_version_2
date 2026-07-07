@@ -1,8 +1,18 @@
 import createRoute from "@/helpers/createRoute";
 import { hashPassword } from "@/lib/password";
 
-const route = createRoute({
+const getRoute = createRoute({
     collectionName: "users",
+    allowedRoles: ["director"],
+    transformResponse: (data) => {
+        const { password, ...rest } = data;
+        return rest;
+    },
+});
+
+const postRoute = createRoute({
+    collectionName: "users",
+    allowedRoles: ["director"],
     transformCreate: async (data) => ({
         name: data.name,
         email: data.email,
@@ -17,5 +27,5 @@ const route = createRoute({
     },
 });
 
-export const GET = route.GET;
-export const POST = route.POST;
+export const GET = getRoute.GET;
+export const POST = postRoute.POST;

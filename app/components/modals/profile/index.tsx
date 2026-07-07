@@ -4,9 +4,12 @@ import { useUser } from '@/app/hooks/useUser';
 import styles from "./index.module.scss";
 import CloseIcon from '@/public/global/close';
 import { useAppDispatch, useAppSelector } from '@/app/hooks/store';
+import { useRouter } from 'next/navigation';
+import { showToast } from '@/store/slices/uiSlice';
 
 const ProfileModal = () => {
     const dispatch = useAppDispatch();
+    const router = useRouter();
     const { isModalOpen, modalType } = useAppSelector((state) => state.ui);
     const { user } = useUser();
 
@@ -14,6 +17,34 @@ const ProfileModal = () => {
 
     const handleClose = () => {
         dispatch(closeModal());
+    };
+
+    const handleLogout = async () => {
+        try {
+            const response = await fetch('/api/auth/logout', {
+                method: 'POST',
+            });
+
+            if (response.ok) {
+                dispatch(closeModal());
+                dispatch(showToast({
+                    type: 'success',
+                    title: 'До свидания!',
+                    message: 'Вы успешно вышли из аккаунта',
+                    duration: 3000,
+                }));
+                router.push('/login');
+            }
+            window.location.href = '/login';
+            window.location.reload();
+        } catch (error) {
+            dispatch(showToast({
+                type: 'error',
+                title: 'Ошибка!',
+                message: 'Не удалось выйти из аккаунта',
+                duration: 4000,
+            }));
+        }
     };
 
     return (
@@ -66,8 +97,8 @@ const ProfileModal = () => {
                 </div>
 
                 <div className={styles["darkening-modal__window__footer"]}>
-                    <button onClick={handleClose} className={styles["close-btn"]}>
-                        Закрыть
+                    <button onClick={handleLogout} className={styles["close-btn"]}>
+                        Выйти
                     </button>
                 </div>
             </div>

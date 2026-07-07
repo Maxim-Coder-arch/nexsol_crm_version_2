@@ -39,17 +39,19 @@ const BidCard = ({ bid, onStatusChange, onDelete }: BidCardProps) => {
             )}
 
             <div className={styles["bid__footer"]}>
-                <select 
-                    value={bid.status}
-                    onChange={(e) => onStatusChange(e.target.value as BidsStatus)}
-                    className={styles["bid__status-select"]}
-                >
-                    {statusOptions.map(opt => (
-                        <option key={opt.value} value={opt.value}>
-                            {opt.label}
-                        </option>
-                    ))}
-                </select>
+                <UserProtected roles={["manager", "director"]}>
+                    <select 
+                        value={bid.status}
+                        onChange={(e) => onStatusChange(e.target.value as BidsStatus)}
+                        className={styles["bid__status-select"]}
+                    >
+                        {statusOptions.map(opt => (
+                            <option key={opt.value} value={opt.value}>
+                                {opt.label}
+                            </option>
+                        ))}
+                    </select>
+                </UserProtected>
                 <UserProtected roles={["director"]}>
                     <button 
                         onClick={onDelete}

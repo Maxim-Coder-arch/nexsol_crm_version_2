@@ -1,8 +1,17 @@
+// app/api/bids/[id]/route.ts
 import createRoute from '@/helpers/createRoute';
 
-const route = createRoute({
-    collectionName: "leads"
+// PATCH — для изменения статуса
+const patchRoute = createRoute({
+    collectionName: "leads",
+    allowedRoles: ['director', 'manager'],
 });
 
-export const PATCH = route.PATCH;
-export const DELETE = route.DELETE;
+// DELETE — для удаления
+const deleteRoute = createRoute({
+    collectionName: "leads",
+    allowedRoles: ['director'],
+});
+
+export const PATCH = patchRoute.PATCH;
+export const DELETE = deleteRoute.DELETE;

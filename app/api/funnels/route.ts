@@ -1,7 +1,17 @@
 import createRoute from "@/helpers/createRoute";
 
-const route = createRoute({
+const getRoute = createRoute({
     collectionName: "funnels",
+    requireAuth: true,
+    transformResponse: (data) => ({
+        ...data,
+        items: data.items || [],
+    }),
+});
+
+const postRoute = createRoute({
+    collectionName: "funnels",
+    allowedRoles: ["director"],
     transformCreate: (data) => ({
         title: data.title,
         type: data.type,
@@ -17,5 +27,5 @@ const route = createRoute({
     }),
 });
 
-export const GET = route.GET;
-export const POST = route.POST;
+export const GET = getRoute.GET;
+export const POST = postRoute.POST;

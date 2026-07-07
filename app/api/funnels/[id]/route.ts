@@ -1,7 +1,8 @@
 import createRoute from "@/helpers/createRoute";
 
-const route = createRoute({
+const patchRoute = createRoute({
     collectionName: "funnels",
+    allowedRoles: ["director", "manager"],
     transformUpdate: (data) => ({
         ...data,
         items: data.items || [],
@@ -12,5 +13,10 @@ const route = createRoute({
     }),
 });
 
-export const PATCH = route.PATCH;
-export const DELETE = route.DELETE;
+const deleteRoute = createRoute({
+    collectionName: "funnels",
+    allowedRoles: ["director"],
+});
+
+export const PATCH = patchRoute.PATCH;
+export const DELETE = deleteRoute.DELETE;

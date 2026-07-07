@@ -1,8 +1,18 @@
 import createRoute from "@/helpers/createRoute";
 import { IClient } from "@/types/clients/client.type";
 
-const route = createRoute({
+const getRoute = createRoute({
     collectionName: "clients",
+    requireAuth: true,
+    transformResponse: (data) => ({
+        ...data,
+        additionalData: data.additionalData || [],
+    }),
+});
+
+const postRoute = createRoute({
+    collectionName: "clients",
+    allowedRoles: ["director", "manager"],
     transformCreate: (data: IClient) => ({
         name: data.name,
         workStatus: data.workStatus || "new",
@@ -16,5 +26,5 @@ const route = createRoute({
     }),
 });
 
-export const GET = route.GET;
-export const POST = route.POST;
+export const GET = getRoute.GET;
+export const POST = postRoute.POST;

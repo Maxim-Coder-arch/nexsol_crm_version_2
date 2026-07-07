@@ -1,14 +1,13 @@
-import clientPromise from "@/lib";
-import { NextResponse } from "next/server";
+import createRoute from '@/helpers/createRoute';
 
-export async function GET() {
-    try {
-        const client = await clientPromise;
-        const db = client.db("nexsol");
-        const collection = db.collection("reviews");
-        const reviews = await collection.find({}).sort({createdAt: -1}).toArray();
-        return NextResponse.json(reviews);
-    } catch {
-        return NextResponse.json({ error: 'Failed to fetch reviews' }, { status: 500 });
-    }
-}
+const getRoute = createRoute({
+    collectionName: "reviews",
+})
+
+const postRoute = createRoute({
+    collectionName: "reviews",
+    allowedRoles: ["director", "manager"]
+})
+
+export const GET = getRoute.GET;
+export const POST = postRoute.POST;

@@ -43,7 +43,11 @@ const createRoute = (options: RouteFactoryOptions) => {
 
     return {
         async GET(request: NextRequest) {
-            console.log("drhgeherthrethrt")
+            const auth = await checkAuth();
+            if (!auth.authorized) {
+                return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+            }
+
             try {
                 const collection = await getCollection();
                 const data = await collection.find({}).sort({ createdAt: -1 }).toArray();
@@ -59,6 +63,10 @@ const createRoute = (options: RouteFactoryOptions) => {
 
         async POST(request: NextRequest) {
             const auth = await checkAuth();
+            if (!auth.authorized) {
+                return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+            }
+
             try {
                 const body = await request.json();
                 const collection = await getCollection();
@@ -86,6 +94,11 @@ const createRoute = (options: RouteFactoryOptions) => {
         },
 
         async PATCH(request: NextRequest, { params }: {params: Promise<{id: string}>}) {
+            const auth = await checkAuth();
+            if (!auth.authorized) {
+                return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+            }
+
             try {
                 const { id } = await params;
                 const body = await request.json();
@@ -119,6 +132,11 @@ const createRoute = (options: RouteFactoryOptions) => {
         },
 
         async DELETE(request: NextRequest, { params }: {params: Promise<{id: string}>} ) {
+            const auth = await checkAuth();
+            if (!auth.authorized) {
+                return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+            }
+
             try {
                 const { id } = await params;
                 const collection = await getCollection();

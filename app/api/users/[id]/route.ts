@@ -1,8 +1,9 @@
 import createRoute from "@/helpers/createRoute";
 import { hashPassword } from "@/lib/password";
 
-const route = createRoute({
+const patchRoute = createRoute({
     collectionName: "users",
+    allowedRoles: ["director"],
     transformUpdate: async (data) => {
         const updateData: any = { ...data };
         if (data.password) {
@@ -16,5 +17,10 @@ const route = createRoute({
     },
 });
 
-export const PATCH = route.PATCH;
-export const DELETE = route.DELETE;
+const deleteRoute = createRoute({
+    collectionName: "users",
+    allowedRoles: ["director"],
+});
+
+export const PATCH = patchRoute.PATCH;
+export const DELETE = deleteRoute.DELETE;

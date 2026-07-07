@@ -13,6 +13,7 @@ import {
 import { clientType } from "@/types/store-types/client.type";
 import { showToast } from "@/store/slices/uiSlice";
 import { useAppDispatch } from "@/app/hooks/store";
+import styles from "./index.module.scss";
 
 const TeamPage = () => {
     const dispatch = useAppDispatch();
@@ -254,7 +255,11 @@ const TeamPage = () => {
             message: 'Не удалось загрузить пользователей',
             duration: 4000,
         }));
-        return <div>Ошибка загрузки</div>;
+        return (
+            <div className={styles["protected-style"]}>
+                <h1>Доступ ограничен</h1>
+            </div>
+        );
     }
 
     return (

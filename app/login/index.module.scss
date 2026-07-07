@@ -1,44 +1,301 @@
 @use "../global-styles/includes.scss" as *;
 
 .login {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    background-color: $main-text-2;
+    padding: 40px 3rem;
+    background-color: $main-text;
+    overflow: hidden;
 
-    & form {
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: 70%;
+        background-image: url("/images/login/24963.jpg");
+        background-size: cover;
+        background-position: center;
+        clip-path: polygon(40% 0, 100% 0, 100% 100%, 10% 100%);
+        z-index: 0;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: 60%;
+        background: linear-gradient(90deg, transparent 0%, rgba($main-text, 0.85) 100%);
+        z-index: 1;
+    }
+
+    &__greeting {
+        position: relative;
+        z-index: 2;
+        max-width: 45%;
         display: flex;
         flex-direction: column;
-        background-color: $main-bg-2;
-        padding: 10px;
-        border-radius: 5px;
-        gap: 10px;
-        min-width: 400px;
+        gap: 30px;
 
-        & h2 {
-            @include font(2rem, 800);
-            color: $main-text-2;
+        &__socials {
+            display: flex;
+            gap: 12px;
+            margin-top: 4px;
+
+            & a {
+                padding: 8px 20px;
+                border-radius: 8px;
+                background: rgba($main-bg, 0.1);
+                border: 1px solid rgba($main-bg, 0.2);
+                color: $main-bg;
+                @include font(0.85rem, 600);
+                text-decoration: none;
+                transition: all 0.3s;
+
+                &:hover {
+                    background: $pale-yellow;
+                    color: $main-text;
+                    border-color: $pale-yellow;
+                    transform: translateY(-2px);
+                }
+            }
         }
 
-        & input {
-            @include font(1rem, 800);
-            background-color: $main-text-2;
-            color: $main-bg-2;
-            padding: 3px 6px;
-            border-radius: 3px;
+        &__text {
+            h1 {
+                @include font(3.2rem, 800);
+                color: $main-bg;
+                line-height: 1.1;
+                margin: 0;
+
+                span {
+                    color: $pale-yellow;
+                }
+            }
+
+            p {
+                @include font(1.1rem, 500);
+                color: rgba($main-bg, 0.7);
+                margin: 0;
+            }
         }
 
-        & button {
-            @include font(1rem, 800);
-            background-color: $main-text-2;
-            color: $pale-yellow;
-            padding: 6px 12px;
+        &__sentence {
+            h2 {
+                @include font(1.2rem, 700);
+                color: $main-bg;
+                margin: 0 0 10px;
+            }
+
+            h3 {
+                @include font(0.95rem, 500);
+                color: rgba($main-bg, 0.75);
+                margin: 0 0 12px;
+                line-height: 1.5;
+            }
+
+            p {
+                @include font(1rem, 600);
+                color: $pale-yellow;
+                margin: 0 0 12px;
+            }
+        }
+    }
+
+    &__form-wrapper {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        max-width: 420px;
+    }
+
+    &__card {
+        background: rgba($main-text, 0.7);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 20px;
+        padding: 36px 32px;
+        border: 1px solid rgba($main-bg, 0.12);
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+
+        &__header {
+            text-align: center;
+            margin-bottom: 28px;
+
+            h2 {
+                @include font(1.6rem, 700);
+                color: $main-bg;
+                margin: 0 0 4px;
+            }
+
+            p {
+                @include font(0.9rem, 400);
+                color: rgba($main-bg, 0.6);
+                margin: 0;
+            }
+        }
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+
+            label {
+                @include font(0.85rem, 600);
+                color: rgba($main-bg, 0.8);
+            }
+
+            input {
+                padding: 10px 14px;
+                border-radius: 10px;
+                border: 1px solid rgba($main-bg, 0.15);
+                background: rgba($main-bg, 0.06);
+                color: $main-bg;
+                @include font(0.95rem, 500);
+                transition: all 0.3s;
+
+                &::placeholder {
+                    color: rgba($main-bg, 0.3);
+                }
+
+                &:focus {
+                    border-color: $pale-yellow;
+                    outline: none;
+                    background: rgba($main-bg, 0.1);
+                    box-shadow: 0 0 0 3px rgba($pale-yellow, 0.15);
+                }
+            }
+        }
+
+        .login__error {
+            padding: 10px 14px;
+            border-radius: 8px;
+            background: rgba(244, 67, 54, 0.15);
+            border: 1px solid rgba(244, 67, 54, 0.3);
+            color: #f44336;
+            @include font(0.85rem, 500);
+            text-align: center;
+        }
+
+        .login__btn {
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            background: $pale-yellow;
+            color: $main-text;
+            @include font(1rem, 700);
             cursor: pointer;
+            transition: all 0.3s;
+
+            &:hover:not(:disabled) {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 20px rgba($pale-yellow, 0.3);
+            }
+
+            &:active:not(:disabled) {
+                transform: scale(0.98);
+            }
+
+            &:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+        }
+    }
+
+    &__footer {
+        text-align: center;
+        margin-top: 4px;
+        padding-top: 16px;
+        border-top: 1px solid rgba($main-bg, 0.08);
+
+        span {
+            @include font(0.85rem, 500);
+            color: rgba($main-bg, 0.5);
+
+            a {
+                color: $pale-yellow;
+                font-weight: 600;
+                text-decoration: none;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $breakpoint-tablet) {
+    .login {
+        flex-direction: column;
+        justify-content: center;
+        padding: 20px;
+
+        &::before {
+            width: 100%;
+            clip-path: none;
+            opacity: 0.3;
+        }
+
+        &::after {
+            display: none;
+        }
+
+        &__greeting {
+            max-width: 100%;
+            text-align: center;
+            margin-bottom: 30px;
+
+            &__text h1 {
+                @include font(2.2rem, 800);
+            }
+
+            &__sentence__socials {
+                justify-content: center;
+            }
+        }
+
+        &__form-wrapper {
+            max-width: 100%;
+        }
+    }
+}
+
+@media (max-width: $breakpoint-mobile) {
+    .login {
+        padding: 16px;
+
+        &__greeting {
+            &__text h1 {
+                @include font(1.8rem, 800);
+            }
+
+            &__sentence {
+                h2 {
+                    @include font(1rem, 700);
+                }
+                h3 {
+                    @include font(0.85rem, 500);
+                }
+            }
+        }
+
+        &__card {
+            padding: 24px 18px;
         }
     }
 }

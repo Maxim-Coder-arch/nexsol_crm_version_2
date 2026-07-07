@@ -1,7 +1,9 @@
 import createRoute from "@/helpers/createRoute";
 
-const route = createRoute({
+
+const patchRoute = createRoute({
     collectionName: "clients",
+    allowedRoles: ["director", "manager"],
     transformUpdate: (data) => ({
         ...data,
         additionalData: data.additionalData || [],
@@ -12,5 +14,10 @@ const route = createRoute({
     }),
 });
 
-export const PATCH = route.PATCH;
-export const DELETE = route.DELETE;
+const deleteRoute = createRoute({
+    collectionName: "clients",
+    allowedRoles: ["director"],
+});
+
+export const PATCH = patchRoute.PATCH;
+export const DELETE = deleteRoute.DELETE;
