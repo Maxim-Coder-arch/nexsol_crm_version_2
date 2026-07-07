@@ -4,6 +4,7 @@ import CloseIcon from "@/public/global/close";
 import DownloadIcon from "@/public/global/download";
 import FileIcon from "@/public/global/file";
 import { FileCardProps } from "@/types/explorer/fileCardProps.type";
+import UserProtected from "@/app/components/share/protected";
 
 const FileCard = ({ file, onDownload, onDelete }: FileCardProps) => {
 
@@ -48,23 +49,24 @@ const FileCard = ({ file, onDownload, onDelete }: FileCardProps) => {
                     <span>{formatDate(file.createdAt)}</span>
                 </div>
             </div>
-
-            <div className={styles["file-card__actions"]}>
-                <button
-                    onClick={() => onDownload(file._id)}
-                    className={styles["file-card__download"]}
-                    title="Скачать"
-                >
-                    <DownloadIcon />
-                </button>
-                <button
-                    onClick={() => onDelete(file._id)}
-                    className={styles["file-card__delete"]}
-                    title="Удалить"
-                >
-                    <CloseIcon />
-                </button>
-            </div>
+            <UserProtected roles={["manager", "director"]}>
+                <div className={styles["file-card__actions"]}>
+                    <button
+                        onClick={() => onDownload(file._id)}
+                        className={styles["file-card__download"]}
+                        title="Скачать"
+                    >
+                        <DownloadIcon />
+                    </button>
+                    <button
+                        onClick={() => onDelete(file._id)}
+                        className={styles["file-card__delete"]}
+                        title="Удалить"
+                    >
+                        <CloseIcon />
+                    </button>
+                </div>
+            </UserProtected>
         </motion.div>
     );
 };

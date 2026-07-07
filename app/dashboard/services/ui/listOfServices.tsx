@@ -3,6 +3,7 @@ import { IListOfServicesProps } from "@/types/services/listOfServices.type";
 import styles from "../index.module.scss";
 import CloseIcon from "@/public/global/close";
 import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
+import UserProtected from "@/app/components/share/protected";
 
 const ListOfServices = ({ services, handleDelete }: IListOfServicesProps) => {
     const show = useTimeoutAnimationLoader();
@@ -74,15 +75,17 @@ const ListOfServices = ({ services, handleDelete }: IListOfServicesProps) => {
                                 {service.url}
                             </a>
                         </div>
-                        <motion.button
-                            whileHover={{ scale: 1.15, rotate: 90 }}
-                            whileTap={{ scale: 0.9 }}
-                            transition={{ duration: 0.2 }}
-                            className={styles["services__list__item__delete"]}
-                            onClick={() => handleDelete(service._id)}
-                        >
-                            <CloseIcon />
-                        </motion.button>
+                        <UserProtected roles={["director", "manager"]}>
+                            <motion.button
+                                whileHover={{ scale: 1.15, rotate: 90 }}
+                                whileTap={{ scale: 0.9 }}
+                                transition={{ duration: 0.2 }}
+                                className={styles["services__list__item__delete"]}
+                                onClick={() => handleDelete(service._id)}
+                            >
+                                <CloseIcon />
+                            </motion.button>
+                        </UserProtected>
                     </motion.li>
                 ))}
             </motion.ul>

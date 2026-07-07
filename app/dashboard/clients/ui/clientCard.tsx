@@ -2,6 +2,7 @@ import { useState } from "react";
 import ClientForm from "./clientForm";
 import styles from "../index.module.scss";
 import { ClientCardProps } from "@/types/clients/clientsCard.type";
+import UserProtected from "@/app/components/share/protected";
 
 const ClientCard = ({ 
     client, 
@@ -43,9 +44,11 @@ const ClientCard = ({
                     <button onClick={() => setIsEditing(true)} className={styles["edit-btn"]}>
                         ✎
                     </button>
-                    <button onClick={() => onDelete(client._id)} className={styles["delete-btn"]}>
-                        ✕
-                    </button>
+                    <UserProtected>
+                        <button onClick={() => onDelete(client._id)} className={styles["delete-btn"]}>
+                            ✕
+                        </button>
+                    </UserProtected>
                 </div>
             </div>
 

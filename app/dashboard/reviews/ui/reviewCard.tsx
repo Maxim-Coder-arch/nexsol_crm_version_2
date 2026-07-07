@@ -1,3 +1,4 @@
+import UserProtected from "@/app/components/share/protected";
 import styles from "../index.module.scss";
 import { ReviewCardProps } from "@/types/reviews/reviewCard.type";
 
@@ -26,9 +27,13 @@ const ReviewCard = ({
             <div className={styles["root-reviews__column__data__review__footer"]}>
                 <div className={styles["root-reviews__column__data__review__footer__buttons"]}>
                     {type === "new" && onApprove && (
-                        <button onClick={() => onApprove(review._id)}>Добавить на сайт</button>
+                        <UserProtected roles={["director", "manager"]}>
+                            <button onClick={() => onApprove(review._id)}>Добавить на сайт</button>
+                        </UserProtected>
                     )}
-                    <button onClick={() => onDelete(review._id)}>Удалить</button>
+                    <UserProtected roles={["director"]}>
+                        <button onClick={() => onDelete(review._id)}>Удалить</button>
+                    </UserProtected>
                 </div>
                 <div className={styles["root-reviews__column__data__review__footer__meta"]}>
                     <p>Добавлено: {review.createdAt}</p>

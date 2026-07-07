@@ -1,6 +1,7 @@
 import { BidsStatus, statusOptions } from "@/config-and-data/bids.cnf";
 import styles from "../index.module.scss";
 import { BidCardProps } from "@/types/bids/bidCard.type";
+import UserProtected from "@/app/components/share/protected";
 
 const BidCard = ({ bid, onStatusChange, onDelete }: BidCardProps) => {
     const date = new Date(bid.createdAt);
@@ -49,13 +50,14 @@ const BidCard = ({ bid, onStatusChange, onDelete }: BidCardProps) => {
                         </option>
                     ))}
                 </select>
-
-                <button 
-                    onClick={onDelete}
-                    className={styles["bid__delete-btn"]}
-                >
-                    Удалить
-                </button>
+                <UserProtected roles={["director"]}>
+                    <button 
+                        onClick={onDelete}
+                        className={styles["bid__delete-btn"]}
+                    >
+                        Удалить
+                    </button>
+                </UserProtected>
             </div>
         </div>
     );
