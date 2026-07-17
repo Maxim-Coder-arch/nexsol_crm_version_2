@@ -12,7 +12,7 @@ const AddFileButton = ({ onClick }: AddFileButtonProps) => {
     const show = useTimeoutAnimationLoader();
 
     return (
-        <UserProtected roles={["manager", "director"]}>
+        <UserProtected roles={["moderator", "director"]}>
             <motion.div
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: show ? 1 : 0, y: show ? 0 : 15 }}

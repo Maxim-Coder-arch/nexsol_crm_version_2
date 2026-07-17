@@ -39,7 +39,7 @@ const BidCard = ({ bid, onStatusChange, onDelete }: BidCardProps) => {
             )}
 
             <div className={styles["bid__footer"]}>
-                <UserProtected roles={["manager", "director"]}>
+                <UserProtected roles={["moderator", "director"]}>
                     <select 
                         value={bid.status}
                         onChange={(e) => onStatusChange(e.target.value as BidsStatus)}

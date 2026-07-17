@@ -16,6 +16,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
         const formData = await request.formData();
         const file = formData.get('file') as File;
+        const isShared = formData.get('isShared') === 'true';
 
         if (!file) {
             return NextResponse.json({ error: 'No file provided' }, { status: 400 });
@@ -31,6 +32,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
                 originalName: file.name,
                 size: file.size,
                 mimeType: file.type || 'application/octet-stream',
+                isShared: isShared || false,
             },
         });
 
@@ -44,6 +46,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
                     fileId: uploadStream.id.toString(),
                     filename: file.name,
                     size: file.size,
+                    isShared: isShared || false,
                     message: 'Файл успешно загружен',
                 }, { status: 201 }));
             });

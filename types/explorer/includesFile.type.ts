@@ -7,5 +7,5 @@ export interface IncludesFilesProps {
     onDelete: (id: string) => void;
     onAddFile: () => void;
     onCancelAdd: () => void;
-    onFileSubmit: (file: File) => void;
+    onFileSubmit: (file: File, isShared: boolean) => void;
 }

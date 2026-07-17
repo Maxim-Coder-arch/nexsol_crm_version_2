@@ -72,7 +72,7 @@ const FilesPage = () => {
         setShowAddForm(false);
     };
 
-    const handleFileSubmit = async (file: File) => {
+    const handleFileSubmit = async (file: File, isShared: boolean) => {
         if (file.size > MAX_FILE_SIZE) {
             dispatch(showToast({
                 type: 'warning',
@@ -85,6 +85,7 @@ const FilesPage = () => {
 
         const formData = new FormData();
         formData.append('file', file);
+        formData.append('isShared', String(isShared));
 
         try {
             await uploadFile(formData).unwrap();
@@ -92,7 +93,7 @@ const FilesPage = () => {
             dispatch(showToast({
                 type: 'success',
                 title: 'Загружено!',
-                message: `Файл "${file.name}" успешно загружен`,
+                message: `Файл "${file.name}" успешно загружен${isShared ? ' (публичный)' : ''}`,
                 duration: 3000,
             }));
         } catch {

@@ -2,7 +2,7 @@ import createRoute from "@/helpers/createRoute";
 
 const patchRoute = createRoute({
     collectionName: "funnels",
-    allowedRoles: ["director", "manager"],
+    allowedRoles: ["director", "moderator"],
     transformUpdate: (data) => ({
         ...data,
         items: data.items || [],

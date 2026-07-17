@@ -23,7 +23,7 @@ const FunnelCard = ({
                     <span className={styles["funnel-card__type"]}>{typeLabel}</span>
                 </div>
                     <div className={styles["funnel-card__actions"]}>
-                        <UserProtected roles={["manager", "director"]}>
+                        <UserProtected roles={["moderator", "director"]}>
                             <button onClick={() => onEdit(funnel)} className={styles["edit-btn"]}>✎</button>
                         </UserProtected>
                         <UserProtected>

@@ -27,7 +27,7 @@ const ReviewCard = ({
             <div className={styles["root-reviews__column__data__review__footer"]}>
                 <div className={styles["root-reviews__column__data__review__footer__buttons"]}>
                     {type === "new" && onApprove && (
-                        <UserProtected roles={["director", "manager"]}>
+                        <UserProtected roles={["director", "moderator"]}>
                             <button onClick={() => onApprove(review._id)}>Добавить на сайт</button>
                         </UserProtected>
                     )}

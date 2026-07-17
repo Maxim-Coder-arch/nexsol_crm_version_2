@@ -16,7 +16,7 @@ const AddClientButton = ({ workStatuses, physicalStatuses, onAdd }: AddClientBut
     const show = useTimeoutAnimationLoader();
 
     return (
-        <UserProtected roles={["director", "manager"]}>
+        <UserProtected roles={["director", "moderator"]}>
             <motion.div
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: show ? 1 : 0, y: show ? 0 : 15 }}

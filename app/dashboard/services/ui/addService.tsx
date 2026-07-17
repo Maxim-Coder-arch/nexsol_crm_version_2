@@ -8,7 +8,7 @@ const AddService = ({ setFormData, handleAdd, formData }: AddServiceProps) => {
     const show  =useTimeoutAnimationLoader();
     
     return (
-        <UserProtected roles={["director", "manager"]}>
+        <UserProtected roles={["director", "moderator"]}>
             <motion.div 
             initial={{opacity: 0, scale: .9}}
             animate={show ? { opacity: 1, scale: 1 } : {}}

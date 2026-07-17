@@ -49,7 +49,7 @@ const FileCard = ({ file, onDownload, onDelete }: FileCardProps) => {
                     <span>{formatDate(file.createdAt)}</span>
                 </div>
             </div>
-            <UserProtected roles={["manager", "director"]}>
+            <UserProtected roles={["moderator", "director"]}>
                 <div className={styles["file-card__actions"]}>
                     <button
                         onClick={() => onDownload(file._id)}

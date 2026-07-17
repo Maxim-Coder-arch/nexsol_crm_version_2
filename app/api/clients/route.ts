@@ -12,7 +12,7 @@ const getRoute = createRoute({
 
 const postRoute = createRoute({
     collectionName: "clients",
-    allowedRoles: ["director", "manager"],
+    allowedRoles: ["director", "moderator"],
     transformCreate: (data: IClient) => ({
         name: data.name,
         workStatus: data.workStatus || "new",

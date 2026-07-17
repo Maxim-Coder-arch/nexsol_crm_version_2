@@ -1,6 +1,7 @@
 // app/dashboard/files/index.module.scss
 @use "../../global-styles/includes.scss" as *;
 
+// ========== Основной контейнер ==========
 .files {
     padding: {
         top: 50px;
@@ -10,38 +11,43 @@
     };
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px;
 
     &__header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         background: $main-text-2;
-        padding: 12px 20px;
-        border-radius: 6px;
+        padding: 14px 24px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 
         h2 {
             @include font(24px, 800);
             color: $main-bg-2;
             margin: 0;
+            letter-spacing: 0.5px;
         }
 
         span {
             @include font(14px, 500);
             color: $second-text;
+            background: rgba($main-bg-2, 0.08);
+            padding: 4px 14px;
+            border-radius: 20px;
         }
     }
 
     &__grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-        gap: 12px;
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 14px;
     }
 
     &__empty {
         background: $main-text-2;
-        border-radius: 6px;
-        padding: 60px 20px;
+        border-radius: 8px;
+        padding: 80px 20px;
         text-align: center;
 
         p {
@@ -52,25 +58,39 @@
     }
 }
 
+// ========== Карточка файла ==========
 .file-card {
     background: $main-text-2;
-    border-radius: 6px;
-    padding: 14px 18px;
+    border-radius: 8px;
+    padding: 16px 20px;
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 16px;
+    transition: all 0.25s ease;
+    border: 1px solid rgba($main-bg-2, 0.06);
+
+    &:hover {
+        transform: translateY(-2px);
+        border-color: rgba($main-bg-2, 0.15);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    }
 
     &__icon {
-        width: 44px;
-        height: 44px;
-        min-width: 44px;
-        background: $main-bg-2;
-        border-radius: 8px;
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        background: rgba($main-bg-2, 0.08);
+        border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 20px;
+        font-size: 22px;
         flex-shrink: 0;
+        transition: background 0.2s;
+
+        &:hover {
+            background: rgba($main-bg-2, 0.15);
+        }
     }
 
     &__info {
@@ -79,44 +99,72 @@
     }
 
     &__name {
-        @include font(14px, 600);
-        color: $main-bg-2;
-        word-break: break-all;
-        margin-bottom: 2px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+
+        span:first-child {
+            @include font(14px, 600);
+            color: $main-bg-2;
+            word-break: break-all;
+        }
+
+        .file-card__badge {
+            @include font(9px, 600);
+            background: $pale-yellow;
+            color: $main-text-2;
+            padding: 2px 10px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+        }
     }
 
     &__meta {
         display: flex;
         gap: 8px;
         flex-wrap: wrap;
+        margin-top: 3px;
 
         span {
             @include font(11px, 500);
             color: $second-text;
         }
+
+        .file-card__author {
+            color: $violet;
+            opacity: 0.8;
+        }
     }
 
     &__actions {
         display: flex;
-        gap: 6px;
+        gap: 8px;
         flex-shrink: 0;
     }
 
     &__download,
     &__delete {
-        width: 30px;
-        height: 30px;
-        border-radius: 5px;
+        width: 32px;
+        height: 32px;
+        border-radius: 6px;
         border: none;
         cursor: pointer;
-        @include font(13px, 600);
+        @include font(14px, 600);
         transition: all 0.2s;
         display: flex;
         justify-content: center;
         align-items: center;
 
         &:hover {
-            transform: scale(1.05);
+            transform: scale(1.08);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        &:active {
+            transform: scale(0.92);
         }
     }
 
@@ -131,6 +179,251 @@
     }
 }
 
+// ========== Кнопка добавления ==========
+.add-file {
+    width: 100%;
+
+    &__btn {
+        width: 100%;
+        background: $main-text-2;
+        color: $main-bg-2;
+        padding: 16px;
+        border-radius: 8px;
+        border: 2px dashed rgba($main-bg-2, 0.2);
+        @include font(16px, 600);
+        cursor: pointer;
+        transition: all 0.25s;
+
+        &:hover {
+            border-color: $burgundy;
+            background: lighten($main-text-2, 5%);
+            box-shadow: 0 0 24px rgba($burgundy, 0.08);
+        }
+    }
+}
+
+// ========== Форма добавления ==========
+.add-file-form {
+    width: 100%;
+
+    &__form {
+        background: $main-text-2;
+        border-radius: 8px;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        border: 1px solid rgba($main-bg-2, 0.06);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 12px;
+        border-bottom: 1px solid rgba($main-bg-2, 0.08);
+
+        h3 {
+            @include font(20px, 700);
+            color: $main-bg-2;
+            margin: 0;
+            letter-spacing: 0.3px;
+        }
+
+        .add-file-form__close {
+            background: none;
+            border: none;
+            color: $main-bg-2;
+            opacity: 0.5;
+            @include font(22px, 700);
+            cursor: pointer;
+            transition: all 0.2s;
+            padding: 0 4px;
+
+            &:hover {
+                opacity: 1;
+                transform: rotate(90deg);
+            }
+        }
+    }
+
+    &__dropzone {
+        border: 2px dashed rgba($main-bg-2, 0.2);
+        border-radius: 8px;
+        padding: 32px 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.25s;
+        min-height: 140px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba($main-bg-2, 0.02);
+
+        &:hover {
+            border-color: $burgundy;
+            background: rgba($burgundy, 0.04);
+        }
+
+        &--drag {
+            border-color: $burgundy;
+            background: rgba($burgundy, 0.08);
+            box-shadow: 0 0 32px rgba($burgundy, 0.06);
+        }
+
+        .add-file-form__input {
+            display: none;
+        }
+
+        .add-file-form__dropzone-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+
+            .add-file-form__dropzone-icon {
+                font-size: 40px;
+                opacity: 0.7;
+            }
+
+            p {
+                @include font(15px, 500);
+                color: $main-bg-2;
+                margin: 0;
+            }
+
+            .add-file-form__dropzone-hint {
+                @include font(12px, 500);
+                color: $second-text;
+            }
+        }
+
+        .add-file-form__file-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            width: 100%;
+            justify-content: center;
+            padding: 8px;
+
+            .add-file-form__file-icon {
+                font-size: 32px;
+            }
+
+            .add-file-form__file-name {
+                @include font(15px, 600);
+                color: $main-bg-2;
+                margin: 0;
+            }
+
+            .add-file-form__file-size {
+                @include font(12px, 500);
+                color: $second-text;
+                margin: 0;
+            }
+
+            .add-file-form__file-remove {
+                background: $burgundy;
+                color: $main-bg-2;
+                border: none;
+                border-radius: 6px;
+                width: 28px;
+                height: 28px;
+                cursor: pointer;
+                @include font(14px, 700);
+                transition: opacity 0.2s;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
+    }
+
+    &__shared {
+        display: flex;
+        align-items: center;
+        padding: 4px 0;
+
+        label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            @include font(14px, 500);
+            color: $main-bg-2;
+
+            input[type="checkbox"] {
+                width: 18px;
+                height: 18px;
+                accent-color: $burgundy;
+                cursor: pointer;
+                border-radius: 4px;
+                background-color: $main-bg-2;
+
+                &:checked {
+                    background-color: $pale-yellow;
+                }
+            }
+
+            span {
+                opacity: 0.85;
+            }
+        }
+    }
+
+    &__actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 4px;
+
+        button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 6px;
+            border: none;
+            @include font(15px, 600);
+            cursor: pointer;
+            transition: all 0.2s;
+            letter-spacing: 0.3px;
+
+            &:hover:not(:disabled) {
+                transform: translateY(-1px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            }
+        }
+
+        .add-file-form__submit {
+            background: $pale-yellow;
+            color: $main-text-2;
+
+            &--disabled {
+                opacity: 0.4;
+                cursor: not-allowed;
+
+                &:hover {
+                    transform: none;
+                    box-shadow: none;
+                }
+            }
+        }
+
+        .add-file-form__cancel {
+            background: rgba($main-bg-2, 0.08);
+            color: $main-bg-2;
+
+            &:hover {
+                background: rgba($main-bg-2, 0.14);
+            }
+        }
+    }
+}
+
+// ========== Адаптивность ==========
 @media (max-width: $breakpoint-tablet) {
     .files {
         padding: {
@@ -141,6 +434,10 @@
 
         &__grid {
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        }
+
+        &__header {
+            padding: 12px 18px;
         }
     }
 }
@@ -157,199 +454,89 @@
             grid-template-columns: 1fr;
         }
 
+        &__header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 14px 16px;
+
+            h2 {
+                @include font(20px, 800);
+            }
+        }
+
         .file-card {
             flex-wrap: wrap;
+            padding: 14px 16px;
 
             &__actions {
                 width: 100%;
                 justify-content: flex-end;
+                margin-top: 4px;
+            }
+        }
+
+        .add-file-form {
+            &__form {
+                padding: 16px;
+            }
+
+            &__dropzone {
+                padding: 24px 16px;
+                min-height: 100px;
+            }
+
+            &__actions {
+                flex-direction: column;
+
+                button {
+                    padding: 12px;
+                }
+            }
+
+            &__shared label {
+                @include font(13px, 500);
             }
         }
     }
 }
 
-// app/dashboard/files/index.module.scss (добавить)
+@media (max-width: $breakpoint-small-mobile) {
+    .files {
+        padding: {
+            top: 16px;
+            left: 6px;
+            right: 6px;
+        };
 
-.add-file {
-    width: 100%;
+        .file-card {
+            padding: 12px 14px;
 
-    &__btn {
-        width: 100%;
-        background: $main-text-2;
-        color: $main-bg-2;
-        padding: 14px;
-        border-radius: 6px;
-        border: 2px dashed $main-text-2;
-        @include font(16px, 600);
-        cursor: pointer;
-        transition: all 0.2s;
-
-        &:hover {
-            border-color: $burgundy;
-            background: lighten($main-text-2, 5%);
-        }
-    }
-}
-
-.add-file-form {
-    width: 100%;
-
-    &__form {
-        background: $main-text-2;
-        border-radius: 6px;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-    }
-
-    &__header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        h3 {
-            @include font(18px, 700);
-            color: $main-bg-2;
-            margin: 0;
-        }
-
-        .add-file-form__close {
-            background: none;
-            border: none;
-            color: $main-bg-2;
-            @include font(20px, 700);
-            cursor: pointer;
-
-            &:hover {
-                opacity: 0.7;
-            }
-        }
-    }
-
-    &__dropzone {
-        border: 2px dashed $main-bg-2;
-        border-radius: 6px;
-        padding: 30px 20px;
-        text-align: center;
-        cursor: pointer;
-        transition: all 0.2s;
-        min-height: 120px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        &:hover {
-            border-color: $burgundy;
-            background: rgba($main-bg-2, 0.05);
-        }
-
-        &--drag {
-            border-color: $burgundy;
-            background: rgba($burgundy, 0.1);
-        }
-
-        .add-file-form__input {
-            display: none;
-        }
-
-        .add-file-form__dropzone-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-
-            .add-file-form__dropzone-icon {
-                font-size: 32px;
+            &__icon {
+                width: 40px;
+                height: 40px;
+                min-width: 40px;
+                font-size: 18px;
             }
 
-            p {
-                @include font(14px, 500);
-                color: $main-bg-2;
-                margin: 0;
-            }
-
-            .add-file-form__dropzone-hint {
-                @include font(12px, 500);
-                color: $second-text;
+            &__name span:first-child {
+                @include font(13px, 600);
             }
         }
 
-        .add-file-form__file-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            width: 100%;
-            justify-content: center;
+        .add-file-form {
+            &__dropzone {
+                padding: 16px 12px;
 
-            .add-file-form__file-icon {
-                font-size: 28px;
-            }
+                .add-file-form__dropzone-content p {
+                    @include font(13px, 500);
+                }
 
-            .add-file-form__file-name {
-                @include font(14px, 600);
-                color: $main-bg-2;
-                margin: 0;
-            }
-
-            .add-file-form__file-size {
-                @include font(12px, 500);
-                color: $second-text;
-                margin: 0;
-            }
-
-            .add-file-form__file-remove {
-                background: $burgundy;
-                color: $main-bg-2;
-                border: none;
-                border-radius: 4px;
-                width: 24px;
-                height: 24px;
-                cursor: pointer;
-                @include font(12px, 700);
-
-                &:hover {
-                    opacity: 0.8;
+                .add-file-form__file-info {
+                    flex-wrap: wrap;
+                    gap: 8px;
                 }
             }
-        }
-    }
-
-    &__actions {
-        display: flex;
-        gap: 10px;
-
-        button {
-            flex: 1;
-            padding: 10px;
-            border-radius: 5px;
-            border: none;
-            @include font(14px, 600);
-            cursor: pointer;
-            transition: all 0.2s;
-
-            &:hover {
-                opacity: 0.8;
-            }
-        }
-
-        .add-file-form__submit {
-            background: $pale-yellow;
-            color: $main-text-2;
-
-            &--disabled {
-                opacity: 0.5;
-                cursor: not-allowed;
-
-                &:hover {
-                    opacity: 0.5;
-                }
-            }
-        }
-
-        .add-file-form__cancel {
-            background: $pale-grey;
-            color: $main-text-2;
         }
     }
 }

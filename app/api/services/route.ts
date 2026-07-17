@@ -7,7 +7,7 @@ const getRoute = createRoute({
 
 const postRoute = createRoute({
     collectionName: "services",
-    allowedRoles: ["director", "manager"],
+    allowedRoles: ["director", "moderator"],
     transformCreate: (data) => ({
         title: data.title,
         description: data.description || '',

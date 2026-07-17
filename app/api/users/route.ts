@@ -3,7 +3,7 @@ import { hashPassword } from "@/lib/password";
 
 const getRoute = createRoute({
     collectionName: "users",
-    allowedRoles: ["director"],
+    allowedRoles: ["director", "moderator"],
     transformResponse: (data) => {
         const { password, ...rest } = data;
         return rest;

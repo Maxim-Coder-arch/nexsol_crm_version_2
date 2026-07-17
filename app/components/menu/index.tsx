@@ -88,7 +88,7 @@ const Menu = () => {
                                     <div className={styles["parent-root-menu__child__profile-window__modal__main"]}>
                                         <Link href={"/"} onClick={handleCloseMenu}>Управлять заметками</Link>
                                         <Link href={"/"} onClick={handleCloseMenu}>Система ролей пользователей</Link>
-                                        <a href="nexsol.ru" onClick={handleCloseMenu}>Перейти на основной сайт</a>
+                                        <a href="https://nexsol.ru/" onClick={handleCloseMenu}>Перейти на основной сайт</a>
                                     </div>
                                     <div className={styles["parent-root-menu__child__profile-window__modal__profile"]}>
                                         <button onClick={handleOpenProfile}>Открыть профиль</button>

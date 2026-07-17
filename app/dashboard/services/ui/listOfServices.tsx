@@ -75,7 +75,7 @@ const ListOfServices = ({ services, handleDelete }: IListOfServicesProps) => {
                                 {service.url}
                             </a>
                         </div>
-                        <UserProtected roles={["director", "manager"]}>
+                        <UserProtected roles={["director", "moderator"]}>
                             <motion.button
                                 whileHover={{ scale: 1.15, rotate: 90 }}
                                 whileTap={{ scale: 0.9 }}

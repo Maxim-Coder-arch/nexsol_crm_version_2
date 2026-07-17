@@ -16,17 +16,26 @@ export async function GET() {
 
         const client = await clientPromise;
         const db = client.db('nexsol');
-        
+
         const files = await db.collection('files.files')
-            .find({ 'metadata.uploadedBy': payload.userId })
+            .find({
+                $or: [
+                    { 'metadata.uploadedBy': payload.userId },
+                    { 'metadata.isShared': true },
+                ]
+            })
             .sort({ uploadDate: -1 })
             .toArray();
+
         const formattedFiles = files.map(file => ({
             _id: file._id.toString(),
-            filename: file.filename,
+            filename: file.metadata?.originalName || file.filename,
             size: file.length,
-            contentType: file.contentType || 'unknown',
+            contentType: file.contentType || file.metadata?.mimeType || 'unknown',
             createdAt: file.uploadDate,
+            uploadedBy: file.metadata?.uploadedBy,
+            uploadedByName: file.metadata?.uploadedByName,
+            isShared: file.metadata?.isShared || false,
         }));
 
         return NextResponse.json(formattedFiles);

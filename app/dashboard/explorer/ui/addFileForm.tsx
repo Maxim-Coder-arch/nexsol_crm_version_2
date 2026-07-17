@@ -4,12 +4,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import styles from "../index.module.scss";
 
 interface AddFileFormProps {
-    onAdd: (file: File) => void;
+    onAdd: (file: File, isShared: boolean) => void;
     onCancel: () => void;
 }
 
 const AddFileForm = ({ onAdd, onCancel }: AddFileFormProps) => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [isShared, setIsShared] = useState(false);
     const [dragOver, setDragOver] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -42,7 +43,7 @@ const AddFileForm = ({ onAdd, onCancel }: AddFileFormProps) => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (selectedFile) {
-            onAdd(selectedFile);
+            onAdd(selectedFile, isShared);
         }
     };
 
@@ -56,19 +57,22 @@ const AddFileForm = ({ onAdd, onCancel }: AddFileFormProps) => {
     return (
         <motion.div
             initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity:  1, y: 0  }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
             className={styles["add-file-form"]}
         >
             <motion.form
                 initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity:  1, scale: 1 }}
+                animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.35, delay: 0.05 }}
                 onSubmit={handleSubmit}
                 className={styles["add-file-form__form"]}
             >
                 <div className={styles["add-file-form__header"]}>
                     <h3>Загрузка файла</h3>
+                    <button type="button" onClick={onCancel} className={styles["add-file-form__close"]}>
+                        ✕
+                    </button>
                 </div>
 
                 <div
@@ -112,6 +116,17 @@ const AddFileForm = ({ onAdd, onCancel }: AddFileFormProps) => {
                             <span className={styles["add-file-form__dropzone-hint"]}>Поддерживаются любые типы файлов</span>
                         </div>
                     )}
+                </div>
+
+                <div className={styles["add-file-form__shared"]}>
+                    <label>
+                        <input
+                            type="checkbox"
+                            checked={isShared}
+                            onChange={(e) => setIsShared(e.target.checked)}
+                        />
+                        <span>Сделать файл публичным (доступен всем пользователям)</span>
+                    </label>
                 </div>
 
                 <div className={styles["add-file-form__actions"]}>
