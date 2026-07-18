@@ -1,31 +1,12 @@
 import { motion } from "framer-motion";
-import styles from "../index.module.scss";
 import { HeroSectionUiTeamProps } from "@/types/hero-section/heroSectionUiTeam.type";
 import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
+import { containerVariants__team as containerVariants } from "@/configs/hero-section/teamAnimationVariants";
+import { personVariants__team as personVariants } from "@/configs/hero-section/teamAnimationVariants";
+import styles from "../index.module.scss";
 
 const HeroSectionUiTeam = ({ team }: HeroSectionUiTeamProps) => {
   const show = useTimeoutAnimationLoader();
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.08,
-        delayChildren: 0.15,
-      },
-    },
-  };
-
-  const personVariants = {
-    hidden: { opacity: 0, y: 20, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { duration: 0.4, ease: "easeOut" },
-    },
-  } as const;
 
   if (team.length === 0) {
     return (

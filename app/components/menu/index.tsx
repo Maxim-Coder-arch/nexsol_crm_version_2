@@ -1,7 +1,7 @@
 // components/layout/Menu/index.tsx
 'use client';
 
-import { menuItems } from "@/config-and-data/menu.cnf";
+import { menuItems } from "@/configs/components/menu/menu.cnf";
 import Link from "next/link";
 import styles from "./index.module.scss";
 import { usePathname } from "next/navigation";

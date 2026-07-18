@@ -8,7 +8,7 @@ import { clientType } from "@/types/store-types/client.type";
 import { showToast } from "@/store/slices/uiSlice";
 import { useAppDispatch } from "@/app/hooks/store";
 import { IFileCard } from "@/types/explorer/fileCard.type";
-import { MAX_FILE_SIZE } from "@/config-and-data/explorer.cnf";
+import { MAX_FILE_SIZE } from "@/configs/explorer/explorer.cnf";
 
 const FilesPage = () => {
     const dispatch = useAppDispatch();

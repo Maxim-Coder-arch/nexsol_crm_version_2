@@ -1,4 +1,4 @@
-import { BidsStatus, statusOptions } from "@/config-and-data/bids.cnf";
+import { BidsStatus, statusOptions } from "@/configs/bids/bids.cnf";
 import styles from "../index.module.scss";
 import { BidCardProps } from "@/types/bids/bidCard.type";
 import UserProtected from "@/app/components/share/protected";

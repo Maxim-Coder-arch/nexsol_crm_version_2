@@ -1,4 +1,4 @@
-import createRoute from "@/helpers/createRoute";
+import createRoute from "@/helpers/global/createRoute";
 
 const route = createRoute({
     collectionName: "services",

@@ -1,11 +1,10 @@
 import { HeroSectionUiDetailStatsProps } from "@/types/hero-section/uiDetailStatsProps";
 import { motion } from "framer-motion";
-import styles from "../index.module.scss";
 import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
+import styles from "../index.module.scss";
 
 const HeroSectionUiDetailStats = ({ detailUsers }: HeroSectionUiDetailStatsProps) => {
     const show = useTimeoutAnimationLoader();
-    
     return (
         <motion.div 
         initial={{opacity: 0}}
@@ -41,5 +40,3 @@ const HeroSectionUiDetailStats = ({ detailUsers }: HeroSectionUiDetailStatsProps
 }
 
 export default HeroSectionUiDetailStats;
-
-

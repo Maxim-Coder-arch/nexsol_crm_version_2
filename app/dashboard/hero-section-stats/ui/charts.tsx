@@ -1,9 +1,17 @@
-import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { 
+  CartesianGrid, 
+  Legend, 
+  Line, 
+  LineChart, 
+  ResponsiveContainer, 
+  Tooltip, 
+  XAxis, 
+  YAxis } from "recharts";
 import { motion } from "framer-motion";
-import styles from "../index.module.scss";
 import { HeroSectionUiChartsProps } from "@/types/hero-section/uiProps.type";
 import CustomTooltip from "./customTooltip";
 import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
+import styles from "../index.module.scss";
 
 const HeroSectionUiCharts = ({ 
   chartPeriod, 

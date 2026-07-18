@@ -1,7 +1,7 @@
 "use client";
 import ClientsIncludes from "./ui/includes";
 import { IClient } from "@/types/clients/client.type";
-import { physicalStatuses, workStatuses } from "@/config-and-data/clients.cnf";
+import { physicalStatuses, workStatuses } from "@/configs/clients/clients.cnf";
 import TemplateContent from "@/app/components/share/template";
 import { 
     useCreateClientMutation, 

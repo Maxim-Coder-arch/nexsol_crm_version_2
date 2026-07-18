@@ -1,4 +1,4 @@
-import { BidsStatus } from "@/config-and-data/bids.cnf";
+import { BidsStatus } from "@/configs/bids/bids.cnf";
 
 export interface IBid {
     _id: string;

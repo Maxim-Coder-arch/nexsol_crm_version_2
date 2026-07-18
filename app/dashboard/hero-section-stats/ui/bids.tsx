@@ -1,31 +1,12 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { HeroSectionUiBidsProps } from "@/types/hero-section/bidsProps";
-import styles from "../index.module.scss";
 import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
+import { containerVariants__bids as containerVariants } from "@/configs/hero-section/bidsAnimationVariants";
+import { cardVariants__bids as cardVariants} from "@/configs/hero-section/bidsAnimationVariants";
+import styles from "../index.module.scss";
 
 const HeroSectionUiBids = ({ bids }: HeroSectionUiBidsProps) => {
   const show = useTimeoutAnimationLoader();
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.15,
-      },
-    },
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 20, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { duration: 0.4, ease: "easeOut" },
-    },
-  } as const;
 
   if (bids.length === 0) {
     return (
@@ -56,7 +37,7 @@ const HeroSectionUiBids = ({ bids }: HeroSectionUiBidsProps) => {
 
   return (
     <motion.div
-      key={bids.length} // ✅ ключ для перезапуска анимации при изменении данных
+      key={bids.length}
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: show ? 1 : 0, y: show ? 0 : 15 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
@@ -72,7 +53,7 @@ const HeroSectionUiBids = ({ bids }: HeroSectionUiBidsProps) => {
 
       <AnimatePresence mode="wait">
         <motion.div
-          key={bids.length} // ✅ ключ для перезапуска
+          key={bids.length}
           variants={containerVariants}
           initial="hidden"
           animate={show ? "visible" : "hidden"}

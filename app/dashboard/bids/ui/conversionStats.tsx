@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { BidsStatus } from "@/config-and-data/bids.cnf";
+import { BidsStatus } from "@/configs/bids/bids.cnf";
 import styles from "../index.module.scss";
 import { ConversionStatsProps } from "@/types/bids/coversionStats.type";
 import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";

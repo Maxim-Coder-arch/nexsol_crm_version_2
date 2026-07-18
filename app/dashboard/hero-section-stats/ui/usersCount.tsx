@@ -1,31 +1,12 @@
 import { motion } from "framer-motion";
-import styles from "../index.module.scss";
 import { HeroSectionUiUsersCountProps } from "@/types/hero-section/usersCountProps";
 import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
+import { containerVariants__usersCount as containerVariants } from "@/configs/hero-section/usersCountAnimationVariants";
+import { itemVariants__usersCount as itemVariants } from "@/configs/hero-section/usersCountAnimationVariants";
+import styles from "../index.module.scss";
 
 const HeroSectionUiUsersCount = ({ users }: HeroSectionUiUsersCountProps) => {
   const show = useTimeoutAnimationLoader();
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.08,
-        delayChildren: 0.15,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { duration: 0.4, ease: "easeOut" },
-    },
-  } as const;
 
   return (
     <motion.div

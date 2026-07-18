@@ -1,4 +1,4 @@
-import createRoute from "@/helpers/createRoute";
+import createRoute from "@/helpers/global/createRoute";
 import { IClient } from "@/types/clients/client.type";
 
 const getRoute = createRoute({

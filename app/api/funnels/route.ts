@@ -1,4 +1,4 @@
-import createRoute from "@/helpers/createRoute";
+import createRoute from "@/helpers/global/createRoute";
 
 const getRoute = createRoute({
     collectionName: "funnels",

@@ -9,23 +9,12 @@ import { DetailUser } from "@/types/hero-section/detailUser.type";
 import { TeamMember } from "@/types/hero-section/teamMember.type";
 import { UserStat } from "@/types/hero-section/userStat.type";
 import { VisitorsStats } from "@/types/hero-section/visitorStats.type";
-import { API_URLS, initialUserStats } from "@/config-and-data/hero-section";
 import { showToast } from "@/store/slices/uiSlice";
 import { useAppDispatch } from "@/app/hooks/store";
+import { initialUserStats } from "@/configs/hero-section/initialUserStats";
+import { API_URLS } from "@/configs/hero-section/apiUrls";
+import { fetchData } from "@/helpers/hero-section/fetchDataHelper";
 
-const fetchData = async (
-  url: string,
-  onSuccess: (data: any[]) => void,
-  onError?: () => void
-) => {
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
-    onSuccess(Array.isArray(data) ? data : []);
-  } catch {
-    if (onError) onError();
-  }
-};
 
 const HeroSectionStats = () => {
   const dispatch = useAppDispatch();

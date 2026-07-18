@@ -1,4 +1,4 @@
-import { BidsStatus } from "@/config-and-data/bids.cnf";
+import { BidsStatus } from "@/configs/bids/bids.cnf";
 import { IBid } from "./bid.type";
 
 export interface IIncludesBidsProps {

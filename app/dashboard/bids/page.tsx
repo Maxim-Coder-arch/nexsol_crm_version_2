@@ -1,5 +1,5 @@
 "use client";
-import { BidsStatus, columnsData } from "@/config-and-data/bids.cnf";
+import { BidsStatus, columnsData } from "@/configs/bids/bids.cnf";
 import IncludesBids from "./ui/includes";
 import TemplateContent from "@/app/components/share/template";
 import { 

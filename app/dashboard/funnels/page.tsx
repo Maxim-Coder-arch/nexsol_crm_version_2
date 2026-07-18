@@ -3,7 +3,7 @@ import { useState } from "react";
 import IncludesFunnels from "./ui/includes";
 import { FunnelType } from "@/types/funnels/ItemType.type";
 import { IFunnel } from "@/types/funnels/funnel.type";
-import { funnelTypes, stageTypes } from "@/config-and-data/funnels.cnf";
+import { funnelTypes, stageTypes } from "@/configs/funnels/funnels.cnf";
 import TemplateContent from "@/app/components/share/template";
 import { 
     useCreateFunnelMutation, 
