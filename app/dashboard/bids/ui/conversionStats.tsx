@@ -1,36 +1,14 @@
 import { motion } from "framer-motion";
-import { BidsStatus } from "@/configs/bids/bids.cnf";
-import styles from "../index.module.scss";
 import { ConversionStatsProps } from "@/types/bids/coversionStats.type";
 import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
+import { itemVariants__conversionStats as itemVariants } from "@/configs/bids/bids.cnf";
+import { generateStatsData } from "@/helpers/bids/generateStatsData";
+import styles from "../index.module.scss";
 
 const ConversionStats = ({ bids }: ConversionStatsProps) => {
   const show = useTimeoutAnimationLoader();
-
-  const total = bids.length;
-  const finished = bids.filter(b => b.status === BidsStatus.finished).length;
-  const inProgress = bids.filter(b => b.status === BidsStatus.inProgress).length;
-  const newBids = bids.filter(b => b.status === BidsStatus.new).length;
-  const conversionRate = total > 0 ? ((finished / total) * 100).toFixed(1) : "0";
-
-  const stats = [
-    { label: "Всего заявок", value: total },
-    { label: "Новые", value: newBids },
-    { label: "В работе", value: inProgress },
-    { label: "Завершено", value: finished },
-    { label: "Конверсия", value: `${conversionRate}%` },
-  ];
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 15, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { duration: 0.4, ease: "easeOut" },
-    },
-  } as const;
-
+  const stats = generateStatsData(bids);
+  
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}

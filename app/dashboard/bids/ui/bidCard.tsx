@@ -1,12 +1,11 @@
 import { BidsStatus, statusOptions } from "@/configs/bids/bids.cnf";
-import styles from "../index.module.scss";
 import { BidCardProps } from "@/types/bids/bidCard.type";
 import UserProtected from "@/app/components/share/protected";
+import { formattedData } from "@/helpers/bids/bidcardFormatted";
+import styles from "../index.module.scss";
 
 const BidCard = ({ bid, onStatusChange, onDelete }: BidCardProps) => {
-    const date = new Date(bid.createdAt);
-    const formattedDate = date.toLocaleDateString('ru-RU');
-    const formattedTime = date.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+    const { formattedDate, formattedTime } = formattedData(bid.createdAt);
 
     return (
         <div className={styles["root-bids__column__bids__bid"]}>

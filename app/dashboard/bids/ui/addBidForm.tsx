@@ -1,34 +1,17 @@
-import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import styles from "../index.module.scss";
 import { AddBidFormProps } from "@/types/bids/addBidForm.type";
 import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
 import UserProtected from "@/app/components/share/protected";
+import styles from "../index.module.scss";
 
-const AddBidForm = ({ onAddBid }: AddBidFormProps) => {
+const AddBidForm = ({ 
+  handleSubmit, 
+  handleChange, 
+  isOpen, 
+  setIsOpen, 
+  formData
+ }: AddBidFormProps) => {
   const show = useTimeoutAnimationLoader();
-  const [formData, setFormData] = useState({
-    username: "",
-    useremail: "",
-    usecontact: "",
-    comment: "",
-  });
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    onAddBid(formData);
-    setFormData({ username: "", useremail: "", usecontact: "", comment: "" });
-    setIsOpen(false);
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
 
   return (
     <UserProtected roles={["director", "moderator"]}>

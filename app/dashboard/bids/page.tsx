@@ -12,6 +12,7 @@ import { IBid } from "@/types/bids/bid.type";
 import { clientType } from "@/types/store-types/client.type";
 import { showToast } from "@/store/slices/uiSlice";
 import { useAppDispatch } from "@/app/hooks/store";
+import { useState } from "react";
 
 const BidsPage = () => {
     const dispatch = useAppDispatch();
@@ -19,6 +20,13 @@ const BidsPage = () => {
     const [createBid] = useCreateBidMutation();
     const [updateBid] = useUpdateBidMutation();
     const [deleteBid] = useDeleteBidMutation();
+    const [isOpen, setIsOpen] = useState(false);
+    const [formData, setFormData] = useState({
+        username: "",
+        useremail: "",
+        usecontact: "",
+        comment: "",
+    });
 
     const handleStatusChange = async (id: string, newStatus: BidsStatus) => {
         try {
@@ -126,6 +134,21 @@ const BidsPage = () => {
         }
     };
 
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+
+        handleAddBid(formData);
+        setFormData({ username: "", useremail: "", usecontact: "", comment: "" });
+        setIsOpen(false);
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setFormData({
+        ...formData,
+        [e.target.name]: e.target.value,
+        });
+    };
+
     if (isLoading) return <div>Загрузка...</div>;
     
     if (error) {
@@ -144,8 +167,12 @@ const BidsPage = () => {
                 bids={bids}
                 handleStatusChange={handleStatusChange}
                 handleDelete={handleDelete}
-                handleAddBid={handleAddBid}
                 columnsData={columnsData}
+                handleSubmit={handleSubmit}
+                handleChange={handleChange}
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                formData={formData}
             />
         </TemplateContent>
     );

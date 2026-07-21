@@ -1,33 +1,14 @@
 import { motion } from "framer-motion";
 import BidCard from "./bidCard";
-import styles from "../index.module.scss";
 import { BidsColumnProps } from "@/types/bids/bidsColumn.type";
 import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
+import { containerVariants__bidsColumn as containerVariants } from "@/configs/bids/bids.cnf";
+import { cardVariants__bidsColumn as cardVariants } from "@/configs/bids/bids.cnf";
+import styles from "../index.module.scss";
 
 const BidsColumn = ({ title, type, bids, onStatusChange, onDelete }: BidsColumnProps) => {
   const show = useTimeoutAnimationLoader();
   const columnBids = bids.filter(bid => bid.status === type);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.06,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 15, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { duration: 0.35, ease: "easeOut" },
-    },
-  } as const;
 
   return (
     <motion.div
