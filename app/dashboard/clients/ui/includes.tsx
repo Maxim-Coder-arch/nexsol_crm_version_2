@@ -1,18 +1,21 @@
 import AddClientButton from "./addClientButton";
 import ClientsColumn from "./clientColumn";
-import styles from "../index.module.scss";
 import { ClientIncludesProps } from "@/types/clients/clientIncludes.type";
+import styles from "../index.module.scss";
 
-const ClientsIncludes = ({ 
-    workStatuses, 
-    physicalStatuses, 
-    addClient, 
-    successfulClients, 
-    updateClient, 
-    deleteClient, 
-    lostClients
- }: ClientIncludesProps) => {
-    
+const ClientsIncludes = ({
+    workStatuses,
+    physicalStatuses,
+    successfulClients,
+    lostClients,
+    addClient,
+    updateClient,
+    deleteClient,
+    isOpen,
+    setIsOpen,
+    form,
+    actions,
+}: ClientIncludesProps) => {
     return (
         <section id="clients">
             <div className={styles["root-clients"]}>
@@ -20,7 +23,12 @@ const ClientsIncludes = ({
                     workStatuses={workStatuses}
                     physicalStatuses={physicalStatuses}
                     onAdd={addClient}
+                    isOpen={isOpen}
+                    setIsOpen={setIsOpen}
+                    form={form}
+                    actions={actions}
                 />
+
                 <div className={styles["columns-container"]}>
                     <ClientsColumn
                         title="Успешные клиенты"
@@ -30,6 +38,7 @@ const ClientsIncludes = ({
                         onUpdate={updateClient}
                         onDelete={deleteClient}
                     />
+
                     <ClientsColumn
                         title="Потерянные клиенты"
                         clients={lostClients}
@@ -41,7 +50,7 @@ const ClientsIncludes = ({
                 </div>
             </div>
         </section>
-    )
-}
+    );
+};
 
 export default ClientsIncludes;

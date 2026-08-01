@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import styles from "../index.module.scss";
 import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
+import styles from "../index.module.scss";
 
 const EmptyState = () => {
     const show = useTimeoutAnimationLoader();

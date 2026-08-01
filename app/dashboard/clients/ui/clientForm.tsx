@@ -1,118 +1,99 @@
-import { useState } from "react";
 import styles from "../index.module.scss";
 import { ClientFormProps } from "@/types/clients/clientForm.type";
 
-const ClientForm = ({ 
-    initialData, 
-    workStatuses, 
-    physicalStatuses, 
-    onSubmit, 
-    onCancel
- }: ClientFormProps) => {
-    
-    const [name, setName] = useState(initialData?.name || "");
-    const [workStatus, setWorkStatus] = useState(initialData?.workStatus || "new");
-    const [physicalStatus, setPhysicalStatus] = useState(initialData?.physicalStatus || "successful");
-    const [comment, setComment] = useState(initialData?.comment || "");
-    const [additionalData, setAdditionalData] = useState<{ key: string; value: string }[]>(
-        initialData?.additionalData || [{ key: "", value: "" }]
-    );
-
-    const handleAddField = () => {
-        setAdditionalData([...additionalData, { key: "", value: "" }]);
-    };
-
-    const handleRemoveField = (index: number) => {
-        setAdditionalData(additionalData.filter((_, i) => i !== index));
-    };
-
-    const handleFieldChange = (index: number, field: "key" | "value", value: string) => {
-        const updated = [...additionalData];
-        updated[index][field] = value;
-        setAdditionalData(updated);
-    };
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!name.trim()) {
-            alert("Введите имя клиента");
-            return;
-        }
-        onSubmit({
-            name: name.trim(),
-            workStatus,
-            physicalStatus,
-            comment: comment.trim(),
-            additionalData: additionalData.filter(field => field.key.trim() || field.value.trim()),
-        });
-    };
-
+const ClientForm = ({
+    workStatuses,
+    physicalStatuses,
+    form,
+    actions,
+    initialData,
+    onCancel,
+}: ClientFormProps) => {
     return (
-        <form onSubmit={handleSubmit} className={styles["client-form"]}>
+        <form onSubmit={actions.handleSubmit} className={styles["client-form"]}>
             <h3>{initialData ? "Редактировать клиента" : "Новый клиент"}</h3>
 
             <div className={styles["form-group"]}>
                 <label>Имя клиента *</label>
                 <input
                     type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={form.name}
                     placeholder="Введите имя или название компании"
+                    onChange={(e) => actions.setName(e.target.value)}
                 />
             </div>
 
             <div className={styles["form-row"]}>
                 <div className={styles["form-group"]}>
                     <label>Рабочий статус</label>
-                    <select value={workStatus} onChange={(e) => setWorkStatus(e.target.value)}>
-                        {workStatuses.map(s => (
-                            <option key={s.value} value={s.value}>{s.label}</option>
+                    <select
+                        value={form.workStatus}
+                        onChange={(e) => actions.setWorkStatus(e.target.value as any)}
+                    >
+                        {workStatuses.map(status => (
+                            <option key={status.value} value={status.value}>
+                                {status.label}
+                            </option>
                         ))}
                     </select>
                 </div>
 
                 <div className={styles["form-group"]}>
                     <label>Физический статус</label>
-                    <select value={physicalStatus} onChange={(e) => setPhysicalStatus(e.target.value)}>
-                        {physicalStatuses.map(s => (
-                            <option key={s.value} value={s.value}>{s.label}</option>
+                    <select
+                        value={form.physicalStatus}
+                        onChange={(e) => actions.setPhysicalStatus(e.target.value as any)}
+                    >
+                        {physicalStatuses.map(status => (
+                            <option key={status.value} value={status.value}>
+                                {status.label}
+                            </option>
                         ))}
                     </select>
                 </div>
             </div>
 
             <div className={styles["form-group"]}>
-                <label>Комментарий по сделке</label>
+                <label>Комментарий</label>
                 <textarea
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                    placeholder="Введите комментарий..."
                     rows={3}
+                    value={form.comment}
+                    placeholder="Введите комментарий..."
+                    onChange={(e) => actions.setComment(e.target.value)}
                 />
             </div>
 
             <div className={styles["form-group"]}>
                 <label>Дополнительные данные</label>
-                {additionalData.map((field, index) => (
+                {form.additionalData.map((field, index) => (
                     <div key={index} className={styles["additional-field"]}>
                         <input
                             type="text"
-                            placeholder="Ключ (например: Телефон)"
+                            placeholder="Ключ"
                             value={field.key}
-                            onChange={(e) => handleFieldChange(index, "key", e.target.value)}
+                            onChange={(e) => actions.handleFieldChange(index, "key", e.target.value)}
                         />
                         <input
                             type="text"
                             placeholder="Значение"
                             value={field.value}
-                            onChange={(e) => handleFieldChange(index, "value", e.target.value)}
+                            onChange={(e) => actions.handleFieldChange(index, "value", e.target.value)}
                         />
-                        {additionalData.length > 1 && (
-                            <button type="button" onClick={() => handleRemoveField(index)}>✕</button>
+                        {form.additionalData.length > 1 && (
+                            <button
+                                type="button"
+                                onClick={() => actions.handleRemoveField(index)}
+                            >
+                                ✕
+                            </button>
                         )}
                     </div>
                 ))}
-                <button type="button" onClick={handleAddField} className={styles["add-field-btn"]}>
+                <button
+                    type="button"
+                    className={styles["add-field-btn"]}
+                    onClick={actions.handleAddField}
+                >
                     + Добавить поле
                 </button>
             </div>
@@ -121,7 +102,7 @@ const ClientForm = ({
                 <button type="submit" className={styles["submit-btn"]}>
                     {initialData ? "Сохранить" : "Добавить"}
                 </button>
-                <button type="button" onClick={onCancel} className={styles["cancel-btn"]}>
+                <button type="button" className={styles["cancel-btn"]} onClick={onCancel}>
                     Отмена
                 </button>
             </div>

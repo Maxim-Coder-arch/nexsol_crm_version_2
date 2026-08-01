@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 import ReviewCard from "./reviewCard";
 import EmptyState from "./emptyState";
-import styles from "../index.module.scss";
 import { ReviewsColumnProps } from "@/types/reviews/reviewColumn.type";
 import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
+import styles from "../index.module.scss";
 
 const ReviewsColumn = ({
   title,

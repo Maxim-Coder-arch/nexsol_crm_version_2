@@ -1,6 +1,6 @@
 import ReviewsColumn from "./ReviewsColumn"
-import styles from "../index.module.scss";
 import { ReviewSectioUiIncludesProps } from "@/types/reviews/reviewSectionUiIncludes.type";
+import styles from "../index.module.scss";
 
 const ReviewsSectionUiIncludes = ({ 
     newReviews, 

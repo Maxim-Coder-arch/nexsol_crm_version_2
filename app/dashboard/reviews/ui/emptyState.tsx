@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { EmptyStateProps } from "@/types/reviews/emptyState.type";
-import styles from "../index.module.scss";
 import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
+import styles from "../index.module.scss";
 
 const EmptyState = ({ type }: EmptyStateProps) => {
   const show = useTimeoutAnimationLoader();

@@ -1,6 +1,6 @@
 import UserProtected from "@/app/components/share/protected";
-import styles from "../index.module.scss";
 import { ReviewCardProps } from "@/types/reviews/reviewCard.type";
+import styles from "../index.module.scss";
 
 const ReviewCard = ({ 
     review, 

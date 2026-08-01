@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import ClientCard from "./clientCard";
 import EmptyState from "./emptyState";
-import styles from "../index.module.scss";
 import { ClientsColumnProps } from "@/types/clients/clientColumn.type";
 import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
+import { containerVariants__client as containerVariants } from "@/configs/clients/clients.cnf";
+import { cardVariants__client as cardVariants } from "@/configs/clients/clients.cnf";
+import styles from "../index.module.scss";
 
 const ClientsColumn = ({
     title,
@@ -14,27 +16,6 @@ const ClientsColumn = ({
     onDelete
 }: ClientsColumnProps) => {
     const show = useTimeoutAnimationLoader();
-
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.08,
-                delayChildren: 0.1,
-            },
-        },
-    };
-
-    const cardVariants = {
-        hidden: { opacity: 0, y: 15, scale: 0.95 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            transition: { duration: 0.35, ease: "easeOut" },
-        },
-    } as const;
 
     return (
         <motion.div

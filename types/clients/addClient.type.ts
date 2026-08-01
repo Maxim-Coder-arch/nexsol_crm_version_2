@@ -1,27 +1,17 @@
 import { Dispatch, SetStateAction } from "react";
 import { IClient, IStatusOption } from "./common.type";
 import {
-    ClientFormActions,
     ClientFormState,
+    ClientFormActions,
 } from "./clientForm.type";
 
-export interface ClientIncludesProps {
+export interface AddClientButtonProps {
     workStatuses: readonly IStatusOption[];
     physicalStatuses: readonly IStatusOption[];
 
-    successfulClients: IClient[];
-    lostClients: IClient[];
-
-    addClient(
+    onAdd: (
         client: Omit<IClient, "_id" | "createdAt" | "updatedAt">
-    ): void;
-
-    updateClient(
-        id: string,
-        updates: Partial<IClient>
-    ): void;
-
-    deleteClient(id: string): void;
+    ) => void;
 
     isOpen: boolean;
     setIsOpen: Dispatch<SetStateAction<boolean>>;
