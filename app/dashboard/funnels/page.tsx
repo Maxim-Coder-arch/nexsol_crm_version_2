@@ -18,13 +18,22 @@ import { useAppDispatch } from "@/app/hooks/store";
 const FunnelsPage = () => {
     const dispatch = useAppDispatch();
     const { data: funnels = [], isLoading, error } = useGetFunnelsQuery(void 0) as clientType<IFunnel>;
-    
     const [createFunnel] = useCreateFunnelMutation();
     const [updateFunnel] = useUpdateFunnelMutation();
     const [deleteFunnel] = useDeleteFunnelMutation();
     const [filter, setFilter] = useState<FunnelType | 'all'>('all');
     const [editingFunnel, setEditingFunnel] = useState<IFunnel | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [title, setTitle] = useState('');
+    const [type, setType] = useState<FunnelType>('sales');
+
+    
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!title.trim()) return;
+        handleAddFunnel({ title: title.trim(), type });
+        setTitle('');
+    };
 
     const handleAddFunnel = async (data: { title: string; type: FunnelType }) => {
         try {
@@ -123,12 +132,16 @@ const FunnelsPage = () => {
                 filteredFunnels={filteredFunnels}
                 funnelTypes={funnelTypes}
                 stageTypes={stageTypes}
-                onAddFunnel={handleAddFunnel}
                 onDeleteFunnel={handleDeleteFunnel}
                 onEditFunnel={handleEditFunnel}
                 onSaveFunnel={handleSaveFunnel}
                 onFilterChange={setFilter}
                 onCloseModal={handleCloseModal}
+                title={title}
+                setTitle={setTitle}
+                type={type}
+                setType={setType}
+                handleSubmit={handleSubmit}
             />
         </TemplateContent>
     );

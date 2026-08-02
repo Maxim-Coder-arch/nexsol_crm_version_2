@@ -1,8 +1,8 @@
 import { useState } from "react";
-import styles from "../index.module.scss";
 import { FunnelType, StageType } from "@/types/funnels/ItemType.type";
 import { IFunnelItem } from "@/types/funnels/funneltem.type";
 import { IEditFunnelModalProps } from "@/types/funnels/editFunnelModal.type";
+import styles from "../index.module.scss";
 
 const EditFunnelModal = ({ 
     funnel, 
@@ -12,7 +12,6 @@ const EditFunnelModal = ({
     funnelTypes,
     stageTypes
 }: IEditFunnelModalProps) => {
-
     const [title, setTitle] = useState('');
     const [type, setType] = useState<FunnelType>('sales');
     const [items, setItems] = useState<IFunnelItem[]>([]);

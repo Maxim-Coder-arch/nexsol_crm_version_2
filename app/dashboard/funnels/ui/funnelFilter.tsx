@@ -1,12 +1,11 @@
-import styles from "../index.module.scss";
 import { IFunnelFilterProps } from "@/types/funnels/funnelFilter.type";
+import styles from "../index.module.scss";
 
 const FunnelFilter = ({ 
     activeFilter, 
     onFilterChange,
     funnelTypes
 }: IFunnelFilterProps) => {
-    
     return (
         <div className={styles["funnel-filter"]}>
             <button 

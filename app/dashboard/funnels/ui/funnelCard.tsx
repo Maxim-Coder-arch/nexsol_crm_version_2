@@ -2,6 +2,7 @@ import FunnelItem from "./funnelItem";
 import styles from "../index.module.scss";
 import { IFunnelCardProps } from "@/types/funnels/funnelCard.type";
 import UserProtected from "@/app/components/share/protected";
+import { typedLabel } from "@/helpers/funnels/typedFunnel";
 
 const FunnelCard = ({ 
     funnel, 
@@ -10,9 +11,7 @@ const FunnelCard = ({
     funnelTypes,
     stageTypes,
 }: IFunnelCardProps) => {
-    
-    const typeLabel = funnelTypes.find(t => t.value === funnel.type)?.label || funnel.type;
-    
+    const typeLabel = typedLabel(funnelTypes, funnel);
 
     return (
         <div 

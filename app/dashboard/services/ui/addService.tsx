@@ -1,11 +1,11 @@
 import { AddServiceProps } from "@/types/services/addService.type";
-import styles from "../index.module.scss";
 import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
 import { motion } from "framer-motion";
 import UserProtected from "@/app/components/share/protected";
+import styles from "../index.module.scss";
 
 const AddService = ({ setFormData, handleAdd, formData }: AddServiceProps) => {
-    const show  =useTimeoutAnimationLoader();
+    const show = useTimeoutAnimationLoader();
     
     return (
         <UserProtected roles={["director", "moderator"]}>

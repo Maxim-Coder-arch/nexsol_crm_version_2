@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import IncludesServices from "./ui/includes";
 import { IService } from "@/types/services/service.type";
 import TemplateContent from "@/app/components/share/template";

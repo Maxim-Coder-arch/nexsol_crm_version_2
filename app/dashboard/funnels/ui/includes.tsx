@@ -1,11 +1,11 @@
 import { IncludesFunnelsProps } from "@/types/funnels/includesFunnel.type";
-import styles from "../index.module.scss";
 import AddFunnel from "./addFunnel";
 import EditFunnelModal from "./editFunnelModal";
 import FunnelCard from "./funnelCard";
 import FunnelFilter from "./funnelFilter";
 import { motion } from "framer-motion";
 import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
+import styles from "../index.module.scss";
 
 const IncludesFunnels = ({
     filter,
@@ -14,20 +14,30 @@ const IncludesFunnels = ({
     filteredFunnels,
     funnelTypes,
     stageTypes,
-    onAddFunnel,
     onDeleteFunnel,
     onEditFunnel,
     onSaveFunnel,
     onFilterChange,
     onCloseModal,
+    title,
+    setTitle,
+    type,
+    setType,
+    handleSubmit,
 }: IncludesFunnelsProps) => {
-
     const show = useTimeoutAnimationLoader();
 
     return (
         <section id="funnels">
             <div className={styles["funnels"]}>
-                <AddFunnel onAdd={onAddFunnel} funnelTypes={funnelTypes} />
+                <AddFunnel 
+                    title={title}
+                    setTitle={setTitle}
+                    type={type}
+                    setType={setType}
+                    handleSubmit={handleSubmit}
+                    funnelTypes={funnelTypes}
+                 />
                 
                 <FunnelFilter 
                     activeFilter={filter} 

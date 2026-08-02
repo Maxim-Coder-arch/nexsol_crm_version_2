@@ -6,13 +6,15 @@ export interface IFunnelItem {
     type: StageType;
 }
 
+export interface IItemStageType {
+    value: StageType; 
+    label: string; 
+    color: string
+}
+
 export interface IFunnelItemProps {
     item: IFunnelItem; 
     index: number; 
     total: number, 
-    stageTypes: { 
-        value: StageType; 
-        label: string; 
-        color: string
-    }[]
+    stageTypes: IItemStageType[]
 }

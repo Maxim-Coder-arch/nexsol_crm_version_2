@@ -1,22 +1,20 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
-import styles from "../index.module.scss";
 import { FunnelType } from "@/types/funnels/ItemType.type";
 import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
 import UserProtected from "@/app/components/share/protected";
+import { IAddFunnel } from "@/types/funnels/addFunnel.type";
+import styles from "../index.module.scss";
 
-const AddFunnel = ({ onAdd, funnelTypes }: { onAdd: (data: { title: string; type: FunnelType }) => void, funnelTypes: { value: FunnelType; label: string }[] }) => {
+const AddFunnel = ({ 
+    funnelTypes, 
+    title, 
+    setTitle, 
+    type, 
+    setType, 
+    handleSubmit
+ }: IAddFunnel) => {
     const show = useTimeoutAnimationLoader();
-    const [title, setTitle] = useState('');
-    const [type, setType] = useState<FunnelType>('sales');
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!title.trim()) return;
-        onAdd({ title: title.trim(), type });
-        setTitle('');
-    };
-
+    
     return (
         <UserProtected>
             <motion.div

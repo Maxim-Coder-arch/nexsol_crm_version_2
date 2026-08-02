@@ -1,9 +1,7 @@
 import AddService from "./addService";
 import ListOfServices from "./listOfServices";
-import styles from "../index.module.scss";
 import { IncludesServicesProps } from "@/types/services/includesService.type";
-
-
+import styles from "../index.module.scss";
 
 const IncludesServices = ({ 
     services, 
