@@ -1,47 +1,24 @@
-'use client';
-import { useState, useRef, Dispatch, SetStateAction } from "react";
 import { motion } from "framer-motion";
 import { AddFileFormProps } from "@/types/explorer/addFileForm.type";
-import styles from "../index.module.scss";
 import { formatSize } from "@/helpers/explorer/formatSize";
 import { handleFileSelect } from "@/helpers/explorer/handleFileSelect";
+import { handleDrop } from "@/helpers/explorer/handelFileDrop";
+import { handleDragOver } from "@/helpers/explorer/handleDragOver";
+import { handleDragLeave } from "@/helpers/explorer/handleDragLeave";
+import { handleSubmit } from "@/helpers/explorer/submit";
+import styles from "../index.module.scss";
 
-const AddFileForm = ({ onAdd, onCancel }: AddFileFormProps) => {
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
-    const [isShared, setIsShared] = useState(false);
-    const [dragOver, setDragOver] = useState(false);
-    const fileInputRef = useRef<HTMLInputElement>(null);
-
-    
-
-    const handleDrop = (e: React.DragEvent) => {
-        e.preventDefault();
-        setDragOver(false);
-        const file = e.dataTransfer.files?.[0];
-        if (file) {
-            setSelectedFile(file);
-        }
-    };
-
-    const handleDragOver = (e: React.DragEvent) => {
-        e.preventDefault();
-        setDragOver(true);
-    };
-
-    const handleDragLeave = (e: React.DragEvent) => {
-        e.preventDefault();
-        setDragOver(false);
-    };
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (selectedFile) {
-            onAdd(selectedFile, isShared);
-        }
-    };
-
-    
-
+const AddFileForm = ({ 
+    onAdd, 
+    onCancel, 
+    selectedFile,
+    setSelectedFile,
+    isShared,
+    setIsShared,
+    dragOver,
+    setDragOver,
+    fileInputRef,
+  }: AddFileFormProps) => {
     return (
         <motion.div
             initial={{ opacity: 0, y: 15 }}
@@ -53,7 +30,7 @@ const AddFileForm = ({ onAdd, onCancel }: AddFileFormProps) => {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.35, delay: 0.05 }}
-                onSubmit={handleSubmit}
+                onSubmit={(e) => handleSubmit(e, selectedFile, isShared, onAdd)}
                 className={styles["add-file-form__form"]}
             >
                 <div className={styles["add-file-form__header"]}>
@@ -65,9 +42,9 @@ const AddFileForm = ({ onAdd, onCancel }: AddFileFormProps) => {
 
                 <div
                     className={`${styles["add-file-form__dropzone"]} ${dragOver ? styles["add-file-form__dropzone--drag"] : ''}`}
-                    onDrop={handleDrop}
-                    onDragOver={handleDragOver}
-                    onDragLeave={handleDragLeave}
+                    onDrop={(e) => handleDrop(e, setDragOver, setSelectedFile)}
+                    onDragOver={(e) => handleDragOver(e, setDragOver)}
+                    onDragLeave={(e) => handleDragLeave(e, setDragOver)}
                     onClick={() => fileInputRef.current?.click()}
                 >
                     <input

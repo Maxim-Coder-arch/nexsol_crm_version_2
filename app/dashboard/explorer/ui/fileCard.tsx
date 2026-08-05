@@ -1,30 +1,14 @@
 import { motion } from "framer-motion";
-import styles from "../index.module.scss";
 import CloseIcon from "@/public/global/close";
 import DownloadIcon from "@/public/global/download";
 import FileIcon from "@/public/global/file";
 import { FileCardProps } from "@/types/explorer/fileCardProps.type";
 import UserProtected from "@/app/components/share/protected";
+import { formatSize } from "@/helpers/explorer/formatSize";
+import { formatDate } from "@/helpers/explorer/formatDate";
+import styles from "../index.module.scss";
 
 const FileCard = ({ file, onDownload, onDelete }: FileCardProps) => {
-
-    const formatSize = (bytes: number): string => {
-        if (bytes < 1024) return bytes + ' B';
-        if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-        if (bytes < 1024 * 1024 * 1024) return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
-        return (bytes / (1024 * 1024 * 1024)).toFixed(1) + ' GB';
-    };
-
-    const formatDate = (date: Date): string => {
-        return new Date(date).toLocaleDateString('ru-RU', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-        });
-    };
-
     return (
         <motion.div
             className={styles["file-card"]}

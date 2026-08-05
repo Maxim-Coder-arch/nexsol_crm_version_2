@@ -3,9 +3,9 @@ import FileGrid from "./fileGrid";
 import FileHeader from "./fileHeader";
 import AddFileButton from "./addFileButton";
 import AddFileForm from "./addFileForm";
-import styles from "../index.module.scss";
 import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
 import { IncludesFilesProps } from "@/types/explorer/includesFile.type";
+import styles from "../index.module.scss";
 
 const IncludesFiles = ({
     files,
@@ -15,6 +15,13 @@ const IncludesFiles = ({
     onAddFile,
     onCancelAdd,
     onFileSubmit,
+    selectedFile,
+    setSelectedFile,
+    isShared,
+    setIsShared,
+    dragOver,
+    setDragOver,
+    fileInputRef,
 }: IncludesFilesProps) => {
     const show = useTimeoutAnimationLoader();
 
@@ -31,7 +38,17 @@ const IncludesFiles = ({
                 {!showAddForm ? (
                     <AddFileButton onClick={onAddFile} />
                 ) : (
-                    <AddFileForm onAdd={onFileSubmit} onCancel={onCancelAdd} />
+                    <AddFileForm 
+                        onAdd={onFileSubmit} 
+                        onCancel={onCancelAdd}
+                        selectedFile={selectedFile}
+                        setSelectedFile={setSelectedFile}
+                        isShared={isShared}
+                        setIsShared={setIsShared}
+                        dragOver={dragOver}
+                        setDragOver={setDragOver}
+                        fileInputRef={fileInputRef}
+                     />
                 )}
 
                 <FileGrid files={files} onDownload={onDownload} onDelete={onDelete} />

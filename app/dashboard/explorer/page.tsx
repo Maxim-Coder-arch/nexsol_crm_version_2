@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import IncludesFiles from "./ui/includes";
 import TemplateContent from "@/app/components/share/template";
 import { useDeleteFileMutation, useGetFilesQuery, useUploadFileMutation } from "@/store/client-api";
@@ -16,6 +16,10 @@ const FilesPage = () => {
     const [uploadFile] = useUploadFileMutation();
     const [deleteFile] = useDeleteFileMutation();
     const [showAddForm, setShowAddForm] = useState(false);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [isShared, setIsShared] = useState(false);
+    const [dragOver, setDragOver] = useState(false);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleDownload = async (id: string) => {
         try {
@@ -130,6 +134,13 @@ const FilesPage = () => {
                 onAddFile={handleAddFile}
                 onCancelAdd={handleCancelAdd}
                 onFileSubmit={handleFileSubmit}
+                selectedFile={selectedFile}
+                setSelectedFile={setSelectedFile}
+                isShared={isShared}
+                setIsShared={setIsShared}
+                dragOver={dragOver}
+                setDragOver={setDragOver}
+                fileInputRef={fileInputRef}
             />
         </TemplateContent>
     );

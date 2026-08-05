@@ -1,10 +1,7 @@
 import { motion } from "framer-motion";
-import styles from "../index.module.scss";
 import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
-
-interface FileHeaderProps {
-    count: number;
-}
+import { FileHeaderProps } from "@/types/explorer/fileHeader.type";
+import styles from "../index.module.scss";
 
 const FileHeader = ({ count }: FileHeaderProps) => {
     const show = useTimeoutAnimationLoader();

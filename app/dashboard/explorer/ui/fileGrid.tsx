@@ -1,32 +1,13 @@
 import { motion } from "framer-motion";
 import FileCard from "./fileCard";
-import styles from "../index.module.scss";
 import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
 import { FileGridProps } from "@/types/explorer/fileGrid.type";
+import { containerVariants__FileGrid as containerVariants } from "@/configs/explorer/animationConfig.cnf";
+import { cardVariants__FileGrid as cardVariants } from "@/configs/explorer/animationConfig.cnf";
+import styles from "../index.module.scss";
 
 const FileGrid = ({ files, onDownload, onDelete }: FileGridProps) => {
     const show = useTimeoutAnimationLoader();
-
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.05,
-                delayChildren: 0.1,
-            },
-        },
-    };
-
-    const cardVariants = {
-        hidden: { opacity: 0, y: 15, scale: 0.95 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            transition: { duration: 0.35, ease: "easeOut" },
-        },
-    } as const;
 
     if (files.length === 0) {
         return (
