@@ -1,9 +1,11 @@
 'use client';
 import { RoleType } from '@/types/team/roleType.type';
-import styles from '../index.module.scss';
 import { AddUserFormProps } from '@/types/users/addUserForm.type';
 import { ROLE_LABELS } from '@/types/team/roleLabels.type';
 import UserProtected from '@/app/components/share/protected';
+import FormFooter from './formFooter';
+import { roleOptions } from '@/configs/users/users.cnf';
+import styles from '../index.module.scss';
 
 const AddUserForm = ({
     formData,
@@ -19,8 +21,6 @@ const AddUserForm = ({
     onSubmit,
     onCancel,
 }: AddUserFormProps) => {
-    const roleOptions: RoleType[] = ['director', 'moderator', 'viewer'];
-
     return (
         <UserProtected>
             <div className={styles["add-user-form"]}>
@@ -122,15 +122,7 @@ const AddUserForm = ({
                             </ul>
                         </div>
                     </div>
-
-                    <div className={styles["add-user-form__footer"]}>
-                        <button type="submit" className={styles["add-user-form__submit"]}>
-                            Добавить
-                        </button>
-                        <button type="button" className={styles["add-user-form__cancel"]} onClick={onCancel}>
-                            Отмена
-                        </button>
-                    </div>
+                    <FormFooter onCancel={onCancel} />
                 </form>
             </div>
         </UserProtected>

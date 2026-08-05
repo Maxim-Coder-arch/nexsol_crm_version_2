@@ -1,9 +1,9 @@
 'use client';
 import { motion } from "framer-motion";
 import { AddUserButtonProps } from '@/types/users/addUserButton.type';
-import styles from '../index.module.scss';
 import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
 import UserProtected from "@/app/components/share/protected";
+import styles from '../index.module.scss';
 
 const AddUserButton = ({ onClick }: AddUserButtonProps) => {
     const show = useTimeoutAnimationLoader();

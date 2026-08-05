@@ -1,12 +1,9 @@
 'use client';
 import { motion } from "framer-motion";
-import styles from "../index.module.scss";
 import useTimeoutAnimationLoader from "@/app/hooks/useTimeoutAnimationLoader";
 import UserProtected from "@/app/components/share/protected";
-
-interface AddFileButtonProps {
-    onClick: () => void;
-}
+import { AddFileButtonProps } from "@/types/explorer/addFileButton.type";
+import styles from "../index.module.scss";
 
 const AddFileButton = ({ onClick }: AddFileButtonProps) => {
     const show = useTimeoutAnimationLoader();

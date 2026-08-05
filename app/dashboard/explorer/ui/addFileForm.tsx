@@ -1,12 +1,10 @@
 'use client';
-import { useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useRef, Dispatch, SetStateAction } from "react";
+import { motion } from "framer-motion";
+import { AddFileFormProps } from "@/types/explorer/addFileForm.type";
 import styles from "../index.module.scss";
-
-interface AddFileFormProps {
-    onAdd: (file: File, isShared: boolean) => void;
-    onCancel: () => void;
-}
+import { formatSize } from "@/helpers/explorer/formatSize";
+import { handleFileSelect } from "@/helpers/explorer/handleFileSelect";
 
 const AddFileForm = ({ onAdd, onCancel }: AddFileFormProps) => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -14,12 +12,7 @@ const AddFileForm = ({ onAdd, onCancel }: AddFileFormProps) => {
     const [dragOver, setDragOver] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            setSelectedFile(file);
-        }
-    };
+    
 
     const handleDrop = (e: React.DragEvent) => {
         e.preventDefault();
@@ -47,12 +40,7 @@ const AddFileForm = ({ onAdd, onCancel }: AddFileFormProps) => {
         }
     };
 
-    const formatSize = (bytes: number): string => {
-        if (bytes < 1024) return bytes + ' B';
-        if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-        if (bytes < 1024 * 1024 * 1024) return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
-        return (bytes / (1024 * 1024 * 1024)).toFixed(1) + ' GB';
-    };
+    
 
     return (
         <motion.div
@@ -85,7 +73,7 @@ const AddFileForm = ({ onAdd, onCancel }: AddFileFormProps) => {
                     <input
                         ref={fileInputRef}
                         type="file"
-                        onChange={handleFileSelect}
+                        onChange={(e) => handleFileSelect(e, setSelectedFile)}
                         className={styles["add-file-form__input"]}
                     />
                     {selectedFile ? (

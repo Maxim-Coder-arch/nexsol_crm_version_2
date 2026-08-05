@@ -1,14 +1,13 @@
 'use client';
 import { TeamCardProps } from '@/types/users/teamCard.type';
 import { ITeamMember } from '../../../../types/team/teamMember.type';
-import styles from '../index.module.scss';
 import { ROLE_LABELS } from '@/types/team/roleLabels.type';
 import { ROLE_COLORS } from '@/types/team/roleColors.type';
 import UserProtected from '@/app/components/share/protected';
-
+import { rolesUsers } from '@/configs/users/users.cnf';
+import styles from '../index.module.scss';
 
 const TeamCard = ({ user, onEdit, onDelete, onRoleChange }: TeamCardProps) => {
-    const roleOptions: ITeamMember['role'][] = ['director', 'moderator', 'viewer'];
 
     return (
         <UserProtected>
@@ -58,7 +57,7 @@ const TeamCard = ({ user, onEdit, onDelete, onRoleChange }: TeamCardProps) => {
                         onChange={(e) => onRoleChange(user._id, e.target.value as ITeamMember['role'])}
                         className={styles["team-card__role-select"]}
                     >
-                        {roleOptions.map(role => (
+                        {rolesUsers.map(role => (
                             <option key={role} value={role}>{ROLE_LABELS[role]}</option>
                         ))}
                     </select>

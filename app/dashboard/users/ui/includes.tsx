@@ -1,11 +1,12 @@
 'use client';
-import { ITeamMember } from '@/types/team/teamMember.type';
+
 import AddUserButton from './addUserButton';
 import TeamColumn from './teamColumn';
 import EditUserModal from '@/app/components/modals/users/editUserModal';
 import AddUserForm from './addUserForm';
-import styles from '../index.module.scss';
 import { IncludesUsersProps } from '@/types/users/includesUser.type';
+import { rolesUsers } from '@/configs/users/users.cnf';
+import styles from '../index.module.scss';
 
 const IncludesUsers = ({
     users,
@@ -32,8 +33,6 @@ const IncludesUsers = ({
     onCancelAdd,
 }: IncludesUsersProps) => {
 
-    const roles: ITeamMember['role'][] = ['director', 'moderator', 'viewer'];
-
     return (
         <section id="team">
             <div className={styles["team"]}>
@@ -57,7 +56,7 @@ const IncludesUsers = ({
                 )}
 
                 <div className={styles["team__grid"]}>
-                    {roles.map(role => (
+                    {rolesUsers.map(role => (
                         <TeamColumn
                             key={role}
                             role={role}
