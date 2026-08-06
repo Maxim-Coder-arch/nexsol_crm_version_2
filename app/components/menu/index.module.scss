@@ -1,4 +1,3 @@
-// components/layout/Menu/index.module.scss
 @use "../../global-styles/includes.scss" as *;
 
 .parent-root-menu {
@@ -31,7 +30,6 @@
             }
         }
 
-        // Бургер-меню (мобильная версия)
         &__burger {
             display: none;
             flex-direction: column;
@@ -64,7 +62,6 @@
             }
         }
 
-        // Список навигации
         &__list {
             display: flex;
             gap: 8px;
@@ -100,7 +97,6 @@
             }
         }
 
-        // Профиль
         &__profile-window {
             position: relative;
             flex-shrink: 0;
@@ -196,9 +192,6 @@
     }
 }
 
-// ========== АДАПТИВНОСТЬ ==========
-
-// Планшет
 @media (max-width: $breakpoint-tablet) {
     .parent-root-menu {
         &__child {
@@ -256,7 +249,6 @@
     }
 }
 
-// Мобилка
 @media (max-width: $breakpoint-mobile) {
     .parent-root-menu {
         &__child {
@@ -320,7 +312,6 @@
     }
 }
 
-// Маленькие мобилки
 @media (max-width: $breakpoint-small-mobile) {
     .parent-root-menu {
         &__child {
